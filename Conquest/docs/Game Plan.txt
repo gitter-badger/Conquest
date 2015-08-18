@@ -1,0 +1,43 @@
+Conquest of the Crusaders is a 2D action based strategy game. There are different races in the game, each with special abilities, units and disadvantages. The ultimate goal is to send your troops from your side, to the enemy side. When enough units are sent to the other side, you win the game.
+
+Each time a unit is deployed there is a cooldown time, and typically stronger units will have a longer cooldown time. 
+
+When a unit is killed, it drops gold. It also adds one to one's 'charge force' which, when accumulated to 100%, can send a 'charge wave'. A charge wave is essentially sending a selected unit in all lanes (like a wave). 
+
+The gold dropped can be used in the market to purchase new units or upgrades on existing units. The shop menu can be brought up in game and accessed via shortcut keys (for pros) or arrow keys. The upgrades apply instantenously. So a major part of the strategy is to look at indicators of enemy upgrades and decide on what to purchase to counter that.
+
+Certain units will counter others, so purchasing units and going for a unit composition is also a very good strategy to think about.
+
+In multiplayer matches, the sessions are quick and one-off. Market upgrades only last for one round. In campaign however, the market upgrades are permanent and are saved.
+
+Each race will have a super-unit, or the trump card of a race, so to speak. Alongside with this, there is also the possibility of a hero unit, which can only be deployed once in one lane only (cannot send a hero 'charge'). The hero will have auras and special abilities that the player can directly control. The hero has mana, which means the player must be wise about the use of the hero abilities. The mana regenerates slowly, so it could potentially allow the player to cast something while the hero is travelling.
+
+
+Game modes:
+
+Singleplayer:
+	Campaign:
+		You get to play as a specific race of your choice and conquer the land of the other races in order to win. Each fight becomes progressively harder as you go. Shop upgrades last throughout the campaign session.
+
+	Quickmatch:
+		Play against a bot in a one time fashion. Choose between easy, normal, hard, insane difficulties.
+
+Multiplayer (second in priority):
+	Host / Join:
+		Players host their own sessions, requires port forwarding.
+
+	Ranked Ladder Match (MAYBE)
+		Players connect to one of our servers and play a ranked match with others of similar skill searching for a game.
+
+
+Race Ideas:
+Human: Jack of all trades, medium armoured
+Skeletons: High melee damage, chance of resurrection (with 1/4 hp), low HP, light armoured
+Elves: Superior ranged damage, light armoured
+Orc: High melee damage, high HP, heavy armoured, poor magic
+Xa'las: Superior magic damage, light armored, low HP
+
+
+Demons: Much strong version of humans, not playable, only found in campaigns
+
+
