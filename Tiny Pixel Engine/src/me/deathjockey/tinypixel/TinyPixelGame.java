@@ -5,6 +5,7 @@ import me.deathjockey.tinypixel.graphics.RenderContext;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 
 /**
  * Abstract layer of the core game. TinyPixelGame, as its name suggests,
@@ -113,9 +114,7 @@ public abstract class TinyPixelGame extends Canvas implements Runnable {
 			boolean render = false;
 			double now = System.nanoTime();
 			unprocessed += (now - then) / nsPerTick;
-
 			then = now;
-
 
 			//process game updates
 			while(unprocessed >= 1) {
@@ -159,14 +158,20 @@ public abstract class TinyPixelGame extends Canvas implements Runnable {
 		if(!canRender) return;
 		//--END init check
 
-		Graphics g = bs.getDrawGraphics();
+		Graphics2D g = (Graphics2D) bs.getDrawGraphics();
 		int[] clearRGBA = Colors.fromInt(renderContext.getClearColor());
 		g.setColor(new Color(clearRGBA[0], clearRGBA[1], clearRGBA[2], clearRGBA[3]));
 		g.fillRect(0, 0, getWidth(), getHeight());
 		renderContext.clearAll();
 		gameRender(renderContext); //Game rendering logic
 
-		g.drawImage(renderContext.getImage(), 0, 0, getWidth(), getHeight(), null);
+		GraphicsEnvironment genv = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		GraphicsDevice gdevice = genv.getDefaultScreenDevice();
+		GraphicsConfiguration gconfig = gdevice.getDefaultConfiguration();
+		BufferedImage nativeImg = gconfig.createCompatibleImage(renderContext.getWidth(), renderContext.getHeight());
+		nativeImg.setRGB(0, 0, renderContext.getWidth(), renderContext.getHeight(), renderContext.getPixelData(), 0,
+				renderContext.getWidth());
+		g.drawImage(nativeImg, 0, 0, WIDTH, HEIGHT, null);
 		bs.show();
 		g.dispose();
 	}

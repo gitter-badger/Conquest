@@ -9,6 +9,8 @@ import me.deathjockey.tinypixel.graphics.RenderContext;
  */
 public class ConquestGame extends TinyPixelGame {
 
+	protected static ConquestGame instance;
+
     public ConquestGame(String title, int width, int height) {
         super(title, width, height);
 
@@ -29,5 +31,7 @@ public class ConquestGame extends TinyPixelGame {
 
     }
 
-
+	public ConquestGame instance() {
+		return instance;
+	}
 }
