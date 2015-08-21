@@ -171,7 +171,7 @@ public abstract class TinyPixelGame extends Canvas implements Runnable {
 		BufferedImage nativeImg = gconfig.createCompatibleImage(renderContext.getWidth(), renderContext.getHeight());
 		nativeImg.setRGB(0, 0, renderContext.getWidth(), renderContext.getHeight(), renderContext.getPixelData(), 0,
 				renderContext.getWidth());
-		g.drawImage(nativeImg, 0, 0, WIDTH, HEIGHT, null);
+		g.drawImage(nativeImg, 0, 0, getWidth(), getHeight(), null);
 		bs.show();
 		g.dispose();
 	}
