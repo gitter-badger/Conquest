@@ -158,7 +158,7 @@ public abstract class TinyPixelGame extends Canvas implements Runnable {
 		if(!canRender) return;
 		//--END init check
 
-		Graphics2D g = (Graphics2D) bs.getDrawGraphics();
+		Graphics g = bs.getDrawGraphics();
 		int[] clearRGBA = Colors.fromInt(renderContext.getClearColor());
 		g.setColor(new Color(clearRGBA[0], clearRGBA[1], clearRGBA[2], clearRGBA[3]));
 		g.fillRect(0, 0, getWidth(), getHeight());
@@ -171,7 +171,7 @@ public abstract class TinyPixelGame extends Canvas implements Runnable {
 		BufferedImage nativeImg = gconfig.createCompatibleImage(renderContext.getWidth(), renderContext.getHeight());
 		nativeImg.setRGB(0, 0, renderContext.getWidth(), renderContext.getHeight(), renderContext.getPixelData(), 0,
 				renderContext.getWidth());
-		g.drawImage(nativeImg, 0, 0, WIDTH, HEIGHT, null);
+		g.drawImage(nativeImg, 0, 0, getWidth(), getHeight(), null);
 		bs.show();
 		g.dispose();
 	}

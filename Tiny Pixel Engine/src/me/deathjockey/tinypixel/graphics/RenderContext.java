@@ -176,7 +176,7 @@ public class RenderContext {
 				int pxl = pixels[bmpIndex];
 				int[] rgba = Colors.fromInt(pxl);
 				float a = rgba[3];
-				//check for valid alpha value (redundant alpha values are ignored)
+//				check for valid alpha value (redundant alpha values are ignored)
 				if(a > 0) {
 					rgba[3] = (int) (255f * alpha);
 					pxl = Colors.toInt(rgba);
@@ -184,6 +184,7 @@ public class RenderContext {
 				}
 			}
 		}
+
 	}
 
 	/**
@@ -268,6 +269,7 @@ public class RenderContext {
 
 		for(int xx = x0; xx < x1; xx++) {
 			for(int yy = y0; yy < y1; yy++) {
+				System.out.println("ALLAH SAVE ME " + color);
 				pixelData[yy * getWidth() + xx] = color;
 			}
 		}

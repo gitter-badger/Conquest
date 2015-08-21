@@ -33,10 +33,10 @@ public class Colors {
 	 * @return Integer representation of the given aRGB color
 	 */
 	public static int toInt(int r, int g, int b, int a) {
-		return  ((a & 0x0ff) << 24) |
-				((r & 0x0ff) << 16) |
-				((g & 0x0ff) << 8)  |
-				(b & 0x0ff);
+		return  ((a & 0xff) << 24) |
+				((r & 0xff) << 16) |
+				((g & 0xff) << 8)  |
+				(b & 0xff);
 	}
 
 	/**
@@ -70,6 +70,6 @@ public class Colors {
 	 * 		   respectively.
 	 */
 	public static int[] fromInt(int col) {
-		return new int[] { (col >> 16) & 0x0FF, (col >> 8) & 0X0FF, col & 0x0FF, (col >> 24) & 0x0FF};
+		return new int[] { (col >> 16) & 0xFF, (col >> 8) & 0XFF, col & 0xFF, (col >> 24) & 0xFF};
 	}
 }
