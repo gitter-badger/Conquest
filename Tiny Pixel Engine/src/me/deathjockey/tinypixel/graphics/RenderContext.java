@@ -2,7 +2,6 @@ package me.deathjockey.tinypixel.graphics;
 
 import com.sun.istack.internal.Nullable;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.util.Arrays;

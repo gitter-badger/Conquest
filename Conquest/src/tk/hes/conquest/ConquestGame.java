@@ -22,7 +22,7 @@ public class ConquestGame extends TinyPixelGame {
     }
 
     @Override
-    protected void gameRender(RenderContext renderContext) {
+    protected void gameRender(RenderContext c) {
 
     }
 
