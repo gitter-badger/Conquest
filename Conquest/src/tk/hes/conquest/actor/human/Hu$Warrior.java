@@ -84,6 +84,6 @@ public class Hu$Warrior extends Actor  {
 
 	@Override
 	public void onDeath() {
-
 	}
+
 }

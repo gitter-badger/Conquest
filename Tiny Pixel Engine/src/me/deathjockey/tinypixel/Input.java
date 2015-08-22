@@ -1,126 +1,103 @@
 package me.deathjockey.tinypixel;
 
-import com.sun.istack.internal.Nullable;
+import me.deathjockey.tinypixel.util.Vector2f;
 
 import java.awt.event.*;
-import java.util.HashMap;
 
 /**
  * Main input handler class for the game engine. Keyboards keys are mapped into a list
  * which will listen for events.
+ * <p>
  *
- * TODO: Implement mouse controls
  *
- * @author Kevin Yang
+ * @author James Roberts
  */
-public class Input implements KeyListener, MouseMotionListener, MouseListener {
+public class Input implements KeyListener, MouseListener, MouseMotionListener {
 
-	private HashMap<String, InputKey> keys = new HashMap<>();
+    public static final int MOUSE_LEFT = 1;
+    public static final int MOUSE_MIDDLE = 2;
+    public static final int MOUSE_RIGHT = 3;
 
-	private int mouseX, mouseY;
-	private int mousePresses, mouseAbsorbs;
-	private boolean mousePress, mouseDown;
+    private static final int NUM_MOUSE = 256;
+    private static final int NUM_KEYCODES = 256;
 
-	public Input(TinyPixelGame game) {
+    private static boolean[] currentKeys = new boolean[NUM_KEYCODES];
+    private static boolean[] lastKeys = new boolean[NUM_KEYCODES];
 
+    private static Vector2f cursorPosition = new Vector2f(0, 0);
+    private static boolean[] currentMouse = new boolean[NUM_MOUSE];
+    private static boolean[] clickedMouse = new boolean[NUM_MOUSE];
 
-		game.addKeyListener(this);
-		game.addMouseListener(this);
-		game.addMouseListener(this);
-	}
+    public void update() {
+        for (int i = 0; i < NUM_KEYCODES; i++) lastKeys[i] = getKeyDown(i);
+        for (int i = 0; i < NUM_MOUSE; i++) clickedMouse[i] = false;
+    }
 
-	public void update() {
-		for (String kk : keys.keySet()) {
-			InputKey k = keys.get(kk);
-			k.update();
-		}
-	}
+    public static boolean getMouseClicked(int mouseButton) {
+        return clickedMouse[mouseButton];
+    }
 
-	public void registerKey(String id, InputKey key) {
-		keys.put(id, key);
-	}
+    public static boolean getMouseUp(int mouseButton) {
+        return !currentMouse[mouseButton];
+    }
 
-	@Nullable
-	public InputKey getKey(String id) { return keys.get(id); }
+    public static boolean getMouseDown(int mouseButton) {
+        return currentMouse[mouseButton];
+    }
 
-	public boolean isKeyPressed(String id) {
-		InputKey key = getKey(id);
-		if(key != null) return key.isPressed();
-		else return false;
-	}
+    public static boolean getKeyUp(int keyCode) {
+        return !getKeyDown(keyCode);
+    }
 
-	public boolean isKeyDown(String id) {
-		InputKey key = getKey(id);
-		if(key != null) return key.isHeldDown();
-		else return false;
-	}
+    public static boolean getKeyDown(int keyCode) {
+        return currentKeys[keyCode];
+    }
 
-	public void releaseAllKeys() {
-		for (int i = 0; i < keys.size(); i++) {
-			keys.get(i).setPressed(false);
-		}
-	}
+    @Override
+    public void keyPressed(KeyEvent e) {
+        currentKeys[e.getKeyCode()] = true;
+    }
 
-	@Override
-	public void keyTyped(KeyEvent e) {
+    @Override
+    public void keyReleased(KeyEvent e) {
+        currentKeys[e.getKeyCode()] = false;
+    }
 
-	}
+    @Override
+    public void mousePressed(MouseEvent e) {
+        currentMouse[e.getButton()] = true;
+    }
 
-	@Override
-	public void keyPressed(KeyEvent e) {
-		int kc = e.getKeyCode();
-		for(String kk : keys.keySet()) {
-			InputKey k = keys.get(kk);
-			if(k.hasAssignedKeyCode(kc)) {
-				k.setPressed(true);
-			}
-		}
-	}
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        currentMouse[e.getButton()] = false;
+    }
 
-	@Override
-	public void keyReleased(KeyEvent e) {
-		int kc = e.getKeyCode();
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        clickedMouse[e.getButton()] = true;
+    }
 
-		for (String kk : keys.keySet()) {
-			InputKey k = keys.get(kk);
-			if(k.hasAssignedKeyCode(kc)) {
-				k.setPressed(false);
-			}
-		}
-	}
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        cursorPosition.set(e.getX(), e.getY());
+    }
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
+    // Below are unused
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
 
-	}
+    @Override
+    public void mouseEntered(MouseEvent e) {
+    }
 
-	@Override
-	public void mousePressed(MouseEvent e) {
+    @Override
+    public void mouseExited(MouseEvent e) {
+    }
 
-	}
+    @Override
+    public void mouseDragged(MouseEvent e) {
+    }
 
-	@Override
-	public void mouseReleased(MouseEvent e) {
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-
-	}
-
-	@Override
-	public void mouseDragged(MouseEvent e) {
-
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
-
-	}
 }
