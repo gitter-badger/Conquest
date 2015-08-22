@@ -15,9 +15,9 @@ public class Action {
 
 	private ArrayList<ActionKeyFrameListener> listeners = new ArrayList<>();
 
-	public Action(ActionKeyFrameListener ... listeners) {
-		if(listeners != null) {
-			for (ActionKeyFrameListener listener : listeners) {
+    public Action(ActionKeyFrameListener... listeners) {
+        if (listeners != null) {
+            for (ActionKeyFrameListener listener : listeners) {
 				this.listeners.add(listener);
 			}
 		}

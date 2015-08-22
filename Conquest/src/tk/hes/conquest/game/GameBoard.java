@@ -47,17 +47,17 @@ public class GameBoard {
 		}
 	}
 
-	public void update(Input input) {
-		player1.update(input);
-		player2.update(input);
+    public void update() {
+        player1.update();
+        player2.update();
 
 		for(int lane : entityMap.keySet()) {
 			ArrayList<Actor> laneActors = entityMap.get(lane);
 			for(int i = 0; i < laneActors.size(); i++) {
 				Actor actor = laneActors.get(i);
-				actor.update(input);
-				if(actor.canRemove()) {
-					removeActor(actor, lane);
+                actor.update();
+                if (actor.canRemove()) {
+                    removeActor(actor, lane);
 					i--;
 				}
 			}

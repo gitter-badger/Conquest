@@ -1,7 +1,6 @@
 package tk.hes.conquest;
 
 import me.deathjockey.tinypixel.Input;
-import me.deathjockey.tinypixel.InputKey;
 import me.deathjockey.tinypixel.TinyPixelGame;
 import me.deathjockey.tinypixel.graphics.BitFont;
 import me.deathjockey.tinypixel.graphics.Bitmap;
@@ -42,10 +41,6 @@ public class ConquestGame extends TinyPixelGame {
 		gameFont.addSpacingRule("li!", 3, 0);
 		renderContext.installFont("normal", gameFont);
 
-		//TODO temporary
-		game.getInput().registerKey("up", new InputKey(KeyEvent.VK_UP));
-		game.getInput().registerKey("down", new InputKey(KeyEvent.VK_DOWN));
-		game.getInput().registerKey("deploy", new InputKey(KeyEvent.VK_SPACE));
 
 		Player player1 = new Player("Kevin", Race.HUMAN, Origin.WEST);
 		Player player2 = new Player("Dumhead", Race.HUMAN, Origin.EAST);
@@ -81,8 +76,8 @@ public class ConquestGame extends TinyPixelGame {
 	}
 
     @Override
-    protected void gameUpdate(Input input) {
-		board.update(input);
+    protected void gameUpdate() {
+        board.update();
     }
 
 	public ConquestGame instance() {

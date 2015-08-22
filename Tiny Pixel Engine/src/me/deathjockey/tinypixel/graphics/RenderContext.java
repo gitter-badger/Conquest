@@ -202,10 +202,10 @@ public class RenderContext {
 	 */
 	public void render(int[] pixels, int pw, int ph, int x, int y, float alpha, int tintColor) {
 		int[] tRGBA = Colors.fromInt(tintColor);
-		float ta = tRGBA[3];
-		float tr = tRGBA[0];
-		float tg = tRGBA[1];
-		float tb = tRGBA[2];
+        float tr = tRGBA[0];
+        float tg = tRGBA[1];
+        float tb = tRGBA[2];
+        float ta = tRGBA[3];
 
 		int[] pixelBuffer = Arrays.copyOf(pixels, pixels.length);
 		for(int i = 0;  i < pixelBuffer.length; i++) {
