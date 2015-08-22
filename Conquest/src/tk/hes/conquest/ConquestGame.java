@@ -69,6 +69,8 @@ public class ConquestGame extends TinyPixelGame {
 //			r = 0; g = 0; b = 0;
 //		}
 
+		c.render(Art.BUTTONS, 100, 100);
+
 		c.getFont("normal").render("Use up & down arrow keys to toggle deploy lane\\" +
 				"Press [SPACE] to drop warriors. \\\\Grab some popcorn and watch them fight.", 30, 30, Colors.toInt(r, g, b ,255));
 	}
