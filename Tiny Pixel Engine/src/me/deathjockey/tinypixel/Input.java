@@ -9,7 +9,6 @@ import java.awt.event.*;
  * which will listen for events.
  * <p>
  *
- *
  * @author James Roberts
  */
 public class Input implements KeyListener, MouseListener, MouseMotionListener {
@@ -19,7 +18,7 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
     public static final int MOUSE_RIGHT = 3;
 
     private static final int NUM_MOUSE = 256;
-    private static final int NUM_KEYCODES = 256;
+    private static final int NUM_KEYCODES = 65565;
 
     private static boolean[] currentKeys = new boolean[NUM_KEYCODES];
     private static boolean[] lastKeys = new boolean[NUM_KEYCODES];
@@ -53,6 +52,14 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
         return currentKeys[keyCode];
     }
 
+    public static boolean getKeyPressed(int keyCode) {
+        return !lastKeys[keyCode] && getKeyDown(keyCode);
+    }
+
+    public static Vector2f getCursorPosition() {
+        return cursorPosition;
+    }
+
     @Override
     public void keyPressed(KeyEvent e) {
         currentKeys[e.getKeyCode()] = true;
@@ -61,6 +68,11 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
     @Override
     public void keyReleased(KeyEvent e) {
         currentKeys[e.getKeyCode()] = false;
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        lastKeys[e.getKeyCode()] = true;
     }
 
     @Override
@@ -84,10 +96,6 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
     }
 
     // Below are unused
-    @Override
-    public void keyTyped(KeyEvent e) {
-    }
-
     @Override
     public void mouseEntered(MouseEvent e) {
     }

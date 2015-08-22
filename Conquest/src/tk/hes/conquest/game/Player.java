@@ -41,14 +41,14 @@ public class Player {
     }
 
     public void update() {
-        if (Input.getKeyDown(KeyEvent.VK_A)) {
+        if (Input.getKeyPressed(KeyEvent.VK_A)) {
             if (deployLane < 5)
                 deployLane++;
-        } else if (Input.getKeyDown(KeyEvent.VK_D)) {
+        } else if (Input.getKeyPressed(KeyEvent.VK_D)) {
             if (deployLane > 0)
                 deployLane--;
         }
-        if (Input.getKeyDown(KeyEvent.VK_SPACE)) {
+        if (Input.getKeyPressed(KeyEvent.VK_SPACE)) {
             if (this.race.equals(Race.HUMAN))
                 board.addActor(ActorFactory.make(this, race, ActorType.MELEE), deployLane);
         }
