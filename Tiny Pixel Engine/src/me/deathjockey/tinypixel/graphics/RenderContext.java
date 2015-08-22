@@ -52,7 +52,7 @@ public class RenderContext {
 	}
 
 	/**
-	 * Draws a given animation to the context.
+	 * Draws a given action to the context.
 	 *
 	 * @param animation Animation to be drawn
 	 * @param x x co-ordinate on screen
@@ -63,12 +63,12 @@ public class RenderContext {
 	}
 
 	/**
-	 * Draws a given animation to the context with transparency.
+	 * Draws a given action to the context with transparency.
 	 *
 	 * @param animation Animation to be drawn
 	 * @param x x co-ordinate on screen
 	 * @param y	y co-ordinate on screen
-	 * @param alpha Transparency (0f - 1f) of the animation
+	 * @param alpha Transparency (0f - 1f) of the action
 	 */
 	public void render(Animation animation, int x, int y, float alpha) {
 		render(animation, x, y, alpha, Colors.toInt(0, 0, 0, 0));
@@ -79,8 +79,8 @@ public class RenderContext {
 	 * @param animation Animation to be drawn
 	 * @param x x co-ordinate on screen
 	 * @param y y co-ordinate on screen
-	 * @param alpha Transparency (0f - 1f) of the animation
-	 * @param color Color tint of the animation
+	 * @param alpha Transparency (0f - 1f) of the action
+	 * @param color Color tint of the action
 	 */
 	public void render(Animation animation, int x, int y, float alpha, int color) {
 		animation.render(this, x, y, alpha, color);
@@ -201,36 +201,26 @@ public class RenderContext {
 	 * @param tintColor Color tint to apply before rendering
 	 */
 	public void render(int[] pixels, int pw, int ph, int x, int y, float alpha, int tintColor) {
-		/*
-	 	 * TODO Tinting is not perfect yet, pixels only tint to the light side
- 		 * 		A point-RGB average is needed for proper overlay effects
-		 */
-		int[] tintRGBA = Colors.fromInt(tintColor);
-		float rTint = (float) tintRGBA[0] / 255f;
-		float gTint = (float) tintRGBA[1] / 255f;
-		float bTint = (float) tintRGBA[2] / 255f;
-		float maskAlpha = (float) tintRGBA[3] / 255f;
+		int[] tRGBA = Colors.fromInt(tintColor);
+		float ta = tRGBA[3];
+		float tr = tRGBA[0];
+		float tg = tRGBA[1];
+		float tb = tRGBA[2];
 
-		int[] pixelBuffer = pixels.clone();
-		for(int i = 0; i < pixelBuffer.length; i++) {
-			int[] rgba = Colors.fromInt(pixelBuffer[i]);
-			int a = rgba[3];
-			if(a == 0) continue;
+		int[] pixelBuffer = Arrays.copyOf(pixels, pixels.length);
+		for(int i = 0;  i < pixelBuffer.length; i++) {
+			int[] pRGBA = Colors.fromInt(pixelBuffer[i]);
+			float br = pRGBA[0];
+			float bb = pRGBA[1];
+			float bg = pRGBA[2];
 
-			//blend colors (for tint)
-			float red = rgba[0] + (255 - rgba[0]) * (rTint * maskAlpha);
-			float green = rgba[1] + (255 - rgba[1]) * (gTint * maskAlpha);
-			float blue = rgba[2] + (255 - rgba[2]) * (bTint * maskAlpha);
-			int alpha2 = (int) alpha * 255;
+			int r = (int) (br + (tr - br) / 2);
+			int g = (int) (Math.abs(tg - bg) / (ta + 1));
+			int b = (int) (Math.abs(tb - bb) / (ta + 1));
 
-			//color correction
-			if(red > 255) red = 255;
-			if(green > 255) green = 255;
-			if(blue > 255) green = 255;
-			if(alpha2 > 255) alpha = 255;
-
-			pixelBuffer[i] = Colors.toInt((int) red, (int) green, (int) blue, alpha2);
+			pixelBuffer[i] = Colors.toInt(r, g, b, pRGBA[3]);
 		}
+
 		render(pixelBuffer, pw, ph, x, y, alpha);
 	}
 
@@ -269,7 +259,6 @@ public class RenderContext {
 
 		for(int xx = x0; xx < x1; xx++) {
 			for(int yy = y0; yy < y1; yy++) {
-				System.out.println("ALLAH SAVE ME " + color);
 				pixelData[yy * getWidth() + xx] = color;
 			}
 		}

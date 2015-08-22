@@ -13,8 +13,7 @@ public class ActorFactory {
 		Class<? extends Actor> actorClass = raceActorMap.get(actorType);
 		if (actorClass != null) {
 			try {
-				long uid = Actor.generateNextUID();
-				Actor actor = actorClass.getConstructor(Player.class, Long.class).newInstance(owner, uid);
+				Actor actor = actorClass.getConstructor(Player.class).newInstance(owner);
 				return actor;
 			} catch (Exception e) {
 				e.printStackTrace();

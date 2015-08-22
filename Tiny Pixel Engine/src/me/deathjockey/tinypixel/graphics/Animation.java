@@ -5,7 +5,7 @@ import com.sun.istack.internal.NotNull;
 import java.util.LinkedList;
 
 /**
- * An animation is a series of Bitmaps played in a timed manner.
+ * An action is a series of Bitmaps played in a timed manner.
  * Various controls exist to render animations on-screen. These
  * are managed by the update method.
  *
@@ -13,25 +13,25 @@ import java.util.LinkedList;
  */
 public class Animation {
 
-	/** Number of frames in the animation */
+	/** Number of frames in the action */
 	private LinkedList<Frame> frames = new LinkedList<>();
 
 	/** Current frame being drawn */
 	private int frame = -1;
 
-	/** Is the animation playing? */
+	/** Is the action playing? */
 	private boolean started = false;
 
-	/** Relative speed to play the animation in (original time * speed factor) */
+	/** Relative speed to play the action in (original time * speed factor) */
 	private float speed = 1f;
 
 	/** Frame update timer */
 	private long lastUpdate;
 
-	/** Control for looping the animation (i.e. start from beginning again when completed) */
+	/** Control for looping the action (i.e. start from beginning again when completed) */
 	private boolean looping = false;
 
-	/** Control for reversing the animation (i.e. start from last frame of bitmap list) */
+	/** Control for reversing the action (i.e. start from last frame of bitmap list) */
 	private boolean reverseMode = false;
 
 	/** Control for pingpong mode (i.e. start from beginning but play reverse when last frame is reached, loop) */
@@ -57,7 +57,7 @@ public class Animation {
 	}
 
 	/**
-	 * Adds a new frame to the end of the animation list
+	 * Adds a new frame to the end of the action list
 	 * @param bitmap Bitmap to be drawn
 	 * @param delay Time in milliseconds the frame lasts
 	 * @return
@@ -68,7 +68,7 @@ public class Animation {
 	}
 
 	/**
-	 * Renders the animation on a given context.
+	 * Renders the action on a given context.
 	 *
 	 * @param context Render context to be drawn on
 	 * @param x x co-ordinate on screen
@@ -79,25 +79,25 @@ public class Animation {
 	}
 
 	/**
-	 * Renders the animation on a given context with specified transparency.
+	 * Renders the action on a given context with specified transparency.
 	 *
 	 * @param context Render context to be drawn on
 	 * @param x x co-ordinate on screen
 	 * @param y y co-ordinate on screen
-	 * @param alpha	Alpha transparency of the animation
+	 * @param alpha	Alpha transparency of the action
 	 */
 	public void render(RenderContext context, int x, int y, float alpha) {
 		render(context, x, y, alpha, Colors.toInt(0, 0, 0, 0));
 	}
 
 	/**
-	 * Renders the animation on a given context with specified transparency and tint color.
+	 * Renders the action on a given context with specified transparency and tint color.
 	 *
 	 * @param context Render context to be drawn on
 	 * @param x x co-ordinate on screen
 	 * @param y y co-ordinate on screen
-	 * @param alpha	Alpha transparency of the animation
-	 * @param tintColor Tint color of the animation
+	 * @param alpha	Alpha transparency of the action
+	 * @param tintColor Tint color of the action
 	 */
 	public void render(RenderContext context, int x, int y, float alpha, int tintColor) {
 		update();
@@ -106,7 +106,7 @@ public class Animation {
 	}
 
 	/**
-	 * Updates animation timers and frame information
+	 * Updates action timers and frame information
 	 */
 	public void update() {
 		if(firstUpdate && !started) {
@@ -183,7 +183,7 @@ public class Animation {
 	}
 
 	/**
-	 * Begin playing animation.
+	 * Begin playing action.
 	 */
 	public void start() {
 		if(!started) {
@@ -192,8 +192,8 @@ public class Animation {
 	}
 
 	/**
-	 * Resets animation timer to current time and frame to 0.
-	 * Plays the animation again if stopped.
+	 * Resets action timer to current time and frame to 0.
+	 * Plays the action again if stopped.
 	 */
 	public void restart() {
 		frame = 0;
@@ -202,7 +202,7 @@ public class Animation {
 	}
 
 	/**
-	 * Stops playing animation.
+	 * Stops playing action.
 	 */
 	public void stop() {
 		if(started) {

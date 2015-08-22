@@ -2,26 +2,42 @@ package tk.hes.conquest.game;
 
 import me.deathjockey.tinypixel.Input;
 import me.deathjockey.tinypixel.graphics.RenderContext;
+import tk.hes.conquest.ConquestGameDesktopLauncher;
 import tk.hes.conquest.actor.Actor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class GameMatch {
+public class GameBoard {
+
+	public static final int LANE_SIZE = 25;
 
 	private int time; //time remaining
 	private int dominance; //50 start, 0 = p2 win, 100 = p1 win
 	private Player player1, player2;
+	private int laneSize;
 
 	private final HashMap<Integer, ArrayList<Actor>> entityMap = new HashMap<>();
 
-	public GameMatch(Player player1, Player player2) {
+	public GameBoard(Player player1, Player player2, int maxLaneSize, int startDominance, int timeLimit) {
 		this.player1 = player1;
 		this.player2 = player2;
+		this.laneSize = maxLaneSize;
+		this.dominance = startDominance;
+		this.time = timeLimit;
+
+		for(int i = 0; i < maxLaneSize; i++) {
+			entityMap.put(i, new ArrayList<Actor>());
+		}
+		player1.setBoard(this);
+		player2.setBoard(this);
 	}
 
 	public void render(RenderContext context) {
+		player1.render(context);
+		player2.render(context);
+
 		for(int lane : entityMap.keySet()) {
 			ArrayList<Actor> laneActors = entityMap.get(lane);
 			for(int i = 0; i < laneActors.size(); i++) {
@@ -32,6 +48,9 @@ public class GameMatch {
 	}
 
 	public void update(Input input) {
+		player1.update(input);
+		player2.update(input);
+
 		for(int lane : entityMap.keySet()) {
 			ArrayList<Actor> laneActors = entityMap.get(lane);
 			for(int i = 0; i < laneActors.size(); i++) {
@@ -46,21 +65,23 @@ public class GameMatch {
 	}
 
 	public void addActor(Actor actor, int lane) {
+		//TODO TEMPORARY!!
+		Player owner = actor.getOwner();
+		int xPos = 0;
+		switch(owner.getOrigin()) {
+			case WEST: xPos = 25; break;
+			case EAST: xPos = ConquestGameDesktopLauncher.INIT_WIDTH / 2 - 25; break;
+		}
+		actor.setPosition(xPos, ConquestGameDesktopLauncher.INIT_HEIGHT / 3 - lane * 25);
+		actor.assignBoard(this, lane);
+
 		ArrayList<Actor> actors = entityMap.get(lane);
 		actors.add(actor);
 	}
 
 	public void removeActor(Actor actor, int lane) {
-		removeActor(actor.getUID(), lane);
-	}
-
-	public void removeActor(long actorUID, int lane) {
 		List<Actor> actors = entityMap.get(lane);
-		for(int i = 0; i < actors.size(); i++) {
-			if(actors.get(i).getUID() == actorUID)
-				actors.remove(i);
-
-		}
+		actors.remove(actor);
 	}
 
 	public Player getPlayer1() {
@@ -69,5 +90,9 @@ public class GameMatch {
 
 	public Player getPlayer2() {
 		return player2;
+	}
+
+	public ArrayList<Actor> getActorsInLane(int lane) {
+		return entityMap.get(lane);
 	}
 }

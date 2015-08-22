@@ -5,6 +5,18 @@ public class BB {
 	//BB co-ordinates relative to actor's position
 	public float rx, ry, w, h;
 
+
+	public BB() {
+		this(0, 0, 0, 0);
+	}
+
+	public BB(int rx, int ry, int w, int h) {
+		this.rx = rx;
+		this.ry = ry;
+		this.w = w * Actor.SPRITE_SCALE;
+		this.h = h * Actor.SPRITE_SCALE;
+	}
+
 	public float getRx() {
 		return rx;
 	}

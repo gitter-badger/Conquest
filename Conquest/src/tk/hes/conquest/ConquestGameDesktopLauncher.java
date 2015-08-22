@@ -11,7 +11,7 @@ public class ConquestGameDesktopLauncher {
 	public static void main(String[] args) {
 		ConquestGame game = new ConquestGame(TITLE + "  " + VERSION, INIT_WIDTH, INIT_HEIGHT);
 		TinyPixelGameDesktopWrapper wrapper = new TinyPixelGameDesktopWrapper(game);
-		game.setGraphicsScale(4);
+		game.setGraphicsScale(2);
 		game.setNumBuffer(2);
 		game.setTargetFps(60);
 		game.setFpsVerbose(true);

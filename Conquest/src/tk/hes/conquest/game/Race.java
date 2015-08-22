@@ -1,7 +1,7 @@
 package tk.hes.conquest.game;
 
 import tk.hes.conquest.actor.Actor;
-import tk.hes.conquest.actor.human.Human$Warrior;
+import tk.hes.conquest.actor.human.Hu$Warrior;
 
 import java.util.HashMap;
 
@@ -13,7 +13,7 @@ public enum Race {
 	HUMAN {
 		@Override
 		public void indexActorMap(HashMap<ActorType, Class<? extends Actor>> map) {
-			map.put(ActorType.MELEE, Human$Warrior.class);
+			map.put(ActorType.MELEE, Hu$Warrior.class);
 		}
 	},
 

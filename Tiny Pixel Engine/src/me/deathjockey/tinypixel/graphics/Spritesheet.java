@@ -33,6 +33,9 @@ public class Spritesheet extends Bitmap {
 	/** Sorted cell sprites are stored here */
 	private Bitmap[][] cellSprites;
 
+	/** Scaling **/
+	private float scale = 1f;
+
 	/**
 	 * Instantiates a spritesheet object from a given Bitmap object (the main image) with spritsheet
 	 * parameters.
@@ -67,13 +70,22 @@ public class Spritesheet extends Bitmap {
 		}
 	}
 
+	@Override
+	public Spritesheet getScaled(float scale) {
+		Spritesheet s = new Spritesheet(getScaled((int) (getWidth() * scale), (int) (getHeight() * scale)),
+				new Dimension((int) (cellSize.width * scale), (int) (cellSize.height * scale)),
+				startOffset, verticalGapSize, horizontalGapSize);
+		s.scale = scale;
+		return s;
+	}
+
 	/**
-	 * Generates a series of timed animation.
-	 * Generates a series of timed animation.
+	 * Generates a series of timed action.
+	 * Generates a series of timed action.
 	 *
 	 * @param time Time in milliseconds to be applied to all generated frames
 	 * @param spriteLoc Location of the sprites (in terms of cells)
-	 * @return Generated animation with specified cells and provided time for all frames.
+	 * @return Generated action with specified cells and provided time for all frames.
 	 */
 	public Animation generateAnimation(int time, Point ... spriteLoc) {
 		Bitmap[] sprites = new Bitmap[spriteLoc.length];
@@ -87,13 +99,13 @@ public class Spritesheet extends Bitmap {
 	}
 
 	/**
-	 * Generates a series of timed animation.
+	 * Generates a series of timed action.
 	 *
 	 * Note that the length of the time array must be the same as spriteLoc array.
 	 *
 	 * @param time Time in milliseconds to be applied for each frame. Size should be equal to <strong>spriteLoc</strong>
 	 * @param spriteLoc Location of the sprites (in terms of cells)
-	 * @return Generated animation with specified cells and provided time for each frame.
+	 * @return Generated action with specified cells and provided time for each frame.
 	 */
 	public Animation generateAnimation(int[] time, Point[] spriteLoc) {
 		if(time.length != spriteLoc.length)
@@ -109,12 +121,12 @@ public class Spritesheet extends Bitmap {
 	}
 
 	/**
-	 * Generates a series of timed animation, assuming the spritesheet is either a vertical
-	 * or horizontal strip (i.e. 1 in width or height) and stores frames for an animation.
+	 * Generates a series of timed action, assuming the spritesheet is either a vertical
+	 * or horizontal strip (i.e. 1 in width or height) and stores frames for an action.
 	 *
 	 * @param sequenceOrientation Orientation of the spritesheet
 	 * @param time Time in milliseconds to be applied to every frame
-	 * @return Generated animation with specified cells and provided time for every frame.
+	 * @return Generated action with specified cells and provided time for every frame.
 	 */
 	@Nullable
 	public Animation generateAnimation(int sequenceOrientation, int time) {
@@ -139,12 +151,12 @@ public class Spritesheet extends Bitmap {
 	}
 
 	/**
-	 * Generates a series of timed animation, assuming the spritesheet is either a vertical
-	 * or horizontal strip (i.e. 1 in width or height) and stores frames for an animation.
+	 * Generates a series of timed action, assuming the spritesheet is either a vertical
+	 * or horizontal strip (i.e. 1 in width or height) and stores frames for an action.
 	 *
 	 * @param sequenceOrientation Orientation of the spritesheet
 	 * @param times Times in milliseconds to be applied to each frame
-	 * @return Generated animation with specified cells and provided time for each frame.
+	 * @return Generated action with specified cells and provided time for each frame.
 	 */
 	@Nullable
 	public Animation generateAnimation(int sequenceOrientation, int[] times) {
@@ -166,6 +178,10 @@ public class Spritesheet extends Bitmap {
 			default:
 				return null;
 		}
+	}
+
+	public float getScale() {
+		return scale;
 	}
 
 	@Nullable
@@ -199,5 +215,9 @@ public class Spritesheet extends Bitmap {
 
 	public void setStartOffset(Point startOffset) {
 		this.startOffset = startOffset;
+	}
+
+	public Dimension getCellSize() {
+		return cellSize;
 	}
 }

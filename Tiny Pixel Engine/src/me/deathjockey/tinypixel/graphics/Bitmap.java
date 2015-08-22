@@ -23,6 +23,10 @@ public class Bitmap {
 	private int[] pixels;
 	private int width, height;
 
+	protected Bitmap() {
+
+	}
+
 	/**
 	 * Loads an instance from a provided input stream
 	 *

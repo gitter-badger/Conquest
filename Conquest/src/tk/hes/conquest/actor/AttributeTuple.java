@@ -2,6 +2,8 @@ package tk.hes.conquest.actor;
 
 public class AttributeTuple {
 
+	public boolean leaveCorpse;
+
 	public int health;
 	public int healthMax;
 	public int mana;
@@ -11,9 +13,12 @@ public class AttributeTuple {
 	public int expReward;
 	public int level;
 
-	public int attack;
-	public int attackRandom; //max .random value
+	public int attackPhysical;
+	public int attackRandomPhysical; //max .random value
+	public int attackMagic;
+	public int attackRandomMagical;
 	public int defense;
+	public int magicDefense;
 	public int range;
 	public int blindRange;
 
