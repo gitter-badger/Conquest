@@ -7,7 +7,6 @@ import tk.hes.conquest.ConquestGameDesktopLauncher;
 import tk.hes.conquest.graphics.Art;
 
 import java.awt.event.KeyEvent;
-import java.security.Key;
 
 public class Player {
 
@@ -26,7 +25,7 @@ public class Player {
 
     public void render(RenderContext c) {
         int rx = -1, ry = -1;
-        Bitmap cursor = Art.UI_UNIT_DEPLOY_CURSOR;
+        Bitmap cursor = Art.UI_CURSOR;
         switch (origin) {
             case WEST:
                 rx = 10;

@@ -43,14 +43,24 @@ public abstract class GAbstractButton extends GComponent {
     public void update() {
         Vector2f mouse = Input.getCursorPosition();
         if (mouse.getX() > position.getX() && mouse.getX() < position.getX() + size.getWidth() && mouse.getY() > position.getY() && mouse.getY() < position.getY() + size.getHeight()) {
-            currentState = Input.getMouseDown(Input.MOUSE_LEFT) ? GState.PRESSED : GState.NORMAL;
-            if (Input.getMouseClicked(Input.MOUSE_LEFT))
+            currentState = GState.PRESSED;
+            if (Input.getMouseClicked(Input.MOUSE_LEFT)) {
                 for (GButtonActionListener l : listeners) l.actionPreformed(this);
-
+            }
+        } else {
+            currentState = GState.NORMAL;
         }
     }
 
     public void addActionListener(GButtonActionListener listener) {
         this.listeners.add(listener);
+    }
+
+    public ArrayList<GButtonActionListener> getActionListeners() {
+        return listeners;
+    }
+
+    public GState getCurrentState() {
+        return currentState;
     }
 }

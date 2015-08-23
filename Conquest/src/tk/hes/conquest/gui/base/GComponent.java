@@ -31,9 +31,8 @@ public abstract class GComponent {
             this.isChild = true;
         }
         this.position = calculatePosition(position);
-        this.size = new Dimension(-1, -1);
+        this.size = new Dimension(0, 0);
     }
-
 
     public abstract void init(RenderContext c);
 

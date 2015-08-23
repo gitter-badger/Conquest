@@ -7,5 +7,6 @@ package tk.hes.conquest.gui.base;
  */
 public enum GState {
     NORMAL,
+    HOVERED,
     PRESSED
 }

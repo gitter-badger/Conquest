@@ -11,40 +11,39 @@ import tk.hes.conquest.gui.base.GState;
 
 
 /**
- * This {@code GButton} class is the generic rectangular button class. It is built off {@code GAbstractButton},
+ * This {@code GTextButton} class is the generic rectangular button class. It is built off {@code GAbstractButton},
  * which provides the basic mouse over detection capabilities.
  *
  * @author James Roberts
  */
-public class GButton extends GAbstractButton {
+public class GTextButton extends GAbstractButton {
 
     protected Bitmap buttonNormal;
     protected Bitmap buttonPressed;
     private GButtonColor buttonColor;
     private GLabel label;
 
-
-    public GButton(String text, GComponent parent) {
+    public GTextButton(String text, GComponent parent) {
         this(text, new Vector2f(0, 0), parent);
     }
 
-    public GButton(String text, GButtonColor color, GComponent parent) {
+    public GTextButton(String text, GButtonColor color, GComponent parent) {
         this(text, new Vector2f(0, 0), color, parent);
     }
 
-    public GButton(String text, Vector2f position) {
+    public GTextButton(String text, Vector2f position) {
         this(text, position, GButtonColor.BLUE);
     }
 
-    public GButton(String text, Vector2f position, GButtonColor color) {
+    public GTextButton(String text, Vector2f position, GButtonColor color) {
         this(text, position, color, null);
     }
 
-    public GButton(String text, Vector2f position, GComponent parent) {
+    public GTextButton(String text, Vector2f position, GComponent parent) {
         this(text, position, GButtonColor.BLUE, parent);
     }
 
-    public GButton(String text, Vector2f position, GButtonColor color, GComponent parent) {
+    public GTextButton(String text, Vector2f position, GButtonColor color, GComponent parent) {
         super(position, parent);
         this.label = new GLabel(text, new Vector2f(0, 0), this);
         this.buttonColor = color;
@@ -83,7 +82,7 @@ public class GButton extends GAbstractButton {
 
     @Override
     public void render(RenderContext c) {
-        if (currentState == GState.NORMAL)
+        if (currentState == GState.NORMAL || currentState == GState.HOVERED)
             c.render(buttonNormal, (int) position.getX(), (int) position.getY());
         else if (currentState == GState.PRESSED)
             c.render(buttonPressed, (int) position.getX(), (int) position.getY());

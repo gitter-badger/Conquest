@@ -8,8 +8,8 @@ import me.deathjockey.tinypixel.util.Vector2f;
 import tk.hes.conquest.gui.base.GAlignment;
 import tk.hes.conquest.gui.base.GButtonColor;
 import tk.hes.conquest.gui.button.GAbstractButton;
-import tk.hes.conquest.gui.button.GButton;
 import tk.hes.conquest.gui.button.GButtonGroup;
+import tk.hes.conquest.gui.button.GTextButton;
 import tk.hes.conquest.gui.listener.GButtonActionListener;
 
 import java.awt.event.KeyEvent;
@@ -17,11 +17,11 @@ import java.awt.event.KeyEvent;
 public class TestState extends PixelState implements GButtonActionListener {
 
     public GButtonGroup menuGroup;
+    private GTextButton campaignButton;
+    private GTextButton multiplayerButton;
+    private GTextButton scrimmageButton;
+    private GTextButton exitButton;
 
-    private GButton campaignButton;
-    private GButton multiplayerButton;
-    private GButton scrimmageButton;
-    private GButton exitButton;
 
     public TestState(TinyPixelStateBasedGame game) {
         super(game);
@@ -29,11 +29,11 @@ public class TestState extends PixelState implements GButtonActionListener {
 
     @Override
     public void init(RenderContext c) {
-        menuGroup = new GButtonGroup(new Vector2f(10, 10), 4, GAlignment.VERTICAL);
-        menuGroup.addButton((campaignButton = new GButton("Campaign", GButtonColor.BLUE, menuGroup)));
-        menuGroup.addButton((multiplayerButton = new GButton("Multiplayer", GButtonColor.RED, menuGroup)));
-        menuGroup.addButton((scrimmageButton = new GButton("Scrimmage", GButtonColor.GREEN, menuGroup)));
-        menuGroup.addButton((exitButton = new GButton("Exit", GButtonColor.GREY, menuGroup)));
+        menuGroup = new GButtonGroup(new Vector2f(100, 100), 5, GAlignment.VERTICAL);
+        menuGroup.addButton((campaignButton = new GTextButton("Campaign", GButtonColor.BLUE, menuGroup)));
+        menuGroup.addButton((multiplayerButton = new GTextButton("Multiplayer", GButtonColor.RED, menuGroup)));
+        menuGroup.addButton((scrimmageButton = new GTextButton("Scrimmage", GButtonColor.GREEN, menuGroup)));
+        menuGroup.addButton((exitButton = new GTextButton("Exit", GButtonColor.GREY, menuGroup)));
         menuGroup.init(c);
 
         campaignButton.addActionListener(this);
