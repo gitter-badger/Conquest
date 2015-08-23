@@ -87,9 +87,9 @@ public class GButtonGroup extends GComponent {
             for (GButtonActionListener listener : button.getActionListeners())
                 listener.actionPreformed(button);
         }
-        buttons.get(this.selectedItem).currentState = GState.PRESSED;
         if (this.selectedItem < 0) this.selectedItem = 0;
         if (this.selectedItem > buttons.size() - 1) this.selectedItem = buttons.size() - 1;
+        buttons.get(this.selectedItem).currentState = GState.PRESSED;
     }
 
     public void addButton(GTextButton button) {
