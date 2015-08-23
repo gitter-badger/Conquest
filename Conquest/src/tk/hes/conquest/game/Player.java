@@ -41,10 +41,10 @@ public class Player {
     }
 
     public void update() {
-        if (Input.getKeyPressed(KeyEvent.VK_A)) {
+        if (Input.getKeyPressed(KeyEvent.VK_UP)) {
             if (deployLane < 5)
                 deployLane++;
-        } else if (Input.getKeyPressed(KeyEvent.VK_D)) {
+        } else if (Input.getKeyPressed(KeyEvent.VK_DOWN)) {
             if (deployLane > 0)
                 deployLane--;
         }

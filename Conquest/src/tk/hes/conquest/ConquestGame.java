@@ -1,6 +1,5 @@
 package tk.hes.conquest;
 
-import me.deathjockey.tinypixel.Input;
 import me.deathjockey.tinypixel.TinyPixelGame;
 import me.deathjockey.tinypixel.graphics.BitFont;
 import me.deathjockey.tinypixel.graphics.Bitmap;
@@ -13,7 +12,6 @@ import tk.hes.conquest.game.Race;
 import tk.hes.conquest.graphics.Art;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 
 /**
  * Created by James on 8/19/2015.
@@ -39,6 +37,7 @@ public class ConquestGame extends TinyPixelGame {
 		gameFont.addSpacingRule("^1*()+-;:/.,", 4, 0);
 		gameFont.addSpacingRule("j", 4, 1);
 		gameFont.addSpacingRule("li!", 3, 0);
+		renderContext.setClearColor(Colors.PURE_WHITE);
 		renderContext.installFont("normal", gameFont);
 
 
@@ -48,7 +47,7 @@ public class ConquestGame extends TinyPixelGame {
 		board = new GameBoard(player1, player2, 6, 50, 600000);
 
 		//Test
-		bitmap = Art.UNIT_HUMAN_MELEE.getSprite(0, 0);
+		bitmap = Art.UI_TEST;
 	}
 
 	int r = 0, g = 0, b = 0;
@@ -56,7 +55,7 @@ public class ConquestGame extends TinyPixelGame {
     @Override
     protected void gameRender(RenderContext c) {
 		board.render(c);
-		c.render(bitmap, 20, 20, 1.0f, Colors.PURE_RED);
+		c.render(bitmap, 0, 0);
 //		r++;
 //		if(r > 255) {
 //			r = 0; g++;
@@ -69,10 +68,8 @@ public class ConquestGame extends TinyPixelGame {
 //			r = 0; g = 0; b = 0;
 //		}
 
-		c.render(Art.BUTTONS, 100, 100);
-
-		c.getFont("normal").render("Use up & down arrow keys to toggle deploy lane\\" +
-				"Press [SPACE] to drop warriors. \\\\Grab some popcorn and watch them fight.", 30, 30, Colors.toInt(r, g, b ,255));
+		c.getFont("normal").render("8", 46, 22, Colors.PURE_YELLOW);
+		c.render(Art.UNIT_HUMAN_MELEE.getSprite(0, 0), 72, 22);
 	}
 
     @Override

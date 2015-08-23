@@ -1,6 +1,5 @@
 package tk.hes.conquest.actor;
 
-import me.deathjockey.tinypixel.Input;
 import me.deathjockey.tinypixel.Time;
 import me.deathjockey.tinypixel.graphics.Bitmap;
 import me.deathjockey.tinypixel.graphics.Colors;
@@ -14,7 +13,7 @@ import java.util.ArrayList;
 
 public abstract class Actor implements ActionKeyFrameListener {
 
-    public static final int SPRITE_SCALE = 3;
+    public static final int SPRITE_SCALE = 2;
 
     protected Vector2f position;
     protected BB bb;
@@ -27,6 +26,7 @@ public abstract class Actor implements ActionKeyFrameListener {
     protected int currentLane;
     protected boolean hurt = false;
     protected long hurtTime;
+	protected float hurtAlpha = 1.0f;
     protected static final int hurtTintDuration = 1000;
     protected boolean dead = false;
     protected long deadTime;
@@ -63,22 +63,25 @@ public abstract class Actor implements ActionKeyFrameListener {
             Action.Frame frame = action.getCurrentFrame();
             boolean flipped = owner.getOrigin().equals(Origin.EAST);
             Bitmap sprite = (flipped) ? frame.getBitmap().getFlipped(false, true) : frame.getBitmap();
+			int drawX = (int) position.getX() + ((flipped) ? frame.getxOffset() : 0);
+			int drawY = (int) position.getY() + ((flipped) ? frame.getyOffset() : 0);
 
             if (!hurt) {
-                c.render(sprite, (int) position.getX() + ((flipped) ? frame.getxOffset() : 0),
-                        (int) position.getY() + ((flipped) ? frame.getyOffset() : 0));
+				if(!dead) {
+					c.render(sprite, drawX, drawY);
+				} else {
+					c.render(sprite, drawX, drawY,
+							1f - ((float) System.currentTimeMillis() - (float) deadTime) * (float)corpseDecayTime);
+				}
             } else {
-                int tint = 255 - (int) ((float) (System.currentTimeMillis() - hurtTime) / (float) hurtTintDuration * 255);
+                int tint = 128 - (int) ((float) (System.currentTimeMillis() - hurtTime) / (float) hurtTintDuration * 128);
+				if(tint < 0) tint = 0;
 
                 //System.out.println(tint);
                 c.render(sprite, (int) position.getX() + ((flipped) ? frame.getxOffset() : 0),
                         (int) position.getY() + ((flipped) ? frame.getyOffset() : 0), 1.0f,
-                        Colors.toInt(255, 0, 0, tint));
+                        Colors.toInt(255, 0, 0, (int) hurtAlpha * 255));
             }
-        }
-
-        if (System.currentTimeMillis() - hurtTime > hurtTintDuration) {
-            hurt = false;
         }
     }
 
@@ -87,10 +90,19 @@ public abstract class Actor implements ActionKeyFrameListener {
 
         if (dead) {
             currentAction = ActionType.DEATH;
+			hurt = true;
+			hurtAlpha = 0.7f;
 
             if (System.currentTimeMillis() - deadTime > corpseDecayTime)
                 remove();
         } else {
+			if(hurt) {
+				if (System.currentTimeMillis() - hurtTime > hurtTintDuration) {
+					hurt = false;
+				}
+				hurtAlpha = ((float) System.currentTimeMillis() - (float) hurtTime) / (float) hurtTintDuration;
+			}
+
             //check enemies
             ArrayList<Actor> actors = board.getActorsInLane(currentLane);
             for (int i = 0; i < actors.size(); i++) {
@@ -102,14 +114,15 @@ public abstract class Actor implements ActionKeyFrameListener {
                 int xDiff = 0;
                 switch (this.owner.getOrigin()) {
                     case WEST:
-                        xDiff = (int) Math.abs(this.position.getX() + bb.getWidth() - actor.position.getX());
+                        xDiff = (int) Math.abs(this.position.getX() + bb.getRx() + bb.getWidth() - actor.position.getX() - actor.getBB().getRx());
                         break;
                     case EAST:
-                        xDiff = (int) Math.abs(this.position.getX() - (actor.position.getX() + actor.bb.getWidth()));
+                        xDiff = (int) Math.abs(this.position.getX() + bb.getRx() - (actor.position.getX() + actor.bb.getWidth() + actor.bb.getRx()));
                         break;
                 }
                 //xDiff < range - blindRage = can fire
-                boolean canAttack = (xDiff > attributes.blindRange && xDiff < attributes.range);
+				//TODO range check bugged (not hitting issue)
+                boolean canAttack = (xDiff > attributes.blindRange && xDiff <= attributes.range - 4);
                 if (canAttack) {
                     preAttack();
                     canMove = false;
