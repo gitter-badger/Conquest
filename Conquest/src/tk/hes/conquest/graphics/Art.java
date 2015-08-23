@@ -11,7 +11,8 @@ public class Art {
 
 	public static final Bitmap UI_UNIT_DEPLOY_CURSOR = get("/ui_cursor.png", 2.0f);
 	public static final Spritesheet FONT = getSpritesheet("/font.png", 8, 10);
-	public static final Bitmap UI_TEST = get("/ui_example.png");
+    public static final Spritesheet BUTTONS = getSpritesheet("/ui_buttons.png", 48, 11, 2.0f);
+    public static final Bitmap UI_TEST = get("/ui_example.png");
 
 	public static final Spritesheet UNIT_HUMAN_MELEE = getSpritesheet("/actors/human/hum_melee.png", 8, 8, Actor.SPRITE_SCALE);
 	public static final Spritesheet UNIT_HUMAN_CASTER = getSpritesheet("/actors/human/hum_caster.png", 8, 8, Actor.SPRITE_SCALE);

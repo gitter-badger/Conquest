@@ -11,7 +11,7 @@ public abstract class PixelState {
         this.game = game;
     }
 
-    public abstract void init();
+    public abstract void init(RenderContext c);
 
     public abstract void update();
 

@@ -293,9 +293,9 @@ public class RenderContext {
 		if(getFont(key) != null)
 			throw new IllegalArgumentException("Another font with key '" + key + "' already exists!");
 
-		font.setContext(this);
-		installedBitFonts.put(key, font);
-	}
+        font.setContext(this);
+        installedBitFonts.put(key, font);
+    }
 
 	/**
 	 * Supplies a BitFont that has already been installed previously.
@@ -309,22 +309,22 @@ public class RenderContext {
 	}
 
 	/**
-	 * Sets the background color upon clearing screen.
-	 *
-	 * @param clearColor Color integer
-	 */
-	public void setClearColor(int clearColor) {
-		this.clearColor = clearColor;
-	}
+     * Supplies the background color upon clearing screen
+     *
+     * @return Color integer
+     */
+    public int getClearColor() {
+        return clearColor;
+    }
 
 	/**
-	 * Supplies the background color upon clearing screen
-	 *
-	 * @return Color integer
-	 */
-	public int getClearColor() {
-		return clearColor;
-	}
+     * Sets the background color upon clearing screen.
+     *
+     * @param clearColor Color integer
+     */
+    public void setClearColor(int clearColor) {
+        this.clearColor = clearColor;
+    }
 
 	/**
 	 * Defines the context's size. All existing pixel data information will be
@@ -388,11 +388,11 @@ public class RenderContext {
 		this.drawScale = scale;
 	}
 
-	public void setDefaultDrawScale(float defaultDrawScale) {
-		this.defaultDrawScale = defaultDrawScale;
-	}
-
 	public float getDefaultDrawScale() {
 		return defaultDrawScale;
-	}
+    }
+
+    public void setDefaultDrawScale(float defaultDrawScale) {
+        this.defaultDrawScale = defaultDrawScale;
+    }
 }

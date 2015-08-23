@@ -5,9 +5,8 @@ import me.deathjockey.tinypixel.util.Vector2f;
 import java.awt.event.*;
 
 /**
- * Main input handler class for the game engine. Keyboards keys are mapped into a list
- * which will listen for events.
- * <p>
+ * An Input class which an instance is required to pick up on keyboard
+ * and mouse events, although all data should be accessed statically.
  *
  * @author James Roberts
  */
@@ -26,11 +25,6 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
     private static Vector2f cursorPosition = new Vector2f(0, 0);
     private static boolean[] currentMouse = new boolean[NUM_MOUSE];
     private static boolean[] clickedMouse = new boolean[NUM_MOUSE];
-
-    public void update() {
-        for (int i = 0; i < NUM_KEYCODES; i++) lastKeys[i] = getKeyDown(i);
-        for (int i = 0; i < NUM_MOUSE; i++) clickedMouse[i] = false;
-    }
 
     public static boolean getMouseClicked(int mouseButton) {
         return clickedMouse[mouseButton];
@@ -57,7 +51,12 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener {
     }
 
     public static Vector2f getCursorPosition() {
-        return cursorPosition;
+        return new Vector2f(cursorPosition.getX() / 2, cursorPosition.getY() / 2);
+    }
+
+    public void update() {
+        for (int i = 0; i < NUM_KEYCODES; i++) lastKeys[i] = getKeyDown(i);
+        for (int i = 0; i < NUM_MOUSE; i++) clickedMouse[i] = false;
     }
 
     @Override

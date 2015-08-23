@@ -2,8 +2,6 @@ package me.deathjockey.tinypixel;
 
 import me.deathjockey.tinypixel.graphics.RenderContext;
 import me.deathjockey.tinypixel.state.PixelState;
-import me.deathjockey.tinypixel.state.transition.EmptyTransition;
-import me.deathjockey.tinypixel.state.transition.ITransition;
 
 import java.util.HashMap;
 
@@ -16,9 +14,6 @@ public abstract class TinyPixelStateBasedGame extends TinyPixelGame {
     private PixelState currentState;
     private PixelState nextState;
 
-    private ITransition enterTransition;
-    private ITransition leaveTransition;
-
     /**
      * Creates an instance of the game with given title, width and height (for context only)
      *
@@ -28,9 +23,10 @@ public abstract class TinyPixelStateBasedGame extends TinyPixelGame {
      */
     public TinyPixelStateBasedGame(String title, int width, int height) {
         super(title, width, height);
+
         currentState = new PixelState(this) {
             @Override
-            public void init() {
+            public void init(RenderContext c) {
 
             }
 
@@ -52,47 +48,54 @@ public abstract class TinyPixelStateBasedGame extends TinyPixelGame {
         indexStates();
     }
 
+    /**
+     * Method to be implemented by extending class to add each state to the engine.
+     */
     public abstract void indexStates();
 
+
+    /**
+     * Initialization method used to init current game state
+     *
+     * @param game          Reference to main engine game class
+     * @param renderContext Reference to RenderContext (screen)
+     */
     @Override
     protected void init(TinyPixelGame game, RenderContext renderContext) {
         if (currentState != null)
-            currentState.init();
+            currentState.init(renderContext);
     }
 
+    /**
+     * Render method used to render current game state
+     *
+     * @param renderContext Reference to RenderContext (screen)
+     */
     @Override
     protected void gameRender(RenderContext renderContext) {
         if (currentState != null)
             currentState.render(renderContext);
     }
 
+    /**
+     * Update method used to update current game state
+     */
     @Override
     protected void gameUpdate() {
         if (currentState != null)
             currentState.update();
     }
 
+    /**
+     * Used to switch between each states added to the game.
+     *
+     * @param id The ID to switch to.
+     */
     public void enterState(int id) {
-        enterState(id, new EmptyTransition(), new EmptyTransition());
-    }
-
-    public void enterState(int id, ITransition leave, ITransition enter) {
-        if (leave == null) {
-            leave = new EmptyTransition();
-        }
-        if (enter == null) {
-            enter = new EmptyTransition();
-        }
-        leaveTransition = leave;
-        enterTransition = enter;
-
         nextState = getState(id);
-        if (nextState == null) {
-            throw new RuntimeException("No game state registered with the ID: " + id);
-        }
-
-        leaveTransition.init(currentState, nextState);
+        if (nextState == null) throw new RuntimeException("No game state registered with the ID: " + id);
         this.currentState = nextState;
+
     }
 
     public void addState(PixelState state) {

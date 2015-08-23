@@ -14,8 +14,8 @@ public class ConquestGameDesktopLauncher {
 		game.setGraphicsScale(2);
 		game.setNumBuffer(2);
 		game.setTargetFps(60);
-		game.setFpsVerbose(true);
-		wrapper.start();
+        game.setFpsVerbose(false);
+        wrapper.start();
 
 		ConquestGame.instance = game;
 	}

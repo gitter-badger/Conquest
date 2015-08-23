@@ -1,0 +1,99 @@
+package tk.hes.conquest.gui.button;
+
+import me.deathjockey.tinypixel.graphics.Bitmap;
+import me.deathjockey.tinypixel.graphics.RenderContext;
+import me.deathjockey.tinypixel.util.Vector2f;
+import tk.hes.conquest.graphics.Art;
+import tk.hes.conquest.gui.base.GButtonColor;
+import tk.hes.conquest.gui.base.GComponent;
+import tk.hes.conquest.gui.base.GLabel;
+import tk.hes.conquest.gui.base.GState;
+
+
+/**
+ * This {@code GButton} class is the generic rectangular button class. It is built off {@code GAbstractButton},
+ * which provides the basic mouse over detection capabilities.
+ *
+ * @author James Roberts
+ */
+public class GButton extends GAbstractButton {
+
+    protected Bitmap buttonNormal;
+    protected Bitmap buttonPressed;
+    private GButtonColor buttonColor;
+    private GLabel label;
+
+
+    public GButton(String text, GComponent parent) {
+        this(text, new Vector2f(0, 0), parent);
+    }
+
+    public GButton(String text, GButtonColor color, GComponent parent) {
+        this(text, new Vector2f(0, 0), color, parent);
+    }
+
+    public GButton(String text, Vector2f position) {
+        this(text, position, GButtonColor.BLUE);
+    }
+
+    public GButton(String text, Vector2f position, GButtonColor color) {
+        this(text, position, color, null);
+    }
+
+    public GButton(String text, Vector2f position, GComponent parent) {
+        this(text, position, GButtonColor.BLUE, parent);
+    }
+
+    public GButton(String text, Vector2f position, GButtonColor color, GComponent parent) {
+        super(position, parent);
+        this.label = new GLabel(text, new Vector2f(0, 0), this);
+        this.buttonColor = color;
+        this.size.setSize(96, 22);
+        updateButtonBitmaps();
+    }
+
+    private void updateButtonBitmaps() {
+        switch (buttonColor) {
+            case GREY:
+                buttonNormal = Art.BUTTONS.getSprite(0, 0);
+                buttonPressed = Art.BUTTONS.getSprite(0, 1);
+                break;
+            default:
+            case BLUE:
+                buttonNormal = Art.BUTTONS.getSprite(0, 2);
+                buttonPressed = Art.BUTTONS.getSprite(0, 3);
+                break;
+            case GREEN:
+                buttonNormal = Art.BUTTONS.getSprite(1, 0);
+                buttonPressed = Art.BUTTONS.getSprite(1, 1);
+                break;
+            case RED:
+                buttonNormal = Art.BUTTONS.getSprite(1, 2);
+                buttonPressed = Art.BUTTONS.getSprite(1, 3);
+                break;
+        }
+    }
+
+    @Override
+    public void init(RenderContext c) {
+        super.init(c);
+        label.init(c);
+        label.setPosition((float) (size.getWidth() / 2 - label.getSize().getWidth() / 2), 5);
+    }
+
+    @Override
+    public void render(RenderContext c) {
+        if (currentState == GState.NORMAL)
+            c.render(buttonNormal, (int) position.getX(), (int) position.getY());
+        else if (currentState == GState.PRESSED)
+            c.render(buttonPressed, (int) position.getX(), (int) position.getY());
+
+        label.render(c);
+        super.render(c);
+    }
+
+    @Override
+    public void update() {
+        super.update();
+    }
+}
