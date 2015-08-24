@@ -19,10 +19,12 @@ public class GDominanceBar extends GBar {
      * Color bar background color.
      */
     private int opponentColor;
+    private int topColor;
 
     public GDominanceBar(Vector2f position) {
         super(position, GBarType.CUSTOM);
         this.opponentColor = Colors.toInt(100, 0, 0, 255);
+        this.topColor = Colors.toInt(0, 0, 100, 255);
     }
 
     @Override
@@ -36,7 +38,7 @@ public class GDominanceBar extends GBar {
         barBackground.render(c);
         c.fillRegion(0, 0, c.getWidth(), 15, opponentColor);
         if (filled > 0) {
-            c.fillRegion(0, 0, (int) filled, 15, Colors.toInt(0, 0, 100, 255));
+            c.fillRegion(0, 0, (int) filled, 15, topColor);
         }
     }
 
@@ -44,5 +46,12 @@ public class GDominanceBar extends GBar {
     public void update() {
     }
 
+    public void setOpponentColor(int opponentColor) {
+        this.opponentColor = opponentColor;
+    }
 
+
+    public void setTopColor(int topColor) {
+        this.topColor = topColor;
+    }
 }
