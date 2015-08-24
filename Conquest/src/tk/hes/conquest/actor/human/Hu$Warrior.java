@@ -28,10 +28,13 @@ public class Hu$Warrior extends Actor  {
 		tuple.blindRange = 0;
 		tuple.range = 16;
 		tuple.magicDefense = 0;
-		tuple.speed = 0.2f;
+		tuple.speed = 2.2f;
 		tuple.attackMagic = 0;
 		tuple.attackRandomMagical = 0;
 		tuple.leaveCorpse = true;
+		tuple.attackSpeed = 1.75f;
+		tuple.goldReward = 5;
+		tuple.chargeReward = 2;
 
 		tuple.exp = 0;
 		tuple.expMax = 0;
@@ -40,6 +43,9 @@ public class Hu$Warrior extends Actor  {
 		int w = Art.UNIT_HUMAN_MELEE.getCellSize().width;
 		int h = Art.UNIT_HUMAN_MELEE.getCellSize().height;
 
+		actions.set(ActionType.STATIC, new Action()
+				.addFrame(Art.UNIT_HUMAN_MELEE.getSprite(0, 0), 500, 0, 0));
+
 		actions.set(ActionType.MOVE, new Action()
 				.addFrame(Art.UNIT_HUMAN_MELEE.getSprite(0, 0), 500, 0, 0)
 				.addFrame(Art.UNIT_HUMAN_MELEE.getSprite(1, 0), 500, 0, 0));
@@ -47,7 +53,8 @@ public class Hu$Warrior extends Actor  {
 		actions.set(ActionType.ATTACK1, new Action(this)
 				.addFrame(Art.UNIT_HUMAN_MELEE.getSprite(0, 1), 250, 0, 0)
 				.addFrame(Art.UNIT_HUMAN_MELEE.getBitmapRegion(1 * w, 1 * h, (1 + 2) * w, (1 + 1) * h), 100, -9 * Actor.SPRITE_SCALE, 0)
-				.addFrame(Art.UNIT_HUMAN_MELEE.getBitmapRegion(1 * w, 1 * h, (1 + 2) * w, (1 + 1) * h), 400, -9 * Actor.SPRITE_SCALE, 0, "swing-hit"));
+				.addFrame(Art.UNIT_HUMAN_MELEE.getBitmapRegion(1 * w, 1 * h, (1 + 2) * w, (1 + 1) * h), 400, -9 * Actor.SPRITE_SCALE, 0, "swing-hit")
+				.addFrame(Art.UNIT_HUMAN_MELEE.getSprite(0, 1), 550, 0, 0, "$RANDOM_DELAY 0 350"));
 
 		actions.set(ActionType.DEATH, new Action()
 				.addFrame(Art.UNIT_HUMAN_MELEE.getSprite(2, 0), 10000, 0, 0));

@@ -13,8 +13,6 @@ import tk.hes.conquest.graphics.Art;
 import tk.hes.conquest.gui.base.dialog.GDialogType;
 import tk.hes.conquest.gui.base.dialog.GTextDialog;
 
-import java.awt.*;
-
 /**
  * GameState where the primary gameplay will take place
  *
@@ -33,8 +31,8 @@ public class GameState extends PixelState {
 
     @Override
     public void init(RenderContext c) {
-        Player player1 = new Player("Kevin", Race.HUMAN, Origin.WEST);
-        Player player2 = new Player("Dumhead", Race.HUMAN, Origin.EAST);
+        Player player1 = new Player("Kevin", Race.HUMAN, Origin.WEST, 100);
+        Player player2 = new Player("Dumhead", Race.HUMAN, Origin.EAST, 100);
 
         board = new GameBoard(player1, player2, 6, 50, 600000);
 

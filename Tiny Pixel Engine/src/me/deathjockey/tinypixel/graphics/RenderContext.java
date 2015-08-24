@@ -172,14 +172,20 @@ public class RenderContext {
 				int contextIndex = yy * getWidth() + xx;
 				if(contextIndex < 0 || contextIndex > pixelData.length - 1)
 					continue;
+				//bmp index
 				int bmpIndex = (yy - y) * pw + (xx - x);
 				int pxl = pixels[bmpIndex];
 				int[] rgba = Colors.fromInt(pxl);
-				float a = rgba[3];
-//				check for valid alpha value (redundant alpha values are ignored)
-				if(a > 0) {
-					rgba[3] = (int) (255f * alpha);
-					pxl = Colors.toInt(rgba);
+				float r = rgba[0];
+				float g = rgba[1];
+				float b = rgba[2];
+				if(rgba[3] > 0) {
+					//context pxl
+					int[] crgba = Colors.fromInt(pixelData[contextIndex]);
+					int cr = (int) (r * alpha + crgba[0] * (1 - alpha));
+					int cg = (int) (g * alpha + crgba[1] * (1 - alpha));
+					int cb = (int) (b * alpha + crgba[2] * (1 - alpha));
+					pxl = Colors.toInt(cr, cg, cb, (int) ((float) crgba[3] * alpha));
 					pixelData[contextIndex] = pxl;
 				}
 			}

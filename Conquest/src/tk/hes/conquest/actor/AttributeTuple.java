@@ -11,12 +11,15 @@ public class AttributeTuple {
 	public int exp;
 	public int expMax;
 	public int expReward;
+	public int goldReward;
+	public int chargeReward;
 	public int level;
 
 	public int attackPhysical;
 	public int attackRandomPhysical; //max .random value
 	public int attackMagic;
 	public int attackRandomMagical;
+	public float attackSpeed;
 	public int defense;
 	public int magicDefense;
 	public int range;

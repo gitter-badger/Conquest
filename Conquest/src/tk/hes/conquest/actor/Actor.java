@@ -5,6 +5,7 @@ import me.deathjockey.tinypixel.graphics.Bitmap;
 import me.deathjockey.tinypixel.graphics.Colors;
 import me.deathjockey.tinypixel.graphics.RenderContext;
 import me.deathjockey.tinypixel.util.Vector2f;
+import tk.hes.conquest.ConquestGameDesktopLauncher;
 import tk.hes.conquest.game.GameBoard;
 import tk.hes.conquest.game.Origin;
 import tk.hes.conquest.game.Player;
@@ -27,7 +28,7 @@ public abstract class Actor implements ActionKeyFrameListener {
     protected boolean hurt = false;
     protected long hurtTime;
 	protected float hurtAlpha = 1.0f;
-    protected static final int hurtTintDuration = 1000;
+    protected static final int hurtTintDuration = 250;
     protected boolean dead = false;
     protected long deadTime;
     protected static final int corpseDecayTime = 10000;
@@ -58,7 +59,6 @@ public abstract class Actor implements ActionKeyFrameListener {
 
     public void render(RenderContext c) {
         Action action = actionSet.get(currentAction);
-
         if (action != null) {
             Action.Frame frame = action.getCurrentFrame();
             boolean flipped = owner.getOrigin().equals(Origin.EAST);
@@ -70,8 +70,10 @@ public abstract class Actor implements ActionKeyFrameListener {
 				if(!dead) {
 					c.render(sprite, drawX, drawY);
 				} else {
-					c.render(sprite, drawX, drawY,
-							1f - ((float) System.currentTimeMillis() - (float) deadTime) * (float)corpseDecayTime);
+					float decayAlpha = 1f - ((float) (System.currentTimeMillis() - deadTime) / (float) corpseDecayTime);
+					System.out.println(decayAlpha);
+					if(decayAlpha < 0) decayAlpha = 0;
+					c.render(sprite, drawX, drawY, decayAlpha);
 				}
             } else {
                 int tint = 128 - (int) ((float) (System.currentTimeMillis() - hurtTime) / (float) hurtTintDuration * 128);
@@ -86,61 +88,68 @@ public abstract class Actor implements ActionKeyFrameListener {
     }
 
     public void update() {
-        boolean canMove = true; //todo more move logic
+		boolean canMove = true;
 
         if (dead) {
             currentAction = ActionType.DEATH;
-			hurt = true;
+			hurt = false;
 			hurtAlpha = 0.7f;
 
             if (System.currentTimeMillis() - deadTime > corpseDecayTime)
                 remove();
         } else {
-			if(hurt) {
+			if (hurt) {
 				if (System.currentTimeMillis() - hurtTime > hurtTintDuration) {
 					hurt = false;
 				}
 				hurtAlpha = ((float) System.currentTimeMillis() - (float) hurtTime) / (float) hurtTintDuration;
 			}
 
-            //check enemies
-            ArrayList<Actor> actors = board.getActorsInLane(currentLane);
-            for (int i = 0; i < actors.size(); i++) {
-                Actor actor = actors.get(i);
-                if (this.owner.equals(actor.getOwner())) continue;
-                if (actor.equals(this)) continue;
-                if (actor.isDead()) continue;
+			//check enemies
+			ArrayList<Actor> actors = board.getOpponentActorsInLane(owner, currentLane);
+			for (int i = 0; i < actors.size(); i++) {
+				Actor actor = actors.get(i);
+				if (actor.isDead()) continue;
 
-                int xDiff = 0;
-                switch (this.owner.getOrigin()) {
-                    case WEST:
-                        xDiff = (int) Math.abs(this.position.getX() + bb.getRx() + bb.getWidth() - actor.position.getX() - actor.getBB().getRx());
-                        break;
-                    case EAST:
-                        xDiff = (int) Math.abs(this.position.getX() + bb.getRx() - (actor.position.getX() + actor.bb.getWidth() + actor.bb.getRx()));
-                        break;
-                }
-                //xDiff < range - blindRage = can fire
+				int xDiff = 0;
+				switch (this.owner.getOrigin()) {
+					case WEST:
+						xDiff = (int) Math.abs(this.position.getX() + bb.getRx() + bb.getWidth()
+								- actor.position.getX() - actor.getBB().getRx());
+						break;
+					case EAST:
+						xDiff = (int) Math.abs(this.position.getX() + bb.getRx()
+								- (actor.position.getX() + actor.bb.getWidth() + actor.bb.getRx()));
+						break;
+				}
+				//xDiff < range - blindRage = can fire
 				//TODO range check bugged (not hitting issue)
-                boolean canAttack = (xDiff > attributes.blindRange && xDiff <= attributes.range - 4);
-                if (canAttack) {
-                    preAttack();
-                    canMove = false;
-                }
-            }
+				boolean canAttack = (xDiff > attributes.blindRange && xDiff <= attributes.range - 1 * Actor.SPRITE_SCALE);
+				if (canAttack) {
+					preAttack();
+					canMove = false;
+					break;
+				}
+			}
 
-            if (canMove) {
-                currentAction = ActionType.MOVE;
-                switch (owner.getOrigin()) {
-                    case WEST:
-                        position.setX(position.getX() + attributes.speed * (float) Time.delta);
-                        break;
-                    case EAST:
-                        position.setX(position.getX() - attributes.speed * (float) Time.delta);
-                        break;
-                }
-            }
-        }
+			if (canMove) {
+				currentAction = ActionType.MOVE;
+				switch (owner.getOrigin()) {
+					case WEST:
+						position.setX(position.getX() + attributes.speed * (float) Time.delta);
+						if(position.getX() > ConquestGameDesktopLauncher.INIT_WIDTH / ConquestGameDesktopLauncher.SCALE) {
+							board.actorReachEdge(this);
+						}
+						break;
+					case EAST:
+						position.setX(position.getX() - attributes.speed * (float) Time.delta);
+						if(position.getX() + bb.getWidth() + 2 < 0) {
+							board.actorReachEdge(this);
+						}
+						break;
+				}
+			}
+		}
 
         actionSet.update();
     }
@@ -161,11 +170,12 @@ public abstract class Actor implements ActionKeyFrameListener {
         hurt = true;
         hurtTime = System.currentTimeMillis();
 
-        if (attributes.health < 0) {
+        if (attributes.health <= 0) {
             if (attributes.leaveCorpse) {
                 dead = true;
                 deadTime = System.currentTimeMillis();
                 onDeath();
+				board.actorDeath(this);
             } else remove();
         }
     }

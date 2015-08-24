@@ -1,6 +1,5 @@
 package tk.hes.conquest.game;
 
-import me.deathjockey.tinypixel.Input;
 import me.deathjockey.tinypixel.graphics.RenderContext;
 import tk.hes.conquest.ConquestGameDesktopLauncher;
 import tk.hes.conquest.actor.Actor;
@@ -18,7 +17,7 @@ public class GameBoard {
 	private Player player1, player2;
 	private int laneSize;
 
-	private final HashMap<Integer, ArrayList<Actor>> entityMap = new HashMap<>();
+	private final HashMap<Integer, ArrayList<Actor>> actorMap = new HashMap<>();
 
 	public GameBoard(Player player1, Player player2, int maxLaneSize, int startDominance, int timeLimit) {
 		this.player1 = player1;
@@ -28,7 +27,7 @@ public class GameBoard {
 		this.time = timeLimit;
 
 		for(int i = 0; i < maxLaneSize; i++) {
-			entityMap.put(i, new ArrayList<Actor>());
+			actorMap.put(i, new ArrayList<Actor>());
 		}
 		player1.setBoard(this);
 		player2.setBoard(this);
@@ -38,8 +37,8 @@ public class GameBoard {
 		player1.render(context);
 		player2.render(context);
 
-		for(int lane : entityMap.keySet()) {
-			ArrayList<Actor> laneActors = entityMap.get(lane);
+		for(int lane : actorMap.keySet()) {
+			ArrayList<Actor> laneActors = actorMap.get(lane);
 			for(int i = 0; i < laneActors.size(); i++) {
 				Actor actor = laneActors.get(i);
 				actor.render(context);
@@ -51,8 +50,8 @@ public class GameBoard {
         player1.update();
         player2.update();
 
-		for(int lane : entityMap.keySet()) {
-			ArrayList<Actor> laneActors = entityMap.get(lane);
+		for(int lane : actorMap.keySet()) {
+			ArrayList<Actor> laneActors = actorMap.get(lane);
 			for(int i = 0; i < laneActors.size(); i++) {
 				Actor actor = laneActors.get(i);
                 actor.update();
@@ -75,12 +74,51 @@ public class GameBoard {
 		actor.setPosition(xPos, ConquestGameDesktopLauncher.INIT_HEIGHT / 3 - lane * 25);
 		actor.assignBoard(this, lane);
 
-		ArrayList<Actor> actors = entityMap.get(lane);
+		ArrayList<Actor> actors = actorMap.get(lane);
 		actors.add(actor);
 	}
 
+	public void actorDeath(Actor actor) {
+		Player owner = actor.getOwner();
+		if(owner.equals(player1)) {
+			player2.addGold(actor.getAttributes().goldReward + (int) (Math.random() * 5));
+			player2.addCharge(actor.getAttributes().chargeReward + (int) (Math.random() * 2));
+		}
+		if(owner.equals(player2)) {
+			player1.addGold(actor.getAttributes().goldReward + (int) (Math.random() * 5));
+			player1.addCharge(actor.getAttributes().chargeReward + (int) (Math.random() * 2));
+		}
+	}
+
+	public void actorReachEdge(Actor actor) {
+		actor.remove();
+		Player owner = actor.getOwner();
+		if(owner.equals(player1)) {
+			dominance += actor.getAttributes().chargeReward;
+		}
+		if(owner.equals(player2)) {
+			dominance -= actor.getAttributes().chargeReward;
+		}
+	}
+
+	public void sendChargeWave(Player player, Race race, ActorType type) {
+		for(int i = 0; i < laneSize; i++) {
+			addActor(ActorFactory.make(player, race, type), i);
+		}
+	}
+
+	public ArrayList<Actor> getOpponentActorsInLane(Player owner, int lane) {
+		ArrayList<Actor> result = new ArrayList<>();
+		ArrayList<Actor> actors = getActorsInLane(lane);
+		for(Actor actor : actors) {
+			if(actor.getOwner().equals(owner)) continue;
+			result.add(actor);
+		}
+		return result;
+	}
+
 	public void removeActor(Actor actor, int lane) {
-		List<Actor> actors = entityMap.get(lane);
+		List<Actor> actors = actorMap.get(lane);
 		actors.remove(actor);
 	}
 
@@ -93,6 +131,10 @@ public class GameBoard {
 	}
 
 	public ArrayList<Actor> getActorsInLane(int lane) {
-		return entityMap.get(lane);
+		return actorMap.get(lane);
+	}
+
+	public int getDominanceValue() {
+		return dominance;
 	}
 }
