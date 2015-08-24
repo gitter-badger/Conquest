@@ -19,8 +19,8 @@ import java.util.ArrayList;
 public abstract class GAbstractButton extends GComponent {
 
     public ArrayList<GButtonActionListener> listeners;
-    protected Bitmap buttonNormal;
-    protected Bitmap buttonPressed;
+    protected Bitmap buttonNormal = null;
+    protected Bitmap buttonPressed = null;
     protected GState currentState;
 
     public GAbstractButton(Vector2f position) {
@@ -36,6 +36,10 @@ public abstract class GAbstractButton extends GComponent {
     public void init(RenderContext c) {
         currentState = GState.NORMAL;
         listeners = new ArrayList<>();
+        if (buttonNormal == null)
+            throw new IllegalArgumentException("buttonNormal cannot be null!");
+
+        this.setSize(buttonNormal.getWidth(), buttonNormal.getHeight());
     }
 
     @Override
