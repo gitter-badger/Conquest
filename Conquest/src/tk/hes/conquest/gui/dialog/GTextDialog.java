@@ -13,7 +13,7 @@ import java.awt.*;
 public class GTextDialog extends GTitleDialog {
 
     public GLabel textLabel;
-    private String text;
+    private String message;
 
     public GTextDialog(String title, Vector2f pos, Dimension size) {
         this(title, pos, size, GDialogType.INFORMATION);
@@ -21,12 +21,13 @@ public class GTextDialog extends GTitleDialog {
 
     public GTextDialog(String title, Vector2f position, Dimension size, GDialogType type) {
         super(title, position, size, type);
+        this.message = "";
     }
 
     @Override
     public void init(RenderContext c) {
         super.init(c);
-        textLabel = new GLabel(text, new Vector2f(5, 16), this);
+        textLabel = new GLabel(message, new Vector2f(5, 16), this);
     }
 
     @Override
@@ -42,7 +43,7 @@ public class GTextDialog extends GTitleDialog {
     }
 
     public void setMessage(String text) {
-        this.text = text;
+        this.message = text;
     }
 
 }
