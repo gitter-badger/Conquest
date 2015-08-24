@@ -33,17 +33,22 @@ public class Action {
 			if(currentFrame < actionFrames.size() - 1) currentFrame++;
 			else currentFrame = 0;
 			currentDuration = actionFrames.get(currentFrame).duration;
-			fireListenerEvents();
-			lastUpdateTime = System.currentTimeMillis();
-		}
-	}
+			ArrayList<String> keyList = actionFrames.get(currentFrame).keyList;
+			for(String key : keyList) {
+				for(ActionKeyFrameListener l : listeners) {
+					l.keyFrameReached(key);
+				}
 
-	private void fireListenerEvents() {
-		ArrayList<String> keyList = actionFrames.get(currentFrame).keyList;
-		for(String key : keyList) {
-			for(ActionKeyFrameListener l : listeners) {
-				l.keyFrameReached(key);
+				//Special frame keys
+				if(key.startsWith("$")) {
+					if(key.startsWith("$RANDOM_DELAY")) {
+						String[] kvs = key.split(" ");
+						int randomValue = (int) (Math.random() * Integer.parseInt(kvs[2]) + Integer.parseInt(kvs[1]));
+						currentDuration += randomValue;
+					}
+				}
 			}
+			lastUpdateTime = System.currentTimeMillis();
 		}
 	}
 

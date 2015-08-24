@@ -12,6 +12,7 @@ public class AttributeTuple {
 	public int expMax;
 	public int expReward;
 	public int goldReward;
+	public int chargeReward;
 	public int level;
 
 	public int attackPhysical;

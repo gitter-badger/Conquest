@@ -5,6 +5,7 @@ import me.deathjockey.tinypixel.graphics.Bitmap;
 import me.deathjockey.tinypixel.graphics.Colors;
 import me.deathjockey.tinypixel.graphics.RenderContext;
 import me.deathjockey.tinypixel.util.Vector2f;
+import tk.hes.conquest.ConquestGameDesktopLauncher;
 import tk.hes.conquest.game.GameBoard;
 import tk.hes.conquest.game.Origin;
 import tk.hes.conquest.game.Player;
@@ -58,7 +59,6 @@ public abstract class Actor implements ActionKeyFrameListener {
 
     public void render(RenderContext c) {
         Action action = actionSet.get(currentAction);
-
         if (action != null) {
             Action.Frame frame = action.getCurrentFrame();
             boolean flipped = owner.getOrigin().equals(Origin.EAST);
@@ -70,8 +70,10 @@ public abstract class Actor implements ActionKeyFrameListener {
 				if(!dead) {
 					c.render(sprite, drawX, drawY);
 				} else {
-					c.render(sprite, drawX, drawY,
-							1f - ((float) System.currentTimeMillis() - (float) deadTime) * (float)corpseDecayTime);
+					float decayAlpha = 1f - ((float) (System.currentTimeMillis() - deadTime) / (float) corpseDecayTime);
+					System.out.println(decayAlpha);
+					if(decayAlpha < 0) decayAlpha = 0;
+					c.render(sprite, drawX, drawY, decayAlpha);
 				}
             } else {
                 int tint = 128 - (int) ((float) (System.currentTimeMillis() - hurtTime) / (float) hurtTintDuration * 128);
@@ -90,7 +92,7 @@ public abstract class Actor implements ActionKeyFrameListener {
 
         if (dead) {
             currentAction = ActionType.DEATH;
-			hurt = true;
+			hurt = false;
 			hurtAlpha = 0.7f;
 
             if (System.currentTimeMillis() - deadTime > corpseDecayTime)
@@ -135,9 +137,15 @@ public abstract class Actor implements ActionKeyFrameListener {
 				switch (owner.getOrigin()) {
 					case WEST:
 						position.setX(position.getX() + attributes.speed * (float) Time.delta);
+						if(position.getX() > ConquestGameDesktopLauncher.INIT_WIDTH / ConquestGameDesktopLauncher.SCALE) {
+							board.actorReachEdge(this);
+						}
 						break;
 					case EAST:
 						position.setX(position.getX() - attributes.speed * (float) Time.delta);
+						if(position.getX() + bb.getWidth() + 2 < 0) {
+							board.actorReachEdge(this);
+						}
 						break;
 				}
 			}
@@ -162,11 +170,12 @@ public abstract class Actor implements ActionKeyFrameListener {
         hurt = true;
         hurtTime = System.currentTimeMillis();
 
-        if (attributes.health < 0) {
+        if (attributes.health <= 0) {
             if (attributes.leaveCorpse) {
                 dead = true;
                 deadTime = System.currentTimeMillis();
                 onDeath();
+				board.actorDeath(this);
             } else remove();
         }
     }

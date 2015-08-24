@@ -172,14 +172,20 @@ public class RenderContext {
 				int contextIndex = yy * getWidth() + xx;
 				if(contextIndex < 0 || contextIndex > pixelData.length - 1)
 					continue;
+				//bmp index
 				int bmpIndex = (yy - y) * pw + (xx - x);
 				int pxl = pixels[bmpIndex];
 				int[] rgba = Colors.fromInt(pxl);
-				float a = rgba[3];
-//				check for valid alpha value (redundant alpha values are ignored)
-				if(a > 0) {
-					rgba[3] = (int) (255f * alpha);
-					pxl = Colors.toInt(rgba);
+				float r = rgba[0];
+				float g = rgba[1];
+				float b = rgba[2];
+				if(rgba[3] > 0) {
+					//context pxl
+					int[] crgba = Colors.fromInt(pixelData[contextIndex]);
+					int cr = (int) (r * alpha + crgba[0] * (1 - alpha));
+					int cg = (int) (g * alpha + crgba[1] * (1 - alpha));
+					int cb = (int) (b * alpha + crgba[2] * (1 - alpha));
+					pxl = Colors.toInt(cr, cg, cb, (int) ((float) crgba[3] * alpha));
 					pixelData[contextIndex] = pxl;
 				}
 			}
@@ -293,9 +299,9 @@ public class RenderContext {
 		if(getFont(key) != null)
 			throw new IllegalArgumentException("Another font with key '" + key + "' already exists!");
 
-		font.setContext(this);
-		installedBitFonts.put(key, font);
-	}
+        font.setContext(this);
+        installedBitFonts.put(key, font);
+    }
 
 	/**
 	 * Supplies a BitFont that has already been installed previously.
@@ -309,22 +315,22 @@ public class RenderContext {
 	}
 
 	/**
-	 * Sets the background color upon clearing screen.
-	 *
-	 * @param clearColor Color integer
-	 */
-	public void setClearColor(int clearColor) {
-		this.clearColor = clearColor;
-	}
+     * Supplies the background color upon clearing screen
+     *
+     * @return Color integer
+     */
+    public int getClearColor() {
+        return clearColor;
+    }
 
 	/**
-	 * Supplies the background color upon clearing screen
-	 *
-	 * @return Color integer
-	 */
-	public int getClearColor() {
-		return clearColor;
-	}
+     * Sets the background color upon clearing screen.
+     *
+     * @param clearColor Color integer
+     */
+    public void setClearColor(int clearColor) {
+        this.clearColor = clearColor;
+    }
 
 	/**
 	 * Defines the context's size. All existing pixel data information will be
@@ -388,11 +394,11 @@ public class RenderContext {
 		this.drawScale = scale;
 	}
 
-	public void setDefaultDrawScale(float defaultDrawScale) {
-		this.defaultDrawScale = defaultDrawScale;
-	}
-
 	public float getDefaultDrawScale() {
 		return defaultDrawScale;
-	}
+    }
+
+    public void setDefaultDrawScale(float defaultDrawScale) {
+        this.defaultDrawScale = defaultDrawScale;
+    }
 }
