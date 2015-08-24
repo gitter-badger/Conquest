@@ -1,6 +1,5 @@
 package tk.hes.conquest.gui.base;
 
-import me.deathjockey.tinypixel.graphics.Bitmap;
 import me.deathjockey.tinypixel.graphics.RenderContext;
 import me.deathjockey.tinypixel.util.Vector2f;
 import tk.hes.conquest.graphics.Art;
@@ -12,9 +11,8 @@ import tk.hes.conquest.gui.base.enums.GBarType;
  */
 public class GBar extends GComponent {
 
-    protected Bitmap barBackground;
+    protected GImage barBackground, barOverlay;
     protected float filled;
-    private Bitmap barOverlay;
     private GBarOrigin drawOrigin;
     private GBarType type;
     private boolean isFlipped;
@@ -34,16 +32,16 @@ public class GBar extends GComponent {
     public void updateBarBitmaps() {
         switch (type) {
             case RED:
-                barBackground = Art.BARS.getSprite(0, 0);
-                barOverlay = Art.BARS.getSprite(1, 0);
+                barBackground = new GImage(Art.BARS.getSprite(0, 0), new Vector2f(0, 0), this);
+                barOverlay = new GImage(Art.BARS.getSprite(1, 0), new Vector2f(0, 0), this);
                 break;
             case BLUE:
-                barBackground = Art.BARS.getSprite(0, 1);
-                barOverlay = Art.BARS.getSprite(1, 1);
+                barBackground = new GImage(Art.BARS.getSprite(0, 1), new Vector2f(0, 0), this);
+                barOverlay = new GImage(Art.BARS.getSprite(1, 1), new Vector2f(0, 0), this);
                 break;
             case GREEN:
-                barBackground = Art.BARS.getSprite(0, 2);
-                barOverlay = Art.BARS.getSprite(1, 2);
+                barBackground = new GImage(Art.BARS.getSprite(0, 2), new Vector2f(0, 0), this);
+                barOverlay = new GImage(Art.BARS.getSprite(1, 2), new Vector2f(0, 0), this);
                 break;
             case CUSTOM:
             default:
@@ -59,14 +57,14 @@ public class GBar extends GComponent {
 
     @Override
     public void render(RenderContext c) {
-        c.render(barBackground.getFlipped(false, isFlipped), (int) position.getX(), (int) position.getY());
+        c.render(barBackground.getImage().getFlipped(false, isFlipped), (int) position.getX(), (int) position.getY());
         if (filled > 0) {
 
             //BITMAP REGION
-            int a = barOverlay.getWidth() - (int) filled;
+            int a = (int) barOverlay.getSize().getWidth() - (int) filled;
 
             int x0 = (drawOrigin == GBarOrigin.LEFT) ? 0 : a;
-            int x1 = (drawOrigin == GBarOrigin.LEFT) ? (int) filled : barOverlay.getWidth();
+            int x1 = (drawOrigin == GBarOrigin.LEFT) ? (int) filled : (int) barOverlay.getSize().getWidth();
             int y0 = 0;
             int y1 = 4;
 
@@ -74,7 +72,7 @@ public class GBar extends GComponent {
             int xx = (int) position.getX() + ((drawOrigin == GBarOrigin.LEFT) ? 0 : a);
             int yy = (int) position.getY();
 
-            c.render(barOverlay.getFlipped(false, isFlipped).getBitmapRegion(x0, y0, x1, y1), xx, yy);
+            c.render(barOverlay.getImage().getFlipped(false, isFlipped).getBitmapRegion(x0, y0, x1, y1), xx, yy);
 
         }
 
@@ -97,7 +95,7 @@ public class GBar extends GComponent {
         if (amount > 100) amount = 100;
         if (amount < 0) amount = 0;
         amount *= .01;
-        this.filled = amount * barBackground.getWidth();
+        this.filled = amount * (int) barBackground.getSize().getWidth();
     }
 
     public void setFlipped(boolean flipped) {

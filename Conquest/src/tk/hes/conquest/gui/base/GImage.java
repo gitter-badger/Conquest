@@ -36,4 +36,7 @@ public class GImage extends GComponent {
     public void update() {
     }
 
+    public Bitmap getImage() {
+        return image;
+    }
 }
