@@ -4,16 +4,16 @@ import me.deathjockey.tinypixel.graphics.Colors;
 import me.deathjockey.tinypixel.graphics.RenderContext;
 import me.deathjockey.tinypixel.util.Vector2f;
 import tk.hes.conquest.graphics.Art;
-import tk.hes.conquest.gui.base.GBar;
+import tk.hes.conquest.gui.bar.GStatBar;
 import tk.hes.conquest.gui.base.GImage;
-import tk.hes.conquest.gui.base.enums.GBarType;
+import tk.hes.conquest.gui.base.enums.GStatBarType;
 
 /**
  * {@code GDominanceBar} is rendered at the top of the screen to display which side is winning.
  *
  * @author James Roberts
  */
-public class GDominanceBar extends GBar {
+public class GDominanceBar extends GStatBar {
 
     /**
      * Color bar background color.
@@ -22,7 +22,7 @@ public class GDominanceBar extends GBar {
     private int topColor;
 
     public GDominanceBar(Vector2f position) {
-        super(position, GBarType.CUSTOM);
+        super(position, GStatBarType.CUSTOM);
         this.opponentColor = Colors.toInt(100, 0, 0, 255);
         this.topColor = Colors.toInt(0, 0, 100, 255);
     }
@@ -37,8 +37,8 @@ public class GDominanceBar extends GBar {
     public void render(RenderContext c) {
         barBackground.render(c);
         c.fillRegion(0, 0, c.getWidth(), 15, opponentColor);
-        if (filled > 0) {
-            c.fillRegion(0, 0, (int) filled, 15, topColor);
+        if (amountFilled > 0) {
+            c.fillRegion(0, 0, (int) amountFilled, 15, topColor);
         }
     }
 

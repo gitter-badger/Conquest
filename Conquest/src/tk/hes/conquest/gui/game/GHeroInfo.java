@@ -3,10 +3,11 @@ package tk.hes.conquest.gui.game;
 import me.deathjockey.tinypixel.graphics.RenderContext;
 import me.deathjockey.tinypixel.util.Vector2f;
 import tk.hes.conquest.graphics.Art;
+import tk.hes.conquest.gui.bar.GStatBar;
 import tk.hes.conquest.gui.base.GBar;
 import tk.hes.conquest.gui.base.GComponent;
 import tk.hes.conquest.gui.base.GImage;
-import tk.hes.conquest.gui.base.enums.GBarType;
+import tk.hes.conquest.gui.base.enums.GStatBarType;
 
 /**
  * @author James
@@ -33,9 +34,14 @@ public class GHeroInfo extends GComponent {
         heroSlot = new GImage(Art.UI_HERO_SLOT, new Vector2f(4, 2), this);
         upgradesImage = new GImage(Art.UI_HERO_UPGRADES, new Vector2f(29, 23), this);
 
-        healthBar = new GBar(new Vector2f(28, 5), GBarType.RED, this);
-        chargeBar = new GBar(new Vector2f(28, 11), GBarType.BLUE, this);
-        experienceBar = new GBar(new Vector2f(28, 17), GBarType.GREEN, this);
+        healthBar = new GStatBar(new Vector2f(28, 5), GStatBarType.RED, this);
+        chargeBar = new GStatBar(new Vector2f(28, 11), GStatBarType.BLUE, this);
+        experienceBar = new GStatBar(new Vector2f(28, 17), GStatBarType.GREEN, this);
+
+        healthBar.init(c);
+        chargeBar.init(c);
+        experienceBar.init(c);
+
 
         healthBar.setFilledPercent(90);
         chargeBar.setFilledPercent(70);
