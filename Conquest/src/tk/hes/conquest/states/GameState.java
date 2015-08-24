@@ -13,6 +13,8 @@ import tk.hes.conquest.graphics.Art;
 import tk.hes.conquest.gui.base.dialog.GDialogType;
 import tk.hes.conquest.gui.base.dialog.GTextDialog;
 
+import java.awt.*;
+
 /**
  * GameState where the primary gameplay will take place
  *
@@ -39,6 +41,7 @@ public class GameState extends PixelState {
         //Test
         bitmap = Art.UNIT_HUMAN_MELEE.getSprite(0, 0);
         dialog = new GTextDialog("Message!", new Vector2f(10, 10), new Dimension(300, 85), GDialogType.INFORMATION);
+        dialog.setPosition(dialog.getPosition().getX(), (int) (c.getHeight() - dialog.getSize().getHeight() - 10));
         dialog.setMessage("Use up & down arrow keys to toggle deploy lane\n" +
                 "Press [SPACE] to drop warriors. \n\nGrab some popcorn and watch them fight.");
         dialog.init(c);
