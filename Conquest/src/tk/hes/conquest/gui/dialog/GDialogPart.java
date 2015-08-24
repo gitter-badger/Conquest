@@ -1,7 +1,8 @@
-package tk.hes.conquest.gui.base.dialog;
+package tk.hes.conquest.gui.dialog;
 
 import me.deathjockey.tinypixel.graphics.Bitmap;
 import tk.hes.conquest.graphics.Art;
+import tk.hes.conquest.gui.base.enums.GDialogType;
 
 /**
  * Parts of a Dialog Box. This class will simplify the extraction of the squares for each dialog box.

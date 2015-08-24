@@ -5,7 +5,7 @@ import me.deathjockey.tinypixel.graphics.Bitmap;
 import me.deathjockey.tinypixel.graphics.RenderContext;
 import me.deathjockey.tinypixel.util.Vector2f;
 import tk.hes.conquest.gui.base.GComponent;
-import tk.hes.conquest.gui.base.GState;
+import tk.hes.conquest.gui.base.enums.GState;
 import tk.hes.conquest.gui.listener.GButtonActionListener;
 
 import java.util.ArrayList;

@@ -1,8 +1,9 @@
-package tk.hes.conquest.gui.base.dialog;
+package tk.hes.conquest.gui.base;
 
 import me.deathjockey.tinypixel.graphics.RenderContext;
 import me.deathjockey.tinypixel.util.Vector2f;
-import tk.hes.conquest.gui.base.GComponent;
+import tk.hes.conquest.gui.base.enums.GDialogType;
+import tk.hes.conquest.gui.dialog.GDialogPart;
 
 import java.awt.*;
 

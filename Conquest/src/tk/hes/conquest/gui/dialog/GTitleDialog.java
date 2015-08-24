@@ -1,8 +1,11 @@
-package tk.hes.conquest.gui.base.dialog;
+package tk.hes.conquest.gui.dialog;
 
 import me.deathjockey.tinypixel.graphics.RenderContext;
 import me.deathjockey.tinypixel.util.Vector2f;
+import tk.hes.conquest.gui.base.GDialog;
 import tk.hes.conquest.gui.base.GLabel;
+import tk.hes.conquest.gui.base.enums.GDialogButtonType;
+import tk.hes.conquest.gui.base.enums.GDialogType;
 import tk.hes.conquest.gui.button.GAbstractButton;
 import tk.hes.conquest.gui.button.GDialogButton;
 import tk.hes.conquest.gui.listener.GButtonActionListener;

@@ -5,14 +5,14 @@ import me.deathjockey.tinypixel.TinyPixelStateBasedGame;
 import me.deathjockey.tinypixel.graphics.RenderContext;
 import me.deathjockey.tinypixel.state.PixelState;
 import me.deathjockey.tinypixel.util.Vector2f;
-import tk.hes.conquest.gui.base.GAlignment;
-import tk.hes.conquest.gui.base.GButtonColor;
-import tk.hes.conquest.gui.base.dialog.GDialogType;
-import tk.hes.conquest.gui.base.dialog.GTitleDialog;
+import tk.hes.conquest.gui.base.enums.GAlignment;
+import tk.hes.conquest.gui.base.enums.GButtonColor;
+import tk.hes.conquest.gui.base.enums.GDialogType;
 import tk.hes.conquest.gui.button.GAbstractButton;
 import tk.hes.conquest.gui.button.GButtonGroup;
 import tk.hes.conquest.gui.button.GButtonGroupSelector;
 import tk.hes.conquest.gui.button.GTextButton;
+import tk.hes.conquest.gui.dialog.GTitleDialog;
 import tk.hes.conquest.gui.listener.GButtonActionListener;
 
 import java.awt.*;

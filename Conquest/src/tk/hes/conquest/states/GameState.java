@@ -10,8 +10,8 @@ import tk.hes.conquest.game.Origin;
 import tk.hes.conquest.game.Player;
 import tk.hes.conquest.game.Race;
 import tk.hes.conquest.graphics.Art;
-import tk.hes.conquest.gui.base.dialog.GDialogType;
-import tk.hes.conquest.gui.base.dialog.GTextDialog;
+import tk.hes.conquest.gui.base.enums.GDialogType;
+import tk.hes.conquest.gui.dialog.GTextDialog;
 
 import java.awt.*;
 
