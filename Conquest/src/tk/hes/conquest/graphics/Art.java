@@ -22,6 +22,10 @@ public class Art {
     public static final Spritesheet STATS_BACKGROUND = getSpritesheet("/ui/stats/ui_stats_background.png", 24, 13);
     public static final Spritesheet STATS_BARS = getSpritesheet("/ui/stats/ui_stats_bars.png", 53, 14);
 
+    public static final Bitmap UI_HERO_UPGRADES = get("/ui/hero/ui_hero_upgrades.png");
+    public static final Bitmap UI_HERO_BACKGROUND = get("/ui/hero/ui_hero_background.png");
+    public static final Bitmap UI_HERO_SLOT = get("/ui/hero/ui_hero_slot.png");
+
     public static final Bitmap UI_TEST = get("/ui/ui_example.png");
 
     public static final Spritesheet UNIT_HUMAN_MELEE = getSpritesheet("/actors/human/hum_melee.png", 8, 8, Actor.SPRITE_SCALE);
