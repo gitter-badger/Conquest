@@ -2,6 +2,7 @@ package tk.hes.conquest;
 
 import me.deathjockey.tinypixel.TinyPixelGame;
 import me.deathjockey.tinypixel.TinyPixelStateBasedGame;
+import me.deathjockey.tinypixel.graphics.Colors;
 import me.deathjockey.tinypixel.graphics.RenderContext;
 import tk.hes.conquest.font.Font;
 import tk.hes.conquest.states.GameState;
@@ -34,6 +35,7 @@ public class ConquestGame extends TinyPixelStateBasedGame {
 
     @Override
     protected void init(TinyPixelGame game, RenderContext renderContext) {
+        renderContext.setClearColor(Colors.PURE_BLUE);
         Font font = new Font();
         font.initFonts();
         font.addFonts(renderContext);
