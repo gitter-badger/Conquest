@@ -7,8 +7,8 @@ import me.deathjockey.tinypixel.state.PixelState;
 import me.deathjockey.tinypixel.util.Vector2f;
 import tk.hes.conquest.gui.base.GAlignment;
 import tk.hes.conquest.gui.base.GButtonColor;
-import tk.hes.conquest.gui.base.dialog.GDialog;
 import tk.hes.conquest.gui.base.dialog.GDialogType;
+import tk.hes.conquest.gui.base.dialog.GTitleDialog;
 import tk.hes.conquest.gui.button.GAbstractButton;
 import tk.hes.conquest.gui.button.GButtonGroup;
 import tk.hes.conquest.gui.button.GButtonGroupSelector;
@@ -27,7 +27,7 @@ public class TestState extends PixelState implements GButtonActionListener {
     private GTextButton scrimmageButton;
     private GTextButton exitButton;
 
-    private GDialog dialog;
+    private GTitleDialog dialog;
 
 
     public TestState(TinyPixelStateBasedGame game) {
@@ -50,22 +50,24 @@ public class TestState extends PixelState implements GButtonActionListener {
         scrimmageButton.addActionListener(this);
         exitButton.addActionListener(this);
 
-        dialog = new GDialog(new Vector2f(0, 0), new Dimension(100, 100), GDialogType.WARNING);
+        dialog = new GTitleDialog("Test Message!", new Vector2f(0, 0), new Dimension(75, 75), GDialogType.ERROR);
+        dialog.setTitle("Warning");
         dialog.init(c);
+
     }
 
     @Override
     public void update() {
         if (Input.getKeyDown(KeyEvent.VK_ESCAPE)) System.exit(0);
         menuGroup.update();
-        //selector.carrotUpdate();
+        selector.carrotUpdate();
         dialog.update();
     }
 
     @Override
     public void render(RenderContext c) {
         menuGroup.render(c);
-        //selector.render(c);
+        selector.render(c);
         dialog.render(c);
     }
 

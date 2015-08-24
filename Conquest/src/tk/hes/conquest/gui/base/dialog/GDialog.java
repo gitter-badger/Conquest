@@ -13,12 +13,12 @@ import java.awt.*;
  */
 public class GDialog extends GComponent {
 
-    private GDialogType type;
-    private GDialogPart part;
+    // TODO: Add ability to close/destory dialogs.
+    protected GDialogType type;
+    protected GDialogPart bitmapParts;
 
     private int centerWidth;
     private int centerWidthAddition;
-
     private int centerHeight;
     private int centerHeightAddition;
 
@@ -28,12 +28,11 @@ public class GDialog extends GComponent {
 
     public GDialog(Vector2f position, Dimension sizeInPixels, GDialogType type) {
         super(position);
-        if (sizeInPixels.getWidth() < 24 || sizeInPixels.getHeight() < 24)
-            throw new IllegalArgumentException("The GDialog size must be at least 24x24");
+        if (sizeInPixels.getWidth() < 32 || sizeInPixels.getHeight() < 32)
+            throw new IllegalArgumentException("The GDialog size must be at least 32x32");
         this.type = type;
         this.size = sizeInPixels;
 
-        // TODO: Below may be equal to 0 depending on "Dimension sizeInPixels," which will cause an error.
         centerWidth = (int) (sizeInPixels.getWidth() / 16);
         centerWidthAddition = (int) sizeInPixels.getWidth() % 16;
         centerHeight = (int) (sizeInPixels.getHeight() / 16);
@@ -42,7 +41,7 @@ public class GDialog extends GComponent {
 
     @Override
     public void init(RenderContext c) {
-        part = new GDialogPart(type);
+        bitmapParts = new GDialogPart(type, false);
     }
 
     @Override
@@ -50,12 +49,13 @@ public class GDialog extends GComponent {
         //TOP
         for (int i = 0; i < centerWidth; i++) {
             if (i == 0)
-                c.render(part.getTopLeftCorner(), (int) position.getX(), (int) position.getY());
+                c.render(bitmapParts.getTopLeftCorner(), (int) position.getX(), (int) position.getY());
             else if (i == centerWidth - 1)
-                c.render(part.getTopRightCorner(), (int) position.getX() + (16 * i) + centerWidthAddition, (int) position.getY());
+                c.render(bitmapParts.getTopRightCorner(), (int) position.getX() + (16 * i) + centerWidthAddition, (int) position.getY());
             else
-                c.render(part.getTopCenterEdge(), (int) position.getX() + (16 * i) + centerWidthAddition, (int) position.getY());
-            c.render(part.getTopCenterEdge().getBitmapRegion(0, 0, centerWidthAddition, 16), (int) position.getX() + 16, (int) position.getY());
+                c.render(bitmapParts.getTopCenterEdge(), (int) position.getX() + (16 * i) + centerWidthAddition, (int) position.getY());
+            if (centerWidthAddition != 0)
+                c.render(bitmapParts.getTopCenterEdge().getBitmapRegion(0, 0, centerWidthAddition, 16), (int) position.getX() + 16, (int) position.getY());
         }
 
         // MIDDLE
@@ -63,12 +63,13 @@ public class GDialog extends GComponent {
             int yy = (int) position.getY() + (16 * y);
             for (int x = 0; x < centerWidth; x++) {
                 if (x == 0)
-                    c.render(part.getMidLeftEdge(), (int) position.getX(), yy);
+                    c.render(bitmapParts.getMidLeftEdge(), (int) position.getX(), yy);
                 else if (x == centerWidth - 1)
-                    c.render(part.getMidRightEdge(), (int) position.getX() + (16 * x) + centerWidthAddition, yy);
+                    c.render(bitmapParts.getMidRightEdge(), (int) position.getX() + (16 * x) + centerWidthAddition, yy);
                 else
-                    c.render(part.getCenter(), (int) position.getX() + (16 * x) + centerWidthAddition, yy);
-                c.render(part.getCenter().getBitmapRegion(0, 0, centerWidthAddition, 16), (int) position.getX() + 16, yy);
+                    c.render(bitmapParts.getCenter(), (int) position.getX() + (16 * x) + centerWidthAddition, yy);
+                if (centerWidthAddition != 0)
+                    c.render(bitmapParts.getCenter().getBitmapRegion(0, 0, centerWidthAddition, 16), (int) position.getX() + 16, yy);
             }
         }
 
@@ -76,19 +77,20 @@ public class GDialog extends GComponent {
         for (int x = 1; x <= centerWidth; x++) {
             int yy = (int) position.getY() + (16 * centerHeight) - 16;
             if (x == 1) {
-                c.render(part.getLowLeftCorner(), (int) position.getX(), yy);
+                c.render(bitmapParts.getLowLeftCorner(), (int) position.getX(), yy);
             } else if (x == centerWidth) {
-                c.render(part.getLowRightCorner(), (int) position.getX() + (16 * x) - 16 + centerWidthAddition, yy);
+                c.render(bitmapParts.getLowRightCorner(), (int) position.getX() + (16 * x) - 16 + centerWidthAddition, yy);
             } else {
-                c.render(part.getLowCenterEdge(), (int) position.getX() + (16 * x) - 16 + centerWidthAddition, yy);
+                c.render(bitmapParts.getLowCenterEdge(), (int) position.getX() + (16 * x) - 16 + centerWidthAddition, yy);
             }
-            c.render(part.getLowCenterEdge().getBitmapRegion(0, 0, centerWidthAddition, 16), (int) position.getX() + 16, yy);
+            if (centerWidthAddition != 0)
+                c.render(bitmapParts.getLowCenterEdge().getBitmapRegion(0, 0, centerWidthAddition, 16), (int) position.getX() + 16, yy);
         }
 
     }
 
     @Override
     public void update() {
-        //System.out.println(Input.getCursorPosition().toString());
     }
+
 }

@@ -15,6 +15,11 @@ public class GDialogPart {
     private Bitmap ERROR = Art.DIALOG.getSprite(0, 2);
     private Bitmap WARNING = Art.DIALOG.getSprite(0, 3);
 
+    private Bitmap INFORMATION_POPUP = Art.DIALOG.getSprite(1, 0);
+    private Bitmap SUCCESS_POPUP = Art.DIALOG.getSprite(1, 1);
+    private Bitmap ERROR_POPUP = Art.DIALOG.getSprite(1, 2);
+    private Bitmap WARNING_POPUP = Art.DIALOG.getSprite(1, 3);
+
     private Bitmap topLeftCorner;
     private Bitmap topCenterEdge;
     private Bitmap topRightCorner;
@@ -28,14 +33,16 @@ public class GDialogPart {
     private Bitmap lowRightCorner;
 
     private GDialogType type;
+    private boolean isTitleDialog;
 
-    public GDialogPart(GDialogType type) {
+    public GDialogPart(GDialogType type, boolean isTitleDialog) {
         this.type = type;
+        this.isTitleDialog = isTitleDialog;
         genTypeInfo();
     }
 
     private void genTypeInfo() {
-        Bitmap info = getBitmapOfType(type);
+        Bitmap info = !isTitleDialog ? getBitmapOfType(type) : getBitmapOfTitleType(type);
         this.topLeftCorner = info.getBitmapRegion(0, 0, 16, 16);
         this.topCenterEdge = info.getBitmapRegion(16, 0, 32, 16);
         this.topRightCorner = info.getBitmapRegion(32, 0, 48, 16);
@@ -61,6 +68,21 @@ public class GDialogPart {
                 return this.WARNING;
             default:
                 return this.INFORMATION;
+        }
+    }
+
+    private Bitmap getBitmapOfTitleType(GDialogType type) {
+        switch (type) {
+            case INFORMATION:
+                return this.INFORMATION_POPUP;
+            case SUCCESS:
+                return this.SUCCESS_POPUP;
+            case ERROR:
+                return this.ERROR_POPUP;
+            case WARNING:
+                return this.WARNING_POPUP;
+            default:
+                return this.INFORMATION_POPUP;
         }
     }
 
@@ -101,4 +123,7 @@ public class GDialogPart {
         return lowRightCorner;
     }
 
+    public void setIsPopup(boolean isPopup) {
+        this.isTitleDialog = isPopup;
+    }
 }

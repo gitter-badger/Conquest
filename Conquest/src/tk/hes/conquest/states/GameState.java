@@ -2,15 +2,18 @@ package tk.hes.conquest.states;
 
 import me.deathjockey.tinypixel.TinyPixelStateBasedGame;
 import me.deathjockey.tinypixel.graphics.Bitmap;
-import me.deathjockey.tinypixel.graphics.Colors;
 import me.deathjockey.tinypixel.graphics.RenderContext;
 import me.deathjockey.tinypixel.state.PixelState;
-import tk.hes.conquest.font.Font;
+import me.deathjockey.tinypixel.util.Vector2f;
 import tk.hes.conquest.game.GameBoard;
 import tk.hes.conquest.game.Origin;
 import tk.hes.conquest.game.Player;
 import tk.hes.conquest.game.Race;
 import tk.hes.conquest.graphics.Art;
+import tk.hes.conquest.gui.base.dialog.GDialogType;
+import tk.hes.conquest.gui.base.dialog.GTextDialog;
+
+import java.awt.*;
 
 /**
  * GameState where the primary gameplay will take place
@@ -22,6 +25,7 @@ public class GameState extends PixelState {
     int r = 0, g = 0, b = 0;
     Bitmap bitmap;
     private GameBoard board;
+    private GTextDialog dialog;
 
     public GameState(TinyPixelStateBasedGame game) {
         super(game);
@@ -36,35 +40,22 @@ public class GameState extends PixelState {
 
         //Test
         bitmap = Art.UNIT_HUMAN_MELEE.getSprite(0, 0);
+        dialog = new GTextDialog("Message!", new Vector2f(10, 10), new Dimension(300, 85), GDialogType.INFORMATION);
+        dialog.setMessage("Use up & down arrow keys to toggle deploy lane\n" +
+                "Press [SPACE] to drop warriors. \n\nGrab some popcorn and watch them fight.");
+        dialog.init(c);
     }
 
     @Override
     public void update() {
         board.update();
+        dialog.update();
     }
 
     @Override
     public void render(RenderContext c) {
         board.render(c);
-        c.render(bitmap, 20, 20, 1.0f, Colors.PURE_RED);
-        r++;
-//        if (r > 255) {
-//            r = 0;
-//            g++;
-//        }
-//        if (g > 255) {
-//            g = 0;
-//            b++;
-//        }
-//        if (b > 255) {
-//            r = 0;
-//            g = 0;
-//            b = 0;
-//        }
-        c.render(Art.BUTTONS, 100, 100);
-
-        c.getFont(Font.NORMAL).render("Use up & down arrow keys to toggle deploy lane\\" +
-                "Press [SPACE] to drop warriors. \\\\Grab some popcorn and watch them fight.", 30, 30, Colors.toInt(r, g, b, 255));
+        dialog.render(c);
     }
 
     @Override

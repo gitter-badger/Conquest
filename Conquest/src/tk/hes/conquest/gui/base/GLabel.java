@@ -27,15 +27,19 @@ public class GLabel extends GComponent {
 
     public GLabel(String text, Vector2f position, int color) {
         super(position);
-        this.color = color;
-        this.text = text;
-        fontType = Font.NORMAL;
+        create(text, color);
     }
-
 
     public GLabel(String text, Vector2f position, GComponent parent) {
         super(position, parent);
+        if (text == null)
+            throw new IllegalArgumentException("String can not equal null!");
+        create(text, Colors.PURE_WHITE);
+    }
+
+    private void create(String text, int color) {
         this.text = text;
+        this.color = Colors.PURE_WHITE;
         fontType = Font.NORMAL;
     }
 

@@ -30,7 +30,7 @@ public class ConquestGame extends TinyPixelStateBasedGame {
     public void indexStates() {
         addState(new GameState(this));
         addState(new TestState(this));
-        enterState(StateID.TEST_STATE.getID());
+        enterState(StateID.GAME_STATE.getID());
     }
 
     @Override
