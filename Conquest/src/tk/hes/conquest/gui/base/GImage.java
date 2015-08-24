@@ -20,6 +20,7 @@ public class GImage extends GComponent {
     public GImage(Bitmap image, Vector2f position, GComponent parent) {
         super(position, parent);
         this.image = image;
+        this.setSize(image.getWidth(), image.getHeight());
     }
 
     @Override

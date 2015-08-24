@@ -16,6 +16,8 @@ public class Art {
     public static final Spritesheet DIALOG = getSpritesheet("/ui/ui_panel.png", 48, 48, 1.0f);
     public static final Spritesheet BARS = getSpritesheet("/ui/ui_bars.png", 54, 4);
 
+    public static final Bitmap DOMINANCE_BAR = get("/ui/ui_dominance_bar.png");
+
     public static final Spritesheet STATS_BUTTONS = getSpritesheet("/ui/stats/ui_stats_buttons.png", 24, 13);
     public static final Spritesheet STATS_BACKGROUND = getSpritesheet("/ui/stats/ui_stats_background.png", 24, 13);
     public static final Spritesheet STATS_BARS = getSpritesheet("/ui/stats/ui_stats_bars.png", 53, 14);
