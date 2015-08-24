@@ -10,6 +10,8 @@ import tk.hes.conquest.gui.base.enums.GBarOrigin;
 import tk.hes.conquest.gui.base.enums.GStatBarType;
 
 /**
+ * GStatBar: Primarily used for displaying statistics to user (i.e: Health, Experience, etc)
+ *
  * @author James
  */
 public class GStatBar extends GBar {

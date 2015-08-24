@@ -10,7 +10,9 @@ import tk.hes.conquest.gui.base.GImage;
 import tk.hes.conquest.gui.base.enums.GStatBarType;
 
 /**
- * @author James
+ * A part of GGameOverlay which display the hero statistics.
+ *
+ * @author James Roberts
  */
 public class GHeroInfo extends GComponent {
 

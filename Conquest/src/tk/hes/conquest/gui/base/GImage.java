@@ -5,7 +5,9 @@ import me.deathjockey.tinypixel.graphics.RenderContext;
 import me.deathjockey.tinypixel.util.Vector2f;
 
 /**
- * @author James
+ * A GImage class for easily drawing images.
+ *
+ * @author James Roberts
  */
 
 public class GImage extends GComponent {

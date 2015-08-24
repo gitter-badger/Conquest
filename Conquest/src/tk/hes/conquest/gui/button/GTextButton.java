@@ -9,12 +9,12 @@ import tk.hes.conquest.gui.base.enums.GButtonColor;
 
 
 /**
- * This {@code GTextButton} class is the generic rectangular button class. It is built off {@code GAbstractButton},
+ *  It is built off {@code GAbstractButton},
  * which provides the basic mouse over detection capabilities.
  *
  * @author James Roberts
  */
-public class GTextButton extends GAbstractButton {
+public class GTextButton extends GButton {
 
 
     private GButtonColor buttonColor;

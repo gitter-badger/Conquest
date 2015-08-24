@@ -5,7 +5,9 @@ import me.deathjockey.tinypixel.util.Vector2f;
 import tk.hes.conquest.gui.base.GComponent;
 
 /**
- * @author James
+ * The game overlay which will be rendered on top of "tk.hes.conquest.game" gameplay.
+ *
+ * @author James Roberts
  */
 public class GGameOverlay extends GComponent {
 

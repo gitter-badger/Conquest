@@ -12,7 +12,6 @@ import java.util.ArrayList;
 /**
  * A button group class which easily keeps buttons in alignment relative to a parent position.
  *
- *
  * @author James Roberts
  */
 public class GButtonGroup extends GComponent {

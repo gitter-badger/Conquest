@@ -8,7 +8,9 @@ import tk.hes.conquest.gui.base.GComponent;
 import java.awt.*;
 
 /**
- * @author James
+ * A GBar with made for making color bars.
+ *
+ * @author James Roberts
  */
 public class GBarColor extends GBar {
 

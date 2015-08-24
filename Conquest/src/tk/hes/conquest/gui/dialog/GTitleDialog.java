@@ -13,6 +13,8 @@ import tk.hes.conquest.gui.listener.GButtonActionListener;
 import java.awt.*;
 
 /**
+ * A Dialog box which uses different images that have titles.
+ *
  * @author James Roberts
  */
 public class GTitleDialog extends GDialog implements GButtonActionListener {

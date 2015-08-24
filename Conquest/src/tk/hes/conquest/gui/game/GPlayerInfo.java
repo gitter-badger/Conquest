@@ -8,6 +8,8 @@ import tk.hes.conquest.gui.base.GImage;
 import tk.hes.conquest.gui.button.GButton;
 
 /**
+ * A part of GGameOverlay which displays player statistics.
+ *
  * @author James Roberts
  */
 public class GPlayerInfo extends GComponent {

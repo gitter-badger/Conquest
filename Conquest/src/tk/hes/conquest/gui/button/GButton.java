@@ -6,6 +6,8 @@ import me.deathjockey.tinypixel.util.Vector2f;
 import tk.hes.conquest.gui.base.GComponent;
 
 /**
+ * This {@code GButton} class is the generic rectangular button class.
+ *
  * @author James
  */
 public class GButton extends GAbstractButton {

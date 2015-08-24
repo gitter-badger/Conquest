@@ -4,6 +4,8 @@ import me.deathjockey.tinypixel.util.Vector2f;
 import tk.hes.conquest.gui.base.enums.GBarOrigin;
 
 /**
+ * An abstract bar which can be filled to a given percentage.
+ *
  * @author James
  */
 public abstract class GBar extends GComponent {

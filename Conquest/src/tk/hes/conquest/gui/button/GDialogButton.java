@@ -6,6 +6,8 @@ import tk.hes.conquest.gui.base.GComponent;
 import tk.hes.conquest.gui.base.enums.GDialogButtonType;
 
 /**
+ * Buttons which are used in {@code GTitleDialog} boxes
+ *
  * @author James
  */
 public class GDialogButton extends GAbstractButton {

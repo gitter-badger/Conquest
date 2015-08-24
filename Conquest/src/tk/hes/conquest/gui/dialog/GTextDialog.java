@@ -8,7 +8,9 @@ import tk.hes.conquest.gui.base.enums.GDialogType;
 import java.awt.*;
 
 /**
- * @author James
+ * Extension of GTitleDialog, except with the option of addng a message to the body.
+ *
+ * @author James Roberts
  */
 public class GTextDialog extends GTitleDialog {
 
