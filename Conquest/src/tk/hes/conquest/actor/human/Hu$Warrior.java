@@ -32,6 +32,8 @@ public class Hu$Warrior extends Actor  {
 		tuple.attackMagic = 0;
 		tuple.attackRandomMagical = 0;
 		tuple.leaveCorpse = true;
+		tuple.attackSpeed = 1.75f;
+		tuple.goldReward = 5;
 
 		tuple.exp = 0;
 		tuple.expMax = 0;
@@ -39,6 +41,9 @@ public class Hu$Warrior extends Actor  {
 
 		int w = Art.UNIT_HUMAN_MELEE.getCellSize().width;
 		int h = Art.UNIT_HUMAN_MELEE.getCellSize().height;
+
+		actions.set(ActionType.STATIC, new Action()
+				.addFrame(Art.UNIT_HUMAN_MELEE.getSprite(0, 0), 500, 0, 0));
 
 		actions.set(ActionType.MOVE, new Action()
 				.addFrame(Art.UNIT_HUMAN_MELEE.getSprite(0, 0), 500, 0, 0)

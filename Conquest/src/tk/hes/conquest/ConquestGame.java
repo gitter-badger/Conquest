@@ -41,13 +41,11 @@ public class ConquestGame extends TinyPixelGame {
 		renderContext.installFont("normal", gameFont);
 
 
-		Player player1 = new Player("Kevin", Race.HUMAN, Origin.WEST);
-		Player player2 = new Player("Dumhead", Race.HUMAN, Origin.EAST);
+		Player player1 = new Player("Kevin", Race.HUMAN, Origin.WEST, 100);
+		Player player2 = new Player("Dumhead", Race.HUMAN, Origin.EAST, 100);
 
 		board = new GameBoard(player1, player2, 6, 50, 600000);
 
-		//Test
-		bitmap = Art.UI_TEST;
 	}
 
 	int r = 0, g = 0, b = 0;
@@ -55,18 +53,6 @@ public class ConquestGame extends TinyPixelGame {
     @Override
     protected void gameRender(RenderContext c) {
 		board.render(c);
-		c.render(bitmap, 0, 0);
-//		r++;
-//		if(r > 255) {
-//			r = 0; g++;
-//		}
-//		if(g > 255) {
-//			g = 0;
-//			b++;
-//		}
-//		if(b > 255) {
-//			r = 0; g = 0; b = 0;
-//		}
 
 		c.getFont("normal").render("8", 46, 22, Colors.PURE_YELLOW);
 		c.render(Art.UNIT_HUMAN_MELEE.getSprite(0, 0), 72, 22);

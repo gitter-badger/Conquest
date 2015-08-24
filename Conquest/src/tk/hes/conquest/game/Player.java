@@ -7,21 +7,24 @@ import tk.hes.conquest.ConquestGameDesktopLauncher;
 import tk.hes.conquest.graphics.Art;
 
 import java.awt.event.KeyEvent;
-import java.security.Key;
 
 public class Player {
 
     private String name;
+	private int gold;
+	private int charge = 0;
+	private int chargeThreshold;
     private Race race;
     private Origin origin;
 
     private int deployLane = 0;
     private GameBoard board;
 
-    public Player(String name, Race race, Origin origin) {
+    public Player(String name, Race race, Origin origin, int gold) {
         this.name = name;
         this.race = race;
         this.origin = origin;
+		this.gold = gold;
     }
 
     public void render(RenderContext c) {
@@ -41,6 +44,7 @@ public class Player {
     }
 
     public void update() {
+		//TODO temporary
         if (Input.getKeyPressed(KeyEvent.VK_UP)) {
             if (deployLane < 5)
                 deployLane++;
@@ -54,7 +58,42 @@ public class Player {
         }
     }
 
-    public void setBoard(GameBoard board) {
+	//Sends a row of units
+	public void deployCharge() {
+		if(charge >= chargeThreshold) {
+			charge = 0;
+			chargeThreshold += 25;
+
+			//TODO verify unit selection, hero units cannot be deployed as charge
+			//TODO get currently selected 'unit' for charge and send them to lane
+		}
+	}
+
+	public int getCharge() {
+		return charge;
+	}
+
+	public void setCharge(int charge) {
+		this.charge = charge;
+	}
+
+	public void addCharge(int amount) {
+		this.charge += amount;
+	}
+
+	public int getGold() {
+		return gold;
+	}
+
+	public void setGold(int gold) {
+		this.gold = gold;
+	}
+
+	public void addGold(int amount) {
+		gold += amount;
+	}
+
+	public void setBoard(GameBoard board) {
         this.board = board;
     }
 

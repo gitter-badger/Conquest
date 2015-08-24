@@ -59,7 +59,6 @@ public class Action {
 	public void reset() {
 		currentFrame = 0;
 		lastUpdateTime = 0;
-		currentDuration = actionFrames.get(currentFrame).duration;
 		lastUpdateTime = System.currentTimeMillis();
 	}
 

@@ -1,6 +1,5 @@
 package tk.hes.conquest.game;
 
-import me.deathjockey.tinypixel.Input;
 import me.deathjockey.tinypixel.graphics.RenderContext;
 import tk.hes.conquest.ConquestGameDesktopLauncher;
 import tk.hes.conquest.actor.Actor;
@@ -77,6 +76,16 @@ public class GameBoard {
 
 		ArrayList<Actor> actors = entityMap.get(lane);
 		actors.add(actor);
+	}
+
+	public ArrayList<Actor> getOpponentActorsInLane(Player owner, int lane) {
+		ArrayList<Actor> result = new ArrayList<>();
+		ArrayList<Actor> actors = getActorsInLane(lane);
+		for(Actor actor : actors) {
+			if(actor.getOwner().equals(owner)) continue;
+			result.add(actor);
+		}
+		return result;
 	}
 
 	public void removeActor(Actor actor, int lane) {

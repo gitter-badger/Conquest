@@ -5,6 +5,7 @@ package tk.hes.conquest.actor;
  */
 public enum ActionType {
 
+	STATIC,
 	MOVE,
 	ATTACK1,
 	ATTACK2,

@@ -27,7 +27,7 @@ public abstract class Actor implements ActionKeyFrameListener {
     protected boolean hurt = false;
     protected long hurtTime;
 	protected float hurtAlpha = 1.0f;
-    protected static final int hurtTintDuration = 1000;
+    protected static final int hurtTintDuration = 250;
     protected boolean dead = false;
     protected long deadTime;
     protected static final int corpseDecayTime = 10000;
@@ -86,7 +86,7 @@ public abstract class Actor implements ActionKeyFrameListener {
     }
 
     public void update() {
-        boolean canMove = true; //todo more move logic
+		boolean canMove = true;
 
         if (dead) {
             currentAction = ActionType.DEATH;
@@ -96,51 +96,52 @@ public abstract class Actor implements ActionKeyFrameListener {
             if (System.currentTimeMillis() - deadTime > corpseDecayTime)
                 remove();
         } else {
-			if(hurt) {
+			if (hurt) {
 				if (System.currentTimeMillis() - hurtTime > hurtTintDuration) {
 					hurt = false;
 				}
 				hurtAlpha = ((float) System.currentTimeMillis() - (float) hurtTime) / (float) hurtTintDuration;
 			}
 
-            //check enemies
-            ArrayList<Actor> actors = board.getActorsInLane(currentLane);
-            for (int i = 0; i < actors.size(); i++) {
-                Actor actor = actors.get(i);
-                if (this.owner.equals(actor.getOwner())) continue;
-                if (actor.equals(this)) continue;
-                if (actor.isDead()) continue;
+			//check enemies
+			ArrayList<Actor> actors = board.getOpponentActorsInLane(owner, currentLane);
+			for (int i = 0; i < actors.size(); i++) {
+				Actor actor = actors.get(i);
+				if (actor.isDead()) continue;
 
-                int xDiff = 0;
-                switch (this.owner.getOrigin()) {
-                    case WEST:
-                        xDiff = (int) Math.abs(this.position.getX() + bb.getRx() + bb.getWidth() - actor.position.getX() - actor.getBB().getRx());
-                        break;
-                    case EAST:
-                        xDiff = (int) Math.abs(this.position.getX() + bb.getRx() - (actor.position.getX() + actor.bb.getWidth() + actor.bb.getRx()));
-                        break;
-                }
-                //xDiff < range - blindRage = can fire
+				int xDiff = 0;
+				switch (this.owner.getOrigin()) {
+					case WEST:
+						xDiff = (int) Math.abs(this.position.getX() + bb.getRx() + bb.getWidth()
+								- actor.position.getX() - actor.getBB().getRx());
+						break;
+					case EAST:
+						xDiff = (int) Math.abs(this.position.getX() + bb.getRx()
+								- (actor.position.getX() + actor.bb.getWidth() + actor.bb.getRx()));
+						break;
+				}
+				//xDiff < range - blindRage = can fire
 				//TODO range check bugged (not hitting issue)
-                boolean canAttack = (xDiff > attributes.blindRange && xDiff <= attributes.range - 4);
-                if (canAttack) {
-                    preAttack();
-                    canMove = false;
-                }
-            }
+				boolean canAttack = (xDiff > attributes.blindRange && xDiff <= attributes.range - 1 * Actor.SPRITE_SCALE);
+				if (canAttack) {
+					preAttack();
+					canMove = false;
+					break;
+				}
+			}
 
-            if (canMove) {
-                currentAction = ActionType.MOVE;
-                switch (owner.getOrigin()) {
-                    case WEST:
-                        position.setX(position.getX() + attributes.speed * (float) Time.delta);
-                        break;
-                    case EAST:
-                        position.setX(position.getX() - attributes.speed * (float) Time.delta);
-                        break;
-                }
-            }
-        }
+			if (canMove) {
+				currentAction = ActionType.MOVE;
+				switch (owner.getOrigin()) {
+					case WEST:
+						position.setX(position.getX() + attributes.speed * (float) Time.delta);
+						break;
+					case EAST:
+						position.setX(position.getX() - attributes.speed * (float) Time.delta);
+						break;
+				}
+			}
+		}
 
         actionSet.update();
     }
