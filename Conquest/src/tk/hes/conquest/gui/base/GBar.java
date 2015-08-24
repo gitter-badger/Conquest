@@ -12,12 +12,11 @@ import tk.hes.conquest.gui.base.enums.GBarType;
  */
 public class GBar extends GComponent {
 
-    private Bitmap barBackground;
+    protected Bitmap barBackground;
+    protected float filled;
     private Bitmap barOverlay;
-
     private GBarOrigin drawOrigin;
     private GBarType type;
-    private float filled;
     private boolean isFlipped;
 
 
@@ -46,9 +45,10 @@ public class GBar extends GComponent {
                 barBackground = Art.BARS.getSprite(0, 2);
                 barOverlay = Art.BARS.getSprite(1, 2);
                 break;
+            case CUSTOM:
             default:
-                barBackground = Art.BARS.getSprite(0, 0);
-                barOverlay = Art.BARS.getSprite(1, 0);
+                barBackground = null;
+                barOverlay = null;
         }
     }
 

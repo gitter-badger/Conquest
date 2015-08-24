@@ -7,4 +7,5 @@ public enum GBarType {
     RED,
     BLUE,
     GREEN,
+    CUSTOM
 }

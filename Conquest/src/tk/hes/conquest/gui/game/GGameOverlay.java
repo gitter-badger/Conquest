@@ -20,6 +20,7 @@ public class GGameOverlay extends GComponent {
     public void init(RenderContext c) {
         dominanceBar = new GDominanceBar(new Vector2f(0, 0));
         dominanceBar.init(c);
+        dominanceBar.setFilledPercent(50);
 
         playerInfo = new GPlayerInfo(new Vector2f(0, (int) dominanceBar.getSize().getHeight() - 4));
         playerInfo.init(c);
