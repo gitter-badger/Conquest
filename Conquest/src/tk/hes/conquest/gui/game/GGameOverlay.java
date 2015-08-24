@@ -1,4 +1,4 @@
-package tk.hes.conquest.gui;
+package tk.hes.conquest.gui.game;
 
 import me.deathjockey.tinypixel.graphics.RenderContext;
 import me.deathjockey.tinypixel.util.Vector2f;
