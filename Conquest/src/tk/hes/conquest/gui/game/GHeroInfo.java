@@ -19,7 +19,7 @@ public class GHeroInfo extends GComponent {
     private GImage backgroundImage;
     private GImage heroSlot;
 
-    private GImage upgradesImage;
+    private GHeroAbilitySlot slotOne, slotTwo, slotThree;
 
     private GBar healthBar;
     private GBar chargeBar;
@@ -34,7 +34,14 @@ public class GHeroInfo extends GComponent {
     public void init(RenderContext c) {
         backgroundImage = new GImage(Art.UI_HERO_BACKGROUND, new Vector2f(0, 0), this);
         heroSlot = new GImage(Art.UI_HERO_SLOT, new Vector2f(4, 2), this);
-        upgradesImage = new GImage(Art.UI_HERO_UPGRADES, new Vector2f(29, 23), this);
+
+        slotOne = new GHeroAbilitySlot(new Vector2f(29, 23), this);
+        slotTwo = new GHeroAbilitySlot(new Vector2f(47, 23), this);
+        slotThree = new GHeroAbilitySlot(new Vector2f(65, 23), this);
+
+        slotOne.init(c);
+        slotTwo.init(c);
+        slotThree.init(c);
 
         healthBar = new GStatBar(new Vector2f(28, 5), GStatBarType.RED, this);
         chargeBar = new GStatBar(new Vector2f(28, 11), GStatBarType.BLUE, this);
@@ -43,7 +50,6 @@ public class GHeroInfo extends GComponent {
         healthBar.init(c);
         chargeBar.init(c);
         experienceBar.init(c);
-
 
         healthBar.setFilledPercent(90);
         chargeBar.setFilledPercent(70);
@@ -54,7 +60,11 @@ public class GHeroInfo extends GComponent {
     public void render(RenderContext c) {
         backgroundImage.render(c);
         heroSlot.render(c);
-        upgradesImage.render(c);
+
+        slotOne.render(c);
+        slotTwo.render(c);
+        slotThree.render(c);
+
 
         healthBar.render(c);
         chargeBar.render(c);
