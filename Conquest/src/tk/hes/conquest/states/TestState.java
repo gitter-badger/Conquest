@@ -7,20 +7,27 @@ import me.deathjockey.tinypixel.state.PixelState;
 import me.deathjockey.tinypixel.util.Vector2f;
 import tk.hes.conquest.gui.base.GAlignment;
 import tk.hes.conquest.gui.base.GButtonColor;
+import tk.hes.conquest.gui.base.dialog.GDialog;
+import tk.hes.conquest.gui.base.dialog.GDialogType;
 import tk.hes.conquest.gui.button.GAbstractButton;
 import tk.hes.conquest.gui.button.GButtonGroup;
+import tk.hes.conquest.gui.button.GButtonGroupSelector;
 import tk.hes.conquest.gui.button.GTextButton;
 import tk.hes.conquest.gui.listener.GButtonActionListener;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class TestState extends PixelState implements GButtonActionListener {
 
+    public GButtonGroupSelector selector;
     public GButtonGroup menuGroup;
     private GTextButton campaignButton;
     private GTextButton multiplayerButton;
     private GTextButton scrimmageButton;
     private GTextButton exitButton;
+
+    private GDialog dialog;
 
 
     public TestState(TinyPixelStateBasedGame game) {
@@ -29,29 +36,37 @@ public class TestState extends PixelState implements GButtonActionListener {
 
     @Override
     public void init(RenderContext c) {
-        menuGroup = new GButtonGroup(new Vector2f(100, 100), 5, GAlignment.VERTICAL);
+        menuGroup = new GButtonGroup(new Vector2f(30, 205), 5, GAlignment.VERTICAL);
         menuGroup.addButton((campaignButton = new GTextButton("Campaign", GButtonColor.BLUE, menuGroup)));
         menuGroup.addButton((multiplayerButton = new GTextButton("Multiplayer", GButtonColor.RED, menuGroup)));
         menuGroup.addButton((scrimmageButton = new GTextButton("Scrimmage", GButtonColor.GREEN, menuGroup)));
         menuGroup.addButton((exitButton = new GTextButton("Exit", GButtonColor.GREY, menuGroup)));
         menuGroup.init(c);
 
+        selector = new GButtonGroupSelector(menuGroup);
+
         campaignButton.addActionListener(this);
         multiplayerButton.addActionListener(this);
         scrimmageButton.addActionListener(this);
         exitButton.addActionListener(this);
 
+        dialog = new GDialog(new Vector2f(0, 0), new Dimension(100, 100), GDialogType.WARNING);
+        dialog.init(c);
     }
 
     @Override
     public void update() {
         if (Input.getKeyDown(KeyEvent.VK_ESCAPE)) System.exit(0);
         menuGroup.update();
+        //selector.carrotUpdate();
+        dialog.update();
     }
 
     @Override
     public void render(RenderContext c) {
         menuGroup.render(c);
+        //selector.render(c);
+        dialog.render(c);
     }
 
     @Override
