@@ -19,11 +19,14 @@ public class GGameOverlay extends GComponent {
 
     private ArrayList<GTitleDialog> dialogBoxes;
 
-    private GDominanceBar dominanceBar;
+    // Game Date References
+    private Player player;
+    private GameBoard board;
+
+    // GUI Element References
+    private GHeroInfo heroInfo;
     private GPlayerInfo playerInfo;
-	private GHeroInfo heroInfo;
-	private GameBoard board;
-	private Player player;
+    private GDominanceBar dominanceBar;
 
     public GGameOverlay(GameBoard board, Player player) {
         super(new Vector2f(0, 0));
@@ -35,7 +38,7 @@ public class GGameOverlay extends GComponent {
     public void init(RenderContext c) {
         dialogBoxes = new ArrayList<>();
 
-        dominanceBar = new GDominanceBar(new Vector2f(0, 0));
+        dominanceBar = new GDominanceBar(new Vector2f(0, 0), player.getName(), board.getPlayer2().getName());
         dominanceBar.init(c);
 		dominanceBar.setFilledPercent(board.getDominanceValue());
 
@@ -50,11 +53,9 @@ public class GGameOverlay extends GComponent {
 
     @Override
     public void update() {
-//		dominanceBar.setFilledPercent(board.getDominanceValue());
-//		playerInfo.setChargePercentage((float) player.getCharge() / (float) player.getChargeThreshold() * 100);
-//		playerInfo.setMoneyAmount(player.getGold());
-
-		//TODO hero info from player
+        dominanceBar.setFilledPercent(board.getDominanceValue());
+        playerInfo.setChargePercentage((float) player.getCharge() / (float) player.getChargeThreshold() * 100);
+        playerInfo.setMoneyAmount(player.getGold());
 
 		dominanceBar.update();
         playerInfo.update();
@@ -80,15 +81,5 @@ public class GGameOverlay extends GComponent {
         this.dialogBoxes.add(dialog);
     }
 
-    public void setGold(int amount) {
-        this.playerInfo.setMoneyAmount(amount);
-    }
 
-    public void setCharge(float amount, float maxCharge) {
-        this.playerInfo.setChargePercentage((amount / maxCharge) * 100);
-    }
-
-	public void setPlayer(Player player) {
-		this.player = player;
-	}
 }
