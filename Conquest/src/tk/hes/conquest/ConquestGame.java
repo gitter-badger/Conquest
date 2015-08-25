@@ -7,7 +7,6 @@ import me.deathjockey.tinypixel.graphics.RenderContext;
 import tk.hes.conquest.font.Font;
 import tk.hes.conquest.states.GameState;
 import tk.hes.conquest.states.StateID;
-import tk.hes.conquest.states.TestState;
 
 /**
  * The main ConquestGame instance.
@@ -29,7 +28,6 @@ public class ConquestGame extends TinyPixelStateBasedGame {
 
     public void indexStates() {
         addState(new GameState(this));
-        addState(new TestState(this));
         enterState(StateID.GAME_STATE.getID());
     }
 

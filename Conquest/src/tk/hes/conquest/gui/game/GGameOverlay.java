@@ -2,6 +2,8 @@ package tk.hes.conquest.gui.game;
 
 import me.deathjockey.tinypixel.graphics.RenderContext;
 import me.deathjockey.tinypixel.util.Vector2f;
+import tk.hes.conquest.game.GameBoard;
+import tk.hes.conquest.game.Player;
 import tk.hes.conquest.gui.base.GComponent;
 import tk.hes.conquest.gui.base.GDialog;
 import tk.hes.conquest.gui.dialog.GTitleDialog;
@@ -19,10 +21,14 @@ public class GGameOverlay extends GComponent {
 
     private GDominanceBar dominanceBar;
     private GPlayerInfo playerInfo;
-    private GHeroInfo heroInfo;
+	private GHeroInfo heroInfo;
+	private GameBoard board;
+	private Player player;
 
-    public GGameOverlay(Vector2f position) {
-        super(position);
+    public GGameOverlay(GameBoard board, Player player) {
+        super(new Vector2f(0, 0));
+		this.board = board;
+		this.player = player;
     }
 
     @Override
@@ -31,7 +37,9 @@ public class GGameOverlay extends GComponent {
 
         dominanceBar = new GDominanceBar(new Vector2f(0, 0));
         dominanceBar.init(c);
-        dominanceBar.setFilledPercent(50);
+		dominanceBar.setFilledPercent(board.getDominanceValue());
+
+        dialogBoxes = new ArrayList<>();
 
         playerInfo = new GPlayerInfo(new Vector2f(0, (int) dominanceBar.getSize().getHeight() - 4));
         playerInfo.init(c);
@@ -42,9 +50,16 @@ public class GGameOverlay extends GComponent {
 
     @Override
     public void update() {
-        dominanceBar.update();
+//		dominanceBar.setFilledPercent(board.getDominanceValue());
+//		playerInfo.setChargePercentage((float) player.getCharge() / (float) player.getChargeThreshold() * 100);
+//		playerInfo.setMoneyAmount(player.getGold());
+
+		//TODO hero info from player
+
+		dominanceBar.update();
         playerInfo.update();
         heroInfo.update();
+
         for (int i = 0; i < dialogBoxes.size(); i++) {
             GTitleDialog d = dialogBoxes.get(i);
             if (d.shouldRemove()) dialogBoxes.remove(i);
@@ -57,7 +72,8 @@ public class GGameOverlay extends GComponent {
         dominanceBar.render(c);
         playerInfo.render(c);
         heroInfo.render(c);
-        for (GDialog d : dialogBoxes) d.render(c);
+        for (GDialog d : dialogBoxes)
+			d.render(c);
     }
 
     public void addDialogBox(GTitleDialog dialog) {
@@ -69,23 +85,10 @@ public class GGameOverlay extends GComponent {
     }
 
     public void setCharge(float amount, float maxCharge) {
-        this.playerInfo.setChargeAmount((amount / maxCharge) * 100);
+        this.playerInfo.setChargePercentage((amount / maxCharge) * 100);
     }
 
-    public void setDominance(int dominance) {
-        this.dominanceBar.setFilledPercent(dominance);
-    }
-
-    public void setHeroHealth(int amount) {
-        this.heroInfo.setHealth(amount);
-    }
-
-    public void setHeroCharge(int amount) {
-        this.heroInfo.setCharge(amount);
-    }
-
-    public void setHeroExperience(float amount) {
-        this.heroInfo.setExperience(amount);
-    }
-
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
 }

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public abstract class Actor implements ActionKeyFrameListener {
 
     public static final int SPRITE_SCALE = 2;
-    protected static final int hurtTintDuration = 250;
+    protected static final int hurtTintDuration = 1000;
     protected static final int corpseDecayTime = 10000;
     protected Vector2f position;
     protected BB bb;
@@ -32,6 +32,7 @@ public abstract class Actor implements ActionKeyFrameListener {
     protected boolean dead = false;
     protected long deadTime;
 
+	protected float moveSpeed;
 	protected boolean shouldAttack = true;
 
     //This constructor is invoked automatically via reflection in ActorFactory to create new actors

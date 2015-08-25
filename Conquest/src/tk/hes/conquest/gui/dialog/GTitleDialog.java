@@ -72,6 +72,6 @@ public class GTitleDialog extends GDialog implements GButtonActionListener {
 
     @Override
     public void actionPreformed(GAbstractButton button) {
-        shouldRemove = true;
-    }
+		shouldRemove = true;
+	}
 }

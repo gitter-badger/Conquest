@@ -22,22 +22,24 @@ public class GameState extends PixelState {
     private GameBoard board;
     private GGameOverlay overlay;
 
-    private GameManager manager;
-
     public GameState(TinyPixelStateBasedGame game) {
         super(game);
     }
 
     @Override
     public void init(RenderContext c) {
-        overlay = new GGameOverlay(new Vector2f(0, 0));
-        overlay.init(c);
-
         Player player1 = new Player("Kevin", Race.HUMAN, Origin.WEST, 100);
-        Player player2 = new Player("Dumhead", Race.HUMAN, Origin.EAST, 100);
-        board = new GameBoard(player1, player2, 6, 50, 600000);
+		player1.updateBufferActor(ActorType.MELEE);
+		player1.updateBufferActor(ActorType.RANGER);
 
-        manager = new GameManager(overlay, player1, board);
+        Player player2 = new Player("Dumhead", Race.HUMAN, Origin.EAST, 100);
+
+        board = new GameBoard(player1, player2, 6, 50, 600000);
+		player2.updateBufferActor(ActorType.RANGER);
+
+        board = new GameBoard(player1, player2, 6, 50, 600000);
+		overlay = new GGameOverlay(board, player1);
+		overlay.init(c);
 
         String name = System.getProperty("user.name");
         GTextDialog dialog = new GTextDialog("Hello, " + name + "!", new Vector2f(2, 80), new Dimension(100, 50));
@@ -51,7 +53,6 @@ public class GameState extends PixelState {
         board.update();
 		ParticleManager.get().update();
         overlay.update();
-        manager.sync();
     }
 
     @Override

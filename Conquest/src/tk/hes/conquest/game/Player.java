@@ -4,9 +4,12 @@ import me.deathjockey.tinypixel.Input;
 import me.deathjockey.tinypixel.graphics.Bitmap;
 import me.deathjockey.tinypixel.graphics.RenderContext;
 import tk.hes.conquest.ConquestGameDesktopLauncher;
+import tk.hes.conquest.actor.Actor;
 import tk.hes.conquest.graphics.Art;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 public class Player {
 
@@ -16,6 +19,10 @@ public class Player {
 	private int chargeThreshold = 100;
     private Race race;
     private Origin origin;
+
+	private final LinkedHashMap<ActorType, Actor> actorBuffer = new LinkedHashMap<>();
+	private final ArrayList<ActorType> actorsOwned = new ArrayList<>();
+	private int actorSelectCaret = 0;
 
     private int deployLane = 0;
     private GameBoard board;
@@ -53,6 +60,19 @@ public class Player {
             if (deployLane > 0)
                 deployLane--;
         }
+		if (Input.getKeyPressed(KeyEvent.VK_LEFT)) {
+			if(actorSelectCaret > 0)
+				actorSelectCaret--;
+			else
+				actorSelectCaret = actorsOwned.size() - 1;
+		} else if (Input.getKeyPressed(KeyEvent.VK_RIGHT)) {
+			if(actorSelectCaret < actorsOwned.size() - 1)
+				actorSelectCaret++;
+			else
+				actorSelectCaret = 0;
+		}
+
+
         if (Input.getKeyPressed(KeyEvent.VK_SPACE)) {
             if (this.race.equals(Race.HUMAN))
                 board.addActor(ActorFactory.make(this, race, ActorType.RANGER), deployLane);
@@ -75,6 +95,26 @@ public class Player {
 			//TODO TEMPORARY!!
 			board.sendChargeWave(this, race, ActorType.MELEE);
 		}
+	}
+
+	public void updateBufferActor(ActorType actorType) {
+		updateBufferActor(actorType, race);
+	}
+
+	private void updateBufferActor(ActorType actorType, Race race) {
+		actorBuffer.put(actorType, ActorFactory.make(this, race, actorType));
+		if(!actorsOwned.contains(actorType)) {
+			actorsOwned.add(actorType);
+		}
+	}
+
+	public void removeBufferActor(ActorType actorType) {
+		actorBuffer.remove(actorType);
+		actorsOwned.remove(actorType);
+	}
+
+	public ActorType getSelectedActor() {
+		return actorsOwned.get(actorSelectCaret);
 	}
 
 	public int getCharge() {

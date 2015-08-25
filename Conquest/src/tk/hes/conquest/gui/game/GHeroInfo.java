@@ -71,7 +71,6 @@ public class GHeroInfo extends GComponent {
 
     @Override
     public void update() {
-
     }
 
     public void setExperience(float amount) {
