@@ -20,10 +20,16 @@ import java.awt.*;
 public class GTitleDialog extends GDialog implements GButtonActionListener {
 
     private String title;
-    private GLabel titleLabel;
-    private GDialogButton closeButton;
+    protected GLabel titleLabel;
+    protected GDialogButton closeButton;
 
     private boolean shouldRemove;
+
+    public GTitleDialog(String title, Vector2f position) {
+        super(position);
+        this.title = title;
+        this.size = null;
+    }
 
     public GTitleDialog(String title, Vector2f pos, Dimension size) {
         this(title, pos, size, GDialogType.INFORMATION);
@@ -32,11 +38,11 @@ public class GTitleDialog extends GDialog implements GButtonActionListener {
     public GTitleDialog(String title, Vector2f position, Dimension size, GDialogType type) {
         super(position, size, type);
         this.title = title;
+        bitmapParts = new GDialogPart(type, true);
     }
 
     @Override
     public void init(RenderContext c) {
-        bitmapParts = new GDialogPart(type, true);
         closeButton = new GDialogButton(new Vector2f((int) size.getWidth() - 9, 3), GDialogButtonType.CROSS, this);
         closeButton.init(c);
         closeButton.addActionListener(this);
@@ -72,6 +78,6 @@ public class GTitleDialog extends GDialog implements GButtonActionListener {
 
     @Override
     public void actionPreformed(GAbstractButton button) {
-		shouldRemove = true;
-	}
+        shouldRemove = true;
+    }
 }

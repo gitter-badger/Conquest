@@ -9,5 +9,6 @@ public enum GDialogType {
     INFORMATION,
     SUCCESS,
     ERROR,
-    WARNING
+    WARNING,
+    CUSTOM
 }

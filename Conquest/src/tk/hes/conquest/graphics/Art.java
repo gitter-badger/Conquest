@@ -26,13 +26,15 @@ public class Art {
     public static final Bitmap UI_HERO_BACKGROUND = get("/ui/hero/ui_hero_background.png");
     public static final Bitmap UI_HERO_SLOT = get("/ui/hero/ui_hero_slot.png");
 
+    public static final Bitmap UI_STORE = get("/ui/store/ui_store.png");
+
     public static final Bitmap UI_TEST = get("/ui/ui_example.png");
 
-	public static final Spritesheet UNIT_HUMAN_MELEE = getSpritesheet("/actors/human/hum_melee.png", 8, 8, Actor.SPRITE_SCALE);
-	public static final Spritesheet UNIT_HUMAN_RANGER = getSpritesheet("/actors/human/hum_ranger.png", 8, 8, Actor.SPRITE_SCALE);
-	public static final Spritesheet UNIT_HUMAN_CASTER = getSpritesheet("/actors/human/hum_caster.png", 8, 8, Actor.SPRITE_SCALE);
+    public static final Spritesheet UNIT_HUMAN_MELEE = getSpritesheet("/actors/human/hum_melee.png", 8, 8, Actor.SPRITE_SCALE);
+    public static final Spritesheet UNIT_HUMAN_RANGER = getSpritesheet("/actors/human/hum_ranger.png", 8, 8, Actor.SPRITE_SCALE);
+    public static final Spritesheet UNIT_HUMAN_CASTER = getSpritesheet("/actors/human/hum_caster.png", 8, 8, Actor.SPRITE_SCALE);
 
-	public static final Spritesheet PARTICLE_PROJECTILE_ARROW = getSpritesheet("/particles/arrows.png", 8, 8, Actor.SPRITE_SCALE);
+    public static final Spritesheet PARTICLE_PROJECTILE_ARROW = getSpritesheet("/particles/arrows.png", 8, 8, Actor.SPRITE_SCALE);
 
     public static Bitmap get(String resource) {
         return get(resource, 1.0f);

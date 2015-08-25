@@ -30,8 +30,8 @@ public class GGameOverlay extends GComponent {
 
     public GGameOverlay(GameBoard board, Player player) {
         super(new Vector2f(0, 0));
-		this.board = board;
-		this.player = player;
+        this.board = board;
+        this.player = player;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class GGameOverlay extends GComponent {
 
         dominanceBar = new GDominanceBar(new Vector2f(0, 0), player.getName(), board.getPlayer2().getName());
         dominanceBar.init(c);
-		dominanceBar.setFilledPercent(board.getDominanceValue());
+        dominanceBar.setFilledPercent(board.getDominanceValue());
 
         dialogBoxes = new ArrayList<>();
 
@@ -57,7 +57,7 @@ public class GGameOverlay extends GComponent {
         playerInfo.setChargePercentage((float) player.getCharge() / (float) player.getChargeThreshold() * 100);
         playerInfo.setMoneyAmount(player.getGold());
 
-		dominanceBar.update();
+        dominanceBar.update();
         playerInfo.update();
         heroInfo.update();
 
@@ -74,7 +74,7 @@ public class GGameOverlay extends GComponent {
         playerInfo.render(c);
         heroInfo.render(c);
         for (GDialog d : dialogBoxes)
-			d.render(c);
+            d.render(c);
     }
 
     public void addDialogBox(GTitleDialog dialog) {

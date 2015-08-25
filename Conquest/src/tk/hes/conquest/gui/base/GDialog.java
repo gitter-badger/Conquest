@@ -14,7 +14,6 @@ import java.awt.*;
  */
 public class GDialog extends GComponent {
 
-    // TODO: Add ability to close/destory dialogs.
     protected GDialogType type;
     protected GDialogPart bitmapParts;
 
@@ -22,6 +21,11 @@ public class GDialog extends GComponent {
     private int centerWidthAddition;
     private int centerHeight;
     private int centerHeightAddition;
+
+    public GDialog(Vector2f position) {
+        super(position);
+        this.type = GDialogType.CUSTOM;
+    }
 
     public GDialog(Vector2f position, Dimension size) {
         this(position, size, GDialogType.INFORMATION);

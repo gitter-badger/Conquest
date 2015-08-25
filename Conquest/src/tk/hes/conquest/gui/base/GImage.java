@@ -19,6 +19,10 @@ public class GImage extends GComponent {
 
     }
 
+    public GImage(Bitmap image, GComponent parent) {
+        this(image, new Vector2f(0, 0), parent);
+    }
+
     public GImage(Bitmap image, Vector2f position, GComponent parent) {
         super(position, parent);
         this.image = image;

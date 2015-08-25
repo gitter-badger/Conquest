@@ -11,6 +11,7 @@ import tk.hes.conquest.game.*;
 import tk.hes.conquest.gui.bar.GBarColor;
 import tk.hes.conquest.gui.dialog.GTextDialog;
 import tk.hes.conquest.gui.game.GGameOverlay;
+import tk.hes.conquest.gui.game.GStore;
 import tk.hes.conquest.particle.ParticleManager;
 
 import java.awt.*;
@@ -25,6 +26,8 @@ public class GameState extends PixelState {
 
     private GameBoard board;
     private GGameOverlay overlay;
+
+    public GStore store;
 
     public GameState(TinyPixelStateBasedGame game) {
         super(game);
@@ -42,8 +45,8 @@ public class GameState extends PixelState {
 		player2.updateActorBuffer(ActorType.RANGER);
 
         board = new GameBoard(player1, player2, 6, 50, 600000);
-		overlay = new GGameOverlay(board, player1);
-		overlay.init(c);
+        overlay = new GGameOverlay(board, player1);
+        overlay.init(c);
 
         String name = System.getProperty("user.name");
         GTextDialog dialog = new GTextDialog("Hello, " + name + "!", new Vector2f(2, 80), new Dimension(100, 50));
@@ -54,13 +57,17 @@ public class GameState extends PixelState {
 		//TODO temporary, remove
 		timerBar = new GBarColor(new Vector2f(160, 65), new Dimension(100, 8), Colors.PURE_WHITE);
 		timerBar.init(c);
+
+        store = new GStore(new Vector2f(10, 100));
+        store.init(c);
     }
 
     @Override
     public void update() {
         board.update();
-		ParticleManager.get().update();
+        ParticleManager.get().update();
         overlay.update();
+        store.update();
 
 		//TODO temporary remove
 		timerBar.update();
@@ -72,35 +79,39 @@ public class GameState extends PixelState {
     @Override
     public void render(RenderContext c) {
         board.render(c);
-		ParticleManager.get().render(c);
+        ParticleManager.get().render(c);
         overlay.render(c);
+        store.render(c);
+        renderOther(c);
+    }
 
-		//TODO remove this, and integrate it into the actor selection UI
-		//TEMPORARY demonstration code for retrieving player info
-		Player player1 = board.getPlayer1();
+    public void renderOther(RenderContext c) {
+        //TODO remove this, and integrate it into the actor selection UI
+        //TEMPORARY demonstration code for retrieving player info
+        Player player1 = board.getPlayer1();
 
-		//Actor buffer contains a 'sample' of each actor type owned by the player
-		//this sample can be used to render on buttons etc.
-		LinkedHashMap<ActorType, Actor> actorBuffer = player1.getActorBuffer();
-		//Here I'm dumping it on the screen horizontally
-		int i = 0;
-		for(ActorType actorType : actorBuffer.keySet()) {
-			Actor sample = actorBuffer.get(actorType);
-			sample.setPosition(170 + i * 30, 30);
-			sample.render(c);
-			i++;
-		}
+        //Actor buffer contains a 'sample' of each actor type owned by the player
+        //this sample can be used to render on buttons etc.
+        LinkedHashMap<ActorType, Actor> actorBuffer = player1.getActorBuffer();
+        //Here I'm dumping it on the screen horizontally
+        int i = 0;
+        for (ActorType actorType : actorBuffer.keySet()) {
+            Actor sample = actorBuffer.get(actorType);
+            sample.setPosition(170 + i * 30, 30);
+            sample.render(c);
+            i++;
+        }
 
-		//To get the player's current 'selection'
-		ActorType selectedType = player1.getSelectedActor();
-		//Draw the selected actor's information
-		Actor sample = actorBuffer.get(selectedType);
-		String text = "Selection: " + sample.getAttributes().name;
-		c.getFont(tk.hes.conquest.font.Font.NORMAL).render(text, 160, 45, Colors.PURE_YELLOW);
-		String description = sample.getAttributes().lore;
-		c.getFont(tk.hes.conquest.font.Font.NORMAL).render(description, 160, 55, Colors.PURE_WHITE);
-		timerBar.render(c);
-		timerBar.setFilledPercent(100f - (float) (player1.getActorCooldown(selectedType)) * 100f);
+        //To get the player's current 'selection'
+        ActorType selectedType = player1.getSelectedActor();
+        //Draw the selected actor's information
+        Actor sample = actorBuffer.get(selectedType);
+        String text = "Selection: " + sample.getAttributes().name;
+        c.getFont(tk.hes.conquest.font.Font.NORMAL).render(text, 160, 45, Colors.PURE_YELLOW);
+        String description = sample.getAttributes().lore;
+        c.getFont(tk.hes.conquest.font.Font.NORMAL).render(description, 160, 55, Colors.PURE_WHITE);
+        timerBar.render(c);
+        timerBar.setFilledPercent(100f - (player1.getActorCooldown(selectedType)) * 100f);
     }
 
     @Override

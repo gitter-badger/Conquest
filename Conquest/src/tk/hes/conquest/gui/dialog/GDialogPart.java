@@ -67,6 +67,8 @@ public class GDialogPart {
                 return this.ERROR;
             case WARNING:
                 return this.WARNING;
+            case CUSTOM:
+                return null;
             default:
                 return this.INFORMATION;
         }
@@ -82,6 +84,8 @@ public class GDialogPart {
                 return this.ERROR_POPUP;
             case WARNING:
                 return this.WARNING_POPUP;
+            case CUSTOM:
+                return null;
             default:
                 return this.INFORMATION_POPUP;
         }
