@@ -78,11 +78,11 @@ public class GPlayerInfo extends GComponent {
         toolButton.update();
     }
 
-    public void setMoneyAmount(String amount) {
-        this.moneyLabel.setText(amount);
+    public void setMoneyAmount(int amount) {
+        this.moneyLabel.setText(String.valueOf(amount));
     }
 
-    public void setChargeAmount(int amount) {
+    public void setChargeAmount(float amount) {
         this.chargeFillBar.setFilledPercent(amount);
     }
 

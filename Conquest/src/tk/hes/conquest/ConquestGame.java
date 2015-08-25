@@ -30,12 +30,12 @@ public class ConquestGame extends TinyPixelStateBasedGame {
     public void indexStates() {
         addState(new GameState(this));
         addState(new TestState(this));
-        enterState(StateID.TEST_STATE.getID());
+        enterState(StateID.GAME_STATE.getID());
     }
 
     @Override
     protected void init(TinyPixelGame game, RenderContext renderContext) {
-        renderContext.setClearColor(Colors.toInt(0, 100, 0, 255));
+        renderContext.setClearColor(Colors.toInt(1280, 128, 128, 255));
         Font font = new Font();
         font.initFonts();
         font.addFonts(renderContext);

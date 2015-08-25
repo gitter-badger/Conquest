@@ -18,13 +18,11 @@ public class GHeroInfo extends GComponent {
 
     private GImage backgroundImage;
     private GImage heroSlot;
-
     private GHeroAbilitySlot slotOne, slotTwo, slotThree;
 
     private GBar healthBar;
     private GBar chargeBar;
     private GBar experienceBar;
-
 
     public GHeroInfo(Vector2f position, GComponent parent) {
         super(position, parent);
@@ -74,5 +72,17 @@ public class GHeroInfo extends GComponent {
     @Override
     public void update() {
 
+    }
+
+    public void setExperience(float amount) {
+        this.experienceBar.setFilledPercent(amount);
+    }
+
+    public void setCharge(float amount) {
+        this.chargeBar.setFilledPercent(amount);
+    }
+
+    public void setHealth(float amount) {
+        this.healthBar.setFilledPercent(amount);
     }
 }

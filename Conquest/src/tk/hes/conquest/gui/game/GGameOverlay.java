@@ -32,7 +32,6 @@ public class GGameOverlay extends GComponent {
         heroInfo.init(c);
     }
 
-
     @Override
     public void update() {
         dominanceBar.update();
@@ -45,6 +44,31 @@ public class GGameOverlay extends GComponent {
         dominanceBar.render(c);
         playerInfo.render(c);
         heroInfo.render(c);
+    }
+
+
+    public void setGold(int amount) {
+        this.playerInfo.setMoneyAmount(amount);
+    }
+
+    public void setCharge(float amount, float maxCharge) {
+        this.playerInfo.setChargeAmount((amount / maxCharge) * 100);
+    }
+
+    public void setDominance(int dominance) {
+        this.dominanceBar.setFilledPercent(dominance);
+    }
+
+    public void setHeroHealth(int amount) {
+        this.heroInfo.setHealth(amount);
+    }
+
+    public void setHeroCharge(int amount) {
+        this.heroInfo.setCharge(amount);
+    }
+
+    public void setHeroExperience(float amount) {
+        this.heroInfo.setExperience(amount);
     }
 
 }
