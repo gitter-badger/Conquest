@@ -11,12 +11,14 @@ public class Art {
 
     public static final Bitmap UI_CURSOR = get("/ui_cursor.png", 2.0f);
     public static final Spritesheet FONT = getSpritesheet("/font.png", 8, 10);
-    public static final Spritesheet BUTTONS = getSpritesheet("/ui_buttons.png", 48, 11, 2.0f);
-    public static final Spritesheet DIALOG = getSpritesheet("/ui_panel.png", 48, 48, 1.0f);
-    public static final Bitmap UI_TEST = get("/ui_example.png");
+    public static final Spritesheet UI_BUTTONS = getSpritesheet("/ui_buttons.png", 48, 11, 2.0f);
+    public static final Spritesheet UI_DIALOG = getSpritesheet("/ui_panel.png", 48, 48, 1.0f);
 
-    public static final Spritesheet UNIT_HUMAN_MELEE = getSpritesheet("/actors/human/hum_melee.png", 8, 8, Actor.SPRITE_SCALE);
-    public static final Spritesheet UNIT_HUMAN_CASTER = getSpritesheet("/actors/human/hum_caster.png", 8, 8, Actor.SPRITE_SCALE);
+	public static final Spritesheet UNIT_HUMAN_MELEE = getSpritesheet("/actors/human/hum_melee.png", 8, 8, Actor.SPRITE_SCALE);
+	public static final Spritesheet UNIT_HUMAN_RANGER = getSpritesheet("/actors/human/hum_ranger.png", 8, 8, Actor.SPRITE_SCALE);
+	public static final Spritesheet UNIT_HUMAN_CASTER = getSpritesheet("/actors/human/hum_caster.png", 8, 8, Actor.SPRITE_SCALE);
+
+	public static final Spritesheet PARTICLE_PROJECTILE_ARROW = getSpritesheet("/particles/arrows.png", 8, 8, Actor.SPRITE_SCALE);
 
     public static Bitmap get(String resource) {
         return get(resource, 1.0f);

@@ -1,13 +1,13 @@
 package tk.hes.conquest.states;
 
 import me.deathjockey.tinypixel.TinyPixelStateBasedGame;
-import me.deathjockey.tinypixel.graphics.Bitmap;
 import me.deathjockey.tinypixel.graphics.RenderContext;
 import me.deathjockey.tinypixel.state.PixelState;
 import tk.hes.conquest.game.GameBoard;
 import tk.hes.conquest.game.Origin;
 import tk.hes.conquest.game.Player;
 import tk.hes.conquest.game.Race;
+import tk.hes.conquest.particle.ParticleManager;
 
 /**
  * GameState where the primary gameplay will take place
@@ -16,8 +16,6 @@ import tk.hes.conquest.game.Race;
  */
 public class GameState extends PixelState {
 
-    int r = 0, g = 0, b = 0;
-    Bitmap bitmap;
     private GameBoard board;
 
     public GameState(TinyPixelStateBasedGame game) {
@@ -35,11 +33,13 @@ public class GameState extends PixelState {
     @Override
     public void update() {
         board.update();
+		ParticleManager.get().update();
     }
 
     @Override
     public void render(RenderContext c) {
         board.render(c);
+		ParticleManager.get().render(c);
     }
 
     @Override

@@ -76,7 +76,7 @@ public class Player {
         }
         if (Input.getKeyPressed(KeyEvent.VK_SPACE)) {
             if (this.race.equals(Race.HUMAN))
-                board.addActor(ActorFactory.make(this, race, ActorType.MELEE), deployLane);
+                board.addActor(ActorFactory.make(this, race, ActorType.RANGER), deployLane);
         }
 
 		if(Input.getKeyPressed(KeyEvent.VK_C)) {

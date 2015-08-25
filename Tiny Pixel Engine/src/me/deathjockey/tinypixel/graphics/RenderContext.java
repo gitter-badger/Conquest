@@ -219,10 +219,15 @@ public class RenderContext {
 			float br = pRGBA[0];
 			float bb = pRGBA[1];
 			float bg = pRGBA[2];
+			int r, g, b;
 
-			int r = (int) ((tr * ta) + (br * (1 - ta)));
-			int g = (int) ((tg * ta) + (bg * (1 - ta)));
-			int b = (int) ((tb * ta) + (bb * (1 - ta)));
+			if(ta > 0f) {
+				r = (int) ((tr * ta) + (br * (1 - ta)));
+				g = (int) ((tg * ta) + (bg * (1 - ta)));
+				b = (int) ((tb * ta) + (bb * (1 - ta)));
+			} else {
+				continue;
+			}
 
 			if(r > 255) r = 255;
 			if(g > 255) g = 255;

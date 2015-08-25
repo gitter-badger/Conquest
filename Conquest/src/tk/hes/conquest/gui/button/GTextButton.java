@@ -54,21 +54,21 @@ public class GTextButton extends GAbstractButton {
     private void updateButtonBitmaps() {
         switch (buttonColor) {
             case GREY:
-                buttonNormal = Art.BUTTONS.getSprite(0, 0);
-                buttonPressed = Art.BUTTONS.getSprite(0, 1);
+                buttonNormal = Art.UI_BUTTONS.getSprite(0, 0);
+                buttonPressed = Art.UI_BUTTONS.getSprite(0, 1);
                 break;
             default:
             case BLUE:
-                buttonNormal = Art.BUTTONS.getSprite(0, 2);
-                buttonPressed = Art.BUTTONS.getSprite(0, 3);
+                buttonNormal = Art.UI_BUTTONS.getSprite(0, 2);
+                buttonPressed = Art.UI_BUTTONS.getSprite(0, 3);
                 break;
             case GREEN:
-                buttonNormal = Art.BUTTONS.getSprite(1, 0);
-                buttonPressed = Art.BUTTONS.getSprite(1, 1);
+                buttonNormal = Art.UI_BUTTONS.getSprite(1, 0);
+                buttonPressed = Art.UI_BUTTONS.getSprite(1, 1);
                 break;
             case RED:
-                buttonNormal = Art.BUTTONS.getSprite(1, 2);
-                buttonPressed = Art.BUTTONS.getSprite(1, 3);
+                buttonNormal = Art.UI_BUTTONS.getSprite(1, 2);
+                buttonPressed = Art.UI_BUTTONS.getSprite(1, 3);
                 break;
         }
     }

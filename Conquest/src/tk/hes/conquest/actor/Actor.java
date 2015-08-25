@@ -33,6 +33,8 @@ public abstract class Actor implements ActionKeyFrameListener {
     protected long deadTime;
     protected static final int corpseDecayTime = 10000;
 
+	protected boolean shouldAttack = true;
+
     //This constructor is invoked automatically via reflection in ActorFactory to create new actors
     public Actor(Player owner) {
         this.owner = owner;
@@ -71,7 +73,6 @@ public abstract class Actor implements ActionKeyFrameListener {
 					c.render(sprite, drawX, drawY);
 				} else {
 					float decayAlpha = 1f - ((float) (System.currentTimeMillis() - deadTime) / (float) corpseDecayTime);
-					System.out.println(decayAlpha);
 					if(decayAlpha < 0) decayAlpha = 0;
 					c.render(sprite, drawX, drawY, decayAlpha);
 				}
@@ -79,10 +80,7 @@ public abstract class Actor implements ActionKeyFrameListener {
                 int tint = 128 - (int) ((float) (System.currentTimeMillis() - hurtTime) / (float) hurtTintDuration * 128);
 				if(tint < 0) tint = 0;
 
-                //System.out.println(tint);
-                c.render(sprite, (int) position.getX() + ((flipped) ? frame.getxOffset() : 0),
-                        (int) position.getY() + ((flipped) ? frame.getyOffset() : 0), 1.0f,
-                        Colors.toInt(255, 0, 0, (int) hurtAlpha * 255));
+                c.render(sprite, drawX, drawY, 1.0f, Colors.toInt(255, 0, 0, (int) hurtAlpha * 255));
             }
         }
     }
@@ -105,54 +103,60 @@ public abstract class Actor implements ActionKeyFrameListener {
 				hurtAlpha = ((float) System.currentTimeMillis() - (float) hurtTime) / (float) hurtTintDuration;
 			}
 
-			//check enemies
-			ArrayList<Actor> actors = board.getOpponentActorsInLane(owner, currentLane);
-			for (int i = 0; i < actors.size(); i++) {
-				Actor actor = actors.get(i);
-				if (actor.isDead()) continue;
+			if(shouldAttack) {
+				//check enemies
+				ArrayList<Actor> actors = board.getOpponentActorsInLane(owner, currentLane);
+				for (int i = 0; i < actors.size(); i++) {
+					Actor actor = actors.get(i);
+					if (actor.isDead()) continue;
 
-				int xDiff = 0;
-				switch (this.owner.getOrigin()) {
-					case WEST:
-						xDiff = (int) Math.abs(this.position.getX() + bb.getRx() + bb.getWidth()
-								- actor.position.getX() - actor.getBB().getRx());
+					int xDiff = 0;
+					switch (this.owner.getOrigin()) {
+						case WEST:
+							xDiff = (int) Math.abs(this.position.getX() + bb.getRx() + bb.getWidth()
+									- actor.position.getX() - actor.getBB().getRx());
+							break;
+						case EAST:
+							xDiff = (int) Math.abs(this.position.getX() + bb.getRx()
+									- (actor.position.getX() + actor.bb.getWidth() + actor.bb.getRx()));
+							break;
+					}
+					//xDiff < range - blindRage = can fire
+					//TODO range check bugged (not hitting issue)
+					boolean canAttack = (xDiff > attributes.blindRange && xDiff <= attributes.range - 1 * Actor.SPRITE_SCALE);
+					if (canAttack) {
+						preAttack();
+						canMove = false;
 						break;
-					case EAST:
-						xDiff = (int) Math.abs(this.position.getX() + bb.getRx()
-								- (actor.position.getX() + actor.bb.getWidth() + actor.bb.getRx()));
-						break;
-				}
-				//xDiff < range - blindRage = can fire
-				//TODO range check bugged (not hitting issue)
-				boolean canAttack = (xDiff > attributes.blindRange && xDiff <= attributes.range - 1 * Actor.SPRITE_SCALE);
-				if (canAttack) {
-					preAttack();
-					canMove = false;
-					break;
+					}
 				}
 			}
 
 			if (canMove) {
-				currentAction = ActionType.MOVE;
-				switch (owner.getOrigin()) {
-					case WEST:
-						position.setX(position.getX() + attributes.speed * (float) Time.delta);
-						if(position.getX() > ConquestGameDesktopLauncher.INIT_WIDTH / ConquestGameDesktopLauncher.SCALE) {
-							board.actorReachEdge(this);
-						}
-						break;
-					case EAST:
-						position.setX(position.getX() - attributes.speed * (float) Time.delta);
-						if(position.getX() + bb.getWidth() + 2 < 0) {
-							board.actorReachEdge(this);
-						}
-						break;
-				}
+				move();
 			}
 		}
 
         actionSet.update();
     }
+
+	public void move() {
+		currentAction = ActionType.MOVE;
+		switch (owner.getOrigin()) {
+			case WEST:
+				position.setX(position.getX() + attributes.speed * (float) Time.delta);
+				if(position.getX() > ConquestGameDesktopLauncher.INIT_WIDTH / ConquestGameDesktopLauncher.SCALE) {
+					board.actorReachEdge(this);
+				}
+				break;
+			case EAST:
+				position.setX(position.getX() - attributes.speed * (float) Time.delta);
+				if(position.getX() + bb.getWidth() + 2 < 0) {
+					board.actorReachEdge(this);
+				}
+				break;
+		}
+	}
 
     public void hurt(Actor provoker) {
         AttributeTuple ptuple = provoker.attributes;
@@ -221,5 +225,11 @@ public abstract class Actor implements ActionKeyFrameListener {
         return owner;
     }
 
+	public GameBoard getGameBoard() {
+		return board;
+	}
 
+	public int getCurrentLane() {
+		return currentLane;
+	}
 }

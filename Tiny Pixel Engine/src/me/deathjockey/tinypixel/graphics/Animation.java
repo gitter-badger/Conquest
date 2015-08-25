@@ -150,6 +150,12 @@ public class Animation {
 		}
 	}
 
+	public void setFlipped(boolean horizontal, boolean vertical) {
+		for(int i = 0; i < frames.size(); i++) {
+			frames.get(i).bitmap = frames.get(i).bitmap.getFlipped(horizontal, vertical);
+		}
+	}
+
 	public float getSpeed() {
 		return speed;
 	}

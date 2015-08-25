@@ -10,10 +10,10 @@ import tk.hes.conquest.graphics.Art;
  */
 public class GDialogPart {
 
-    private Bitmap INFORMATION = Art.DIALOG.getSprite(0, 0);
-    private Bitmap SUCCESS = Art.DIALOG.getSprite(0, 1);
-    private Bitmap ERROR = Art.DIALOG.getSprite(0, 2);
-    private Bitmap WARNING = Art.DIALOG.getSprite(0, 3);
+    private Bitmap INFORMATION = Art.UI_DIALOG.getSprite(0, 0);
+    private Bitmap SUCCESS = Art.UI_DIALOG.getSprite(0, 1);
+    private Bitmap ERROR = Art.UI_DIALOG.getSprite(0, 2);
+    private Bitmap WARNING = Art.UI_DIALOG.getSprite(0, 3);
 
     private Bitmap topLeftCorner;
     private Bitmap topCenterEdge;

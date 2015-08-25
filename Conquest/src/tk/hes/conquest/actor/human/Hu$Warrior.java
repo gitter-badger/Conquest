@@ -15,26 +15,25 @@ public class Hu$Warrior extends Actor  {
 
 	@Override
 	protected void initializeAttributes(AttributeTuple tuple, BB bb, ActionSet actions) {
-		tuple.health = 25;
-		tuple.healthMax = 25;
-		tuple.mana = 25;
-		tuple.manaMax = 25;
-		tuple.attackPhysical = 6;
-		tuple.attackRandomPhysical = 4;
-		tuple.defense = 2;
+		tuple.health = 125;
+		tuple.healthMax = 125;
+		tuple.mana = 0;
+		tuple.manaMax = 0;
+		tuple.attackPhysical = 26;
+		tuple.attackRandomPhysical = 10;
+		tuple.defense = 3;
 		tuple.critChance = 0;
 		tuple.evasion = 0;
-		tuple.expReward = 5;
+		tuple.heroExpReward = 5;
 		tuple.blindRange = 0;
-		tuple.range = 16;
+		tuple.range = 14;
 		tuple.magicDefense = 0;
-		tuple.speed = 2.2f;
+		tuple.speed = 0.2f;
 		tuple.attackMagic = 0;
 		tuple.attackRandomMagical = 0;
 		tuple.leaveCorpse = true;
-		tuple.attackSpeed = 1.75f;
 		tuple.goldReward = 5;
-		tuple.chargeReward = 2;
+		tuple.chargeReward = 4;
 
 		tuple.exp = 0;
 		tuple.expMax = 0;
