@@ -34,10 +34,16 @@ public class Hu$Warrior extends Actor  {
 		tuple.leaveCorpse = true;
 		tuple.goldReward = 5;
 		tuple.chargeReward = 4;
+		tuple.knockback = 3;
+		tuple.knockbackResistance = 3;
 
 		tuple.exp = 0;
 		tuple.expMax = 0;
 		tuple.level = 1;
+
+		tuple.name = "Warrior";
+		tuple.lore = "A warrior awaiting description to be added";
+		tuple.deployDelay = 3500;
 
 		int w = Art.UNIT_HUMAN_MELEE.getCellSize().width;
 		int h = Art.UNIT_HUMAN_MELEE.getCellSize().height;

@@ -48,6 +48,11 @@ public class Hu$Ranger extends Actor {
 		tuple.expMax = 0;
 		tuple.level = 1;
 
+		tuple.name = "Archer";
+		tuple.lore = "Pew pew pew";
+		tuple.deployDelay = 3500;
+		tuple.purchaseCost = 350;
+
 		int w = Art.UNIT_HUMAN_MELEE.getCellSize().width;
 		int h = Art.UNIT_HUMAN_MELEE.getCellSize().height;
 
@@ -108,13 +113,12 @@ public class Hu$Ranger extends Actor {
 
 		public BasicArrow(Actor owner, BB bb) {
 			super(owner, bb, null, null, 1.8f);
-			Animation anim = new Animation(new Bitmap[] { Art.PARTICLE_PROJECTILE_ARROW }, 1000);
+			Animation anim = new Animation(new Bitmap[] { Art.PARTICLE_PROJECTILE_ARROW.getSprite(0, 0) }, 1000);
 
 			Vector2f pos = new Vector2f(owner.getPosition().getX(), owner.getPosition().getY());
 			if(owner.getOwner().getOrigin().equals(Origin.EAST)) {
 				anim.setFlipped(false, true);
 			}
-			System.out.println(pos.getX() + " " + owner.getPosition().getX());
 			this.animation = anim;
 			this.position = pos;
 		}
