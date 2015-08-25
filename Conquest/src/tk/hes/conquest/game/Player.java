@@ -20,6 +20,7 @@ public class Player {
     private Race race;
     private Origin origin;
 
+	private long lastDeployTime = System.currentTimeMillis();
 	private final LinkedHashMap<ActorType, Actor> actorBuffer = new LinkedHashMap<>();
 	private final ArrayList<ActorType> actorsOwned = new ArrayList<>();
 	private int actorSelectCaret = 0;
@@ -74,8 +75,7 @@ public class Player {
 
 
         if (Input.getKeyPressed(KeyEvent.VK_SPACE)) {
-            if (this.race.equals(Race.HUMAN))
-                board.addActor(ActorFactory.make(this, race, ActorType.RANGER), deployLane);
+            deployActor(getSelectedActor());
         }
 
 		if(Input.getKeyPressed(KeyEvent.VK_C)) {
@@ -83,11 +83,39 @@ public class Player {
 		}
     }
 
+	private void deployActor(ActorType actorType) {
+		if(canDeployActor(actorType)) {
+			board.addActor(ActorFactory.make(this, race, actorType), deployLane);
+			lastDeployTime = System.currentTimeMillis();
+		}
+	}
+
+	public boolean canDeployActor(ActorType type) {
+		return System.currentTimeMillis() - lastDeployTime >= actorBuffer.get(type).getAttributes().deployDelay;
+	}
+
+	/*
+	 * Gets the cooldown time as a percentage between 0f and 1f
+	 * with 1f being 100% cool down (ready for deploy).
+	 *
+	 * This method will return -1 if the given actorType is not
+	 * owned by the player
+	 */
+	public float getActorCooldown(ActorType actorType) {
+		if(!actorsOwned.contains(actorType) || actorBuffer.get(actorType) == null)
+			return -1;
+
+		Actor sample = actorBuffer.get(actorType);
+		float percentage = (float) ((System.currentTimeMillis() - lastDeployTime) / (float) sample.getAttributes().deployDelay);
+		if(percentage > 1f) percentage = 1f;
+		return percentage;
+	}
+
 	//Sends a row of units
 	public void deployCharge() {
 		if(charge >= chargeThreshold) {
 			charge = 0;
-			chargeThreshold += 25;
+			chargeThreshold += 20;
 
 			//TODO verify unit selection, hero units cannot be deployed as charge
 			//TODO get currently selected 'unit' for charge and send them to lane
@@ -97,18 +125,26 @@ public class Player {
 		}
 	}
 
-	public void updateBufferActor(ActorType actorType) {
-		updateBufferActor(actorType, race);
+	public void updateActorBuffer(ActorType actorType) {
+		updateActorBuffer(actorType, race);
 	}
 
-	private void updateBufferActor(ActorType actorType, Race race) {
+	public LinkedHashMap<ActorType, Actor> getActorBuffer() {
+		return actorBuffer;
+	}
+
+	public ArrayList<ActorType> getActorsOwned() {
+		return actorsOwned;
+	}
+
+	private void updateActorBuffer(ActorType actorType, Race race) {
 		actorBuffer.put(actorType, ActorFactory.make(this, race, actorType));
 		if(!actorsOwned.contains(actorType)) {
 			actorsOwned.add(actorType);
 		}
 	}
 
-	public void removeBufferActor(ActorType actorType) {
+	public void removeActorBuffer(ActorType actorType) {
 		actorBuffer.remove(actorType);
 		actorsOwned.remove(actorType);
 	}

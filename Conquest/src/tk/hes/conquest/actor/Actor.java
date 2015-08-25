@@ -80,7 +80,7 @@ public abstract class Actor implements ActionKeyFrameListener {
                 int tint = 128 - (int) ((float) (System.currentTimeMillis() - hurtTime) / (float) hurtTintDuration * 128);
 				if(tint < 0) tint = 0;
 
-                c.render(sprite, drawX, drawY, 1.0f, Colors.toInt(255, 0, 0, (int) hurtAlpha * 255));
+                c.render(sprite, drawX, drawY, 1.0f, Colors.toInt(255, 0, 0, tint));
             }
         }
     }
@@ -170,6 +170,10 @@ public abstract class Actor implements ActionKeyFrameListener {
             //TODO evasion skillset / animation / etc.
             return;
         }
+		int knockback = provoker.attributes.knockback - attributes.knockbackResistance;
+		if(knockback > 0)
+			position.setX(position.getX() + (owner.getOrigin().equals(Origin.WEST) ? -knockback : knockback));
+
         attributes.health -= totalDamage;
         hurt = true;
         hurtTime = System.currentTimeMillis();
