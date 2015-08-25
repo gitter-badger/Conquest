@@ -24,7 +24,15 @@ public class AttributeTuple {
 	public int range;
 	public int blindRange;
 
+	public int knockback;
+	public int knockbackResist;
 	public float speed;
 	public int evasion;
 	public int critChance; //critical strike chance
+
+	//info
+	public String name;
+	public String description;
+	public int purchaseCost;
+
 }

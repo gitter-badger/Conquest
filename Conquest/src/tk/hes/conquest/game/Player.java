@@ -1,16 +1,20 @@
 package tk.hes.conquest.game;
 
 import me.deathjockey.tinypixel.Input;
-import me.deathjockey.tinypixel.graphics.BitFont;
 import me.deathjockey.tinypixel.graphics.Bitmap;
-import me.deathjockey.tinypixel.graphics.Colors;
 import me.deathjockey.tinypixel.graphics.RenderContext;
 import tk.hes.conquest.ConquestGameDesktopLauncher;
-import tk.hes.conquest.font.Font;
+import tk.hes.conquest.actor.Actor;
 import tk.hes.conquest.graphics.Art;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
+/**
+ *
+ * @author Kevin Yang
+ */
 public class Player {
 
     private String name;
@@ -22,6 +26,11 @@ public class Player {
 
     private int deployLane = 0;
     private GameBoard board;
+
+	//actor unit selection
+	private final LinkedHashMap<ActorType, Actor> actorBuffer = new LinkedHashMap<>();
+	private final ArrayList<ActorType> actorsOwned = new ArrayList<>();
+	private int actorSelectCaret = 0;
 
     public Player(String name, Race race, Origin origin, int gold) {
         this.name = name;
@@ -45,28 +54,10 @@ public class Player {
         ry = ConquestGameDesktopLauncher.INIT_HEIGHT / 3 - deployLane * 25;
         c.render(cursor, rx, ry);
 
-		//TODO temporary
-		String goldString = "Gold: " + gold;
-		c.getFont(Font.NORMAL).render(goldString, (origin.equals(Origin.WEST) ? 10 : c.getWidth() - 30 - BitFont.widthOf(goldString, c.getFont(Font.NORMAL))),
-				10, Colors.PURE_YELLOW);
-		String chargeString = "Charge: " + charge + "/" + chargeThreshold;
-		c.getFont(Font.NORMAL).render(chargeString, (origin.equals(Origin.WEST) ? 10 : c.getWidth() - 30 - BitFont.widthOf(chargeString, c.getFont(Font.NORMAL))),
-				20, Colors.PURE_CYAN);
-
-		String dominanceString = "Dominance: " + (origin.equals(Origin.WEST) ? board.getDominanceValue() : 100 - board.getDominanceValue());
-		c.getFont(Font.NORMAL).render(dominanceString, (origin.equals(Origin.WEST) ? 10 : c.getWidth() - 30 - BitFont.widthOf(chargeString, c.getFont(Font.NORMAL))),
-				40, Colors.PURE_WHITE);
-
-		if(charge == chargeThreshold) {
-			String chargeReadyString = "Charge ready! Press [C]";
-			c.getFont(Font.NORMAL).render(chargeReadyString, (origin.equals(Origin.WEST) ? 10 : c.getWidth() - 30 - BitFont.widthOf(chargeReadyString, c.getFont(Font.NORMAL))),
-					30, Colors.PURE_CYAN);
-		}
-
 	}
 
     public void update() {
-		//TODO temporary
+		//TODO temporary key codes
         if (Input.getKeyPressed(KeyEvent.VK_UP)) {
             if (deployLane < 5)
                 deployLane++;
@@ -74,15 +65,57 @@ public class Player {
             if (deployLane > 0)
                 deployLane--;
         }
+
+		if (Input.getKeyPressed(KeyEvent.VK_LEFT)) {
+			if (actorSelectCaret > 0)
+				actorSelectCaret--;
+			else
+				actorSelectCaret = actorsOwned.size() - 1;
+		} else if (Input.getKeyPressed(KeyEvent.VK_RIGHT)) {
+			if (actorSelectCaret < actorsOwned.size() - 1)
+				actorSelectCaret++;
+			else
+				actorSelectCaret = 0;
+		}
+
+
         if (Input.getKeyPressed(KeyEvent.VK_SPACE)) {
             if (this.race.equals(Race.HUMAN))
-                board.addActor(ActorFactory.make(this, race, ActorType.RANGER), deployLane);
+                board.addActor(ActorFactory.make(this, race, getActorSelection()), deployLane);
         }
 
 		if(Input.getKeyPressed(KeyEvent.VK_C)) {
 			deployCharge();
 		}
     }
+
+	//Create a buffer actor / replacing existing sample
+	public void updateBufferActor(ActorType actorType) {
+		actorBuffer.put(actorType, ActorFactory.make(this, race, actorType));
+		if(!actorsOwned.contains(actorType))
+			actorsOwned.add(actorType);
+	}
+
+	public boolean isActorInBuffer(ActorType actorType) {
+		return actorBuffer.get(actorType) != null && actorsOwned.contains(actorType);
+	}
+
+	public void removeActorFromBuffer(ActorType actorType) {
+		actorBuffer.remove(actorType);
+		actorsOwned.remove(actorType);
+	}
+
+	public LinkedHashMap<ActorType, Actor> getActorBuffer() {
+		return actorBuffer;
+	}
+
+	public ArrayList<ActorType> getActorsOwned() {
+		return actorsOwned;
+	}
+
+	public ActorType getActorSelection() {
+		return actorsOwned.get(actorSelectCaret);
+	}
 
 	//Sends a row of units
 	public void deployCharge() {
@@ -127,6 +160,10 @@ public class Player {
 
 	public void setBoard(GameBoard board) {
         this.board = board;
+    }
+
+    public int getChargeThreshold() {
+        return chargeThreshold;
     }
 
     public String getName() {

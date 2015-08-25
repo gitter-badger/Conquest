@@ -10,12 +10,14 @@ import tk.hes.conquest.game.GameBoard;
 import tk.hes.conquest.game.Origin;
 import tk.hes.conquest.game.Player;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public abstract class Actor implements ActionKeyFrameListener {
 
     public static final int SPRITE_SCALE = 2;
-
+    protected static final int hurtTintDuration = 1000;
+    protected static final int corpseDecayTime = 10000;
     protected Vector2f position;
     protected BB bb;
     protected AttributeTuple attributes;
@@ -28,11 +30,9 @@ public abstract class Actor implements ActionKeyFrameListener {
     protected boolean hurt = false;
     protected long hurtTime;
 	protected float hurtAlpha = 1.0f;
-    protected static final int hurtTintDuration = 250;
     protected boolean dead = false;
     protected long deadTime;
-    protected static final int corpseDecayTime = 10000;
-
+	protected float moveSpeed;
 	protected boolean shouldAttack = true;
 
     //This constructor is invoked automatically via reflection in ActorFactory to create new actors
@@ -74,20 +74,20 @@ public abstract class Actor implements ActionKeyFrameListener {
 				} else {
 					float decayAlpha = 1f - ((float) (System.currentTimeMillis() - deadTime) / (float) corpseDecayTime);
 					if(decayAlpha < 0) decayAlpha = 0;
-					c.render(sprite, drawX, drawY, decayAlpha);
+					c.render(sprite, drawX, drawY, decayAlpha, Colors.toInt(255, 0, 0, 100));
 				}
             } else {
-                int tint = 128 - (int) ((float) (System.currentTimeMillis() - hurtTime) / (float) hurtTintDuration * 128);
+                float tint = 0.4f - ((System.currentTimeMillis() - hurtTime) / (float) hurtTintDuration);
 				if(tint < 0) tint = 0;
 
-                c.render(sprite, drawX, drawY, 1.0f, Colors.toInt(255, 0, 0, (int) hurtAlpha * 255));
+                c.render(sprite, drawX, drawY, 1.0f, Colors.toInt(255, 0, 0, (int) (tint * 255f)));
             }
         }
     }
 
     public void update() {
 		boolean canMove = true;
-
+		moveSpeed = attributes.speed;
         if (dead) {
             currentAction = ActionType.DEATH;
 			hurt = false;
@@ -103,27 +103,37 @@ public abstract class Actor implements ActionKeyFrameListener {
 				hurtAlpha = ((float) System.currentTimeMillis() - (float) hurtTime) / (float) hurtTintDuration;
 			}
 
-			if(shouldAttack) {
-				//check enemies
-				ArrayList<Actor> actors = board.getOpponentActorsInLane(owner, currentLane);
-				for (int i = 0; i < actors.size(); i++) {
-					Actor actor = actors.get(i);
-					if (actor.isDead()) continue;
+			//check enemies
+			ArrayList<Actor> actors = board.getOpponentActorsInLane(owner, currentLane);
+			for (int i = 0; i < actors.size(); i++) {
+				Actor actor = actors.get(i);
+				if (actor.isDead()) continue;
+				Rectangle actorHitbox = actor.getBounds();
 
+				if (shouldAttack) {
 					int xDiff = 0;
+					Rectangle reach = new Rectangle();
 					switch (this.owner.getOrigin()) {
 						case WEST:
 							xDiff = (int) Math.abs(this.position.getX() + bb.getRx() + bb.getWidth()
 									- actor.position.getX() - actor.getBB().getRx());
+							reach.x = (int) (position.getX() + bb.getRx() + bb.getWidth());
+							reach.y = (int) (position.getY() + bb.getRy());
+							reach.width = (attributes.range);
+							reach.height = (int) (bb.getHeight());
 							break;
 						case EAST:
 							xDiff = (int) Math.abs(this.position.getX() + bb.getRx()
 									- (actor.position.getX() + actor.bb.getWidth() + actor.bb.getRx()));
+							reach.x = (int) (position.getX() + bb.getRx() - attributes.range);
+							reach.y = (int) (position.getY() + bb.getRy());
+							reach.width =  (attributes.range);
+							reach.height = (int) (bb.getHeight());
 							break;
 					}
 					//xDiff < range - blindRage = can fire
 					//TODO range check bugged (not hitting issue)
-					boolean canAttack = (xDiff > attributes.blindRange && xDiff <= attributes.range - 1 * Actor.SPRITE_SCALE);
+					boolean canAttack = (actorHitbox.intersects(reach) && xDiff > attributes.blindRange);
 					if (canAttack) {
 						preAttack();
 						canMove = false;
@@ -170,6 +180,10 @@ public abstract class Actor implements ActionKeyFrameListener {
             //TODO evasion skillset / animation / etc.
             return;
         }
+		int knockback = provoker.attributes.knockback - this.attributes.knockbackResist;
+		if(knockback > 0)
+			position.setX(position.getX() + ((this.owner.getOrigin().equals(Origin.WEST) ? -knockback : knockback)));
+
         attributes.health -= totalDamage;
         hurt = true;
         hurtTime = System.currentTimeMillis();
@@ -188,6 +202,12 @@ public abstract class Actor implements ActionKeyFrameListener {
         this.board = board;
         this.currentLane = lane;
     }
+
+	public Rectangle getBounds() {
+		return new Rectangle((int) (position.getX() + bb.getRx()),
+				(int) (position.getY() + bb.getRy()),
+				(int) (bb.getWidth()), (int) (bb.getHeight()));
+	}
 
     public void setPosition(int x, int y) {
         position.set(x, y);

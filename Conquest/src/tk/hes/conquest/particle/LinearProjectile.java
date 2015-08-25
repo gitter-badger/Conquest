@@ -32,9 +32,7 @@ public abstract class LinearProjectile extends Projectile {
 		ArrayList<Actor> collisions = new ArrayList<>();
 		for(Actor actor : actors) {
 			if(actor.equals(owner)) continue;
-			Rectangle actorBounds = new Rectangle((int) (actor.getPosition().getX() + actor.getBB().getRx()),
-					(int) (actor.getPosition().getY() + actor.getBB().getRy()),
-					(int) actor.getBB().getWidth(), (int) actor.getBB().getHeight());
+			Rectangle actorBounds = actor.getBounds();
 			if(actorBounds.intersects(bounds)) {
 				collisions.add(actor);
 			}

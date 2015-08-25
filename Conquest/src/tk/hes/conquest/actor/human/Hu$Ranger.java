@@ -2,7 +2,6 @@ package tk.hes.conquest.actor.human;
 
 import me.deathjockey.tinypixel.graphics.Animation;
 import me.deathjockey.tinypixel.graphics.Bitmap;
-import me.deathjockey.tinypixel.graphics.RenderContext;
 import me.deathjockey.tinypixel.util.Vector2f;
 import tk.hes.conquest.actor.*;
 import tk.hes.conquest.game.Origin;
@@ -28,7 +27,7 @@ public class Hu$Ranger extends Actor {
 		tuple.healthMax = 65;
 		tuple.mana = 0;
 		tuple.manaMax = 0;
-		tuple.attackPhysical = 13;
+		tuple.attackPhysical = 15;
 		tuple.attackRandomPhysical = 4;
 		tuple.defense = 2;
 		tuple.critChance = 10;
@@ -43,10 +42,15 @@ public class Hu$Ranger extends Actor {
 		tuple.leaveCorpse = true;
 		tuple.goldReward = 6;
 		tuple.chargeReward = 3;
+		tuple.knockback = 0;
 
 		tuple.exp = 0;
 		tuple.expMax = 0;
 		tuple.level = 1;
+
+		tuple.name = "Archer";
+		tuple.description = "Ranged unit, pew pew";
+		tuple.purchaseCost = 400;
 
 		int w = Art.UNIT_HUMAN_MELEE.getCellSize().width;
 		int h = Art.UNIT_HUMAN_MELEE.getCellSize().height;
@@ -61,8 +65,11 @@ public class Hu$Ranger extends Actor {
 		actions.set(ActionType.ATTACK1, new Action(this)
 				.addFrame(Art.UNIT_HUMAN_RANGER.getSprite(0, 1), 250, 0, 0)
 				.addFrame(Art.UNIT_HUMAN_RANGER.getSprite(1, 1), 100, 0, 0)
-				.addFrame(Art.UNIT_HUMAN_RANGER.getSprite(1, 1), 400, 0, 0, "release")
+				.addFrame(Art.UNIT_HUMAN_RANGER.getSprite(1, 1), 400, 0, 0, "shoot-arrow")
 				.addFrame(Art.UNIT_HUMAN_RANGER.getSprite(0, 0), 350, 0, 0, "$RANDOM_DELAY 0 450"));
+
+		actions.set(ActionType.DEATH, new Action()
+				.addFrame(Art.UNIT_HUMAN_RANGER.getSprite(2, 0), 500, 0, 0));
 
 		bb.rx = 1;
 		bb.ry = 0;
@@ -96,7 +103,7 @@ public class Hu$Ranger extends Actor {
 
 	@Override
 	public void keyFrameReached(String key) {
-		if(key.equals("release")) {
+		if(key.equals("shoot-arrow")) {
 			BasicArrow arrow = new BasicArrow(this, new BB(2, 4, 6, 1));
 			ParticleManager.get().spawn(arrow);
 			lastFireTime = System.currentTimeMillis();
@@ -108,20 +115,14 @@ public class Hu$Ranger extends Actor {
 
 		public BasicArrow(Actor owner, BB bb) {
 			super(owner, bb, null, null, 1.8f);
-			Animation anim = new Animation(new Bitmap[] { Art.PARTICLE_PROJECTILE_ARROW }, 1000);
+			Animation anim = new Animation(new Bitmap[] { Art.PARTICLE_PROJECTILE_ARROW.getSprite(0, 0) }, 1000);
 
 			Vector2f pos = new Vector2f(owner.getPosition().getX(), owner.getPosition().getY());
 			if(owner.getOwner().getOrigin().equals(Origin.EAST)) {
 				anim.setFlipped(false, true);
 			}
-			System.out.println(pos.getX() + " " + owner.getPosition().getX());
 			this.animation = anim;
 			this.position = pos;
-		}
-
-		@Override
-		public void render(RenderContext c) {
-			super.render(c);
 		}
 
 		@Override
