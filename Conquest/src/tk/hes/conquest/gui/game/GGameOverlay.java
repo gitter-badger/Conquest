@@ -3,6 +3,10 @@ package tk.hes.conquest.gui.game;
 import me.deathjockey.tinypixel.graphics.RenderContext;
 import me.deathjockey.tinypixel.util.Vector2f;
 import tk.hes.conquest.gui.base.GComponent;
+import tk.hes.conquest.gui.base.GDialog;
+import tk.hes.conquest.gui.dialog.GTitleDialog;
+
+import java.util.ArrayList;
 
 /**
  * The game overlay which will be rendered on top of "tk.hes.conquest.game" gameplay.
@@ -10,6 +14,8 @@ import tk.hes.conquest.gui.base.GComponent;
  * @author James Roberts
  */
 public class GGameOverlay extends GComponent {
+
+    private ArrayList<GTitleDialog> dialogBoxes;
 
     private GDominanceBar dominanceBar;
     private GPlayerInfo playerInfo;
@@ -21,6 +27,8 @@ public class GGameOverlay extends GComponent {
 
     @Override
     public void init(RenderContext c) {
+        dialogBoxes = new ArrayList<>();
+
         dominanceBar = new GDominanceBar(new Vector2f(0, 0));
         dominanceBar.init(c);
         dominanceBar.setFilledPercent(50);
@@ -37,6 +45,11 @@ public class GGameOverlay extends GComponent {
         dominanceBar.update();
         playerInfo.update();
         heroInfo.update();
+        for (int i = 0; i < dialogBoxes.size(); i++) {
+            GTitleDialog d = dialogBoxes.get(i);
+            if (d.shouldRemove()) dialogBoxes.remove(i);
+            d.update();
+        }
     }
 
     @Override
@@ -44,8 +57,12 @@ public class GGameOverlay extends GComponent {
         dominanceBar.render(c);
         playerInfo.render(c);
         heroInfo.render(c);
+        for (GDialog d : dialogBoxes) d.render(c);
     }
 
+    public void addDialogBox(GTitleDialog dialog) {
+        this.dialogBoxes.add(dialog);
+    }
 
     public void setGold(int amount) {
         this.playerInfo.setMoneyAmount(amount);

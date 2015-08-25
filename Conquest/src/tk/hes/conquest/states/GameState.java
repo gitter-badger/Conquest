@@ -5,7 +5,10 @@ import me.deathjockey.tinypixel.graphics.RenderContext;
 import me.deathjockey.tinypixel.state.PixelState;
 import me.deathjockey.tinypixel.util.Vector2f;
 import tk.hes.conquest.game.*;
+import tk.hes.conquest.gui.dialog.GTextDialog;
 import tk.hes.conquest.gui.game.GGameOverlay;
+
+import java.awt.*;
 
 /**
  * GameState where the primary gameplay will take place
@@ -33,6 +36,12 @@ public class GameState extends PixelState {
         board = new GameBoard(player1, player2, 6, 50, 600000);
 
         manager = new GameManager(overlay, player1, board);
+
+        String name = System.getProperty("user.name");
+        GTextDialog dialog = new GTextDialog("Hello, " + name + "!", new Vector2f(2, 80), new Dimension(100, 50));
+        dialog.setMessage("Try closing me!\nIt works!");
+        dialog.init(c);
+        overlay.addDialogBox(dialog);
     }
 
     @Override
