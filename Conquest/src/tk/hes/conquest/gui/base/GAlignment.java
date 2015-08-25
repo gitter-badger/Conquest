@@ -1,4 +1,4 @@
-package tk.hes.conquest.gui.base.enums;
+package tk.hes.conquest.gui.base;
 
 /**
  * GAlignment class for usage with various Game GUI elements

@@ -4,13 +4,14 @@ import me.deathjockey.tinypixel.graphics.Bitmap;
 import me.deathjockey.tinypixel.graphics.RenderContext;
 import me.deathjockey.tinypixel.util.Vector2f;
 import tk.hes.conquest.graphics.Art;
+import tk.hes.conquest.gui.base.GAlignment;
 import tk.hes.conquest.gui.base.GComponent;
-import tk.hes.conquest.gui.base.enums.GAlignment;
 
 import java.util.ArrayList;
 
 /**
  * A button group class which easily keeps buttons in alignment relative to a parent position.
+ *
  *
  * @author James Roberts
  */

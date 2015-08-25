@@ -1,4 +1,4 @@
-package tk.hes.conquest.gui.base.enums;
+package tk.hes.conquest.gui.base.dialog;
 
 /**
  * An enum for the types of dialog boxes.

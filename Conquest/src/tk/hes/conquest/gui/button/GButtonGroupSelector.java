@@ -4,8 +4,8 @@ import me.deathjockey.tinypixel.Input;
 import me.deathjockey.tinypixel.graphics.Bitmap;
 import me.deathjockey.tinypixel.graphics.RenderContext;
 import tk.hes.conquest.graphics.Art;
-import tk.hes.conquest.gui.base.enums.GAlignment;
-import tk.hes.conquest.gui.base.enums.GState;
+import tk.hes.conquest.gui.base.GAlignment;
+import tk.hes.conquest.gui.base.GState;
 import tk.hes.conquest.gui.listener.GButtonActionListener;
 
 import java.awt.event.KeyEvent;

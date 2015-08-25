@@ -132,7 +132,7 @@ public class BitFont {
             }
 
             //next line
-            if (ch == '\n') {
+            if (ch == '\\') {
                 drawY += (int) ((float) defaultGlyphSize.height * scale) +
                         (int) ((float) defaultGlyphSize.height * scale) / 6;
                 drawX = x;

@@ -1,4 +1,4 @@
-package tk.hes.conquest.gui.base.enums;
+package tk.hes.conquest.gui.base;
 
 /**
  * This enumeration tracks the possible button colors. Ideally, these colors will be

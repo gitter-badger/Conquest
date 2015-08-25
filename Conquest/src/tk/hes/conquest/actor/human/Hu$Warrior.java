@@ -34,17 +34,10 @@ public class Hu$Warrior extends Actor  {
 		tuple.leaveCorpse = true;
 		tuple.goldReward = 5;
 		tuple.chargeReward = 4;
-		tuple.knockback = 3;
-		tuple.knockbackResist = 3;
 
 		tuple.exp = 0;
 		tuple.expMax = 0;
 		tuple.level = 1;
-
-		tuple.name = "Swordsmen";
-		tuple.description = "A standard sword wielding melee unit";
-		tuple.purchaseCost = 100;
-
 
 		int w = Art.UNIT_HUMAN_MELEE.getCellSize().width;
 		int h = Art.UNIT_HUMAN_MELEE.getCellSize().height;

@@ -67,10 +67,6 @@ public abstract class GComponent {
         return size;
     }
 
-    public void setSize(Dimension size) {
-        this.size = size;
-    }
-
     public void setSize(int width, int height) {
         this.size.setSize(width, height);
     }

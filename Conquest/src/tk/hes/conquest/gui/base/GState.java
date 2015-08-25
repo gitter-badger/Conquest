@@ -1,4 +1,4 @@
-package tk.hes.conquest.gui.base.enums;
+package tk.hes.conquest.gui.base;
 
 /**
  * A enumeration to track the possible states of a {@code GAbstractButton}.
@@ -10,4 +10,3 @@ public enum GState {
     HOVERED,
     PRESSED
 }
-

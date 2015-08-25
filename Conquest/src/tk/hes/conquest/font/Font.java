@@ -20,7 +20,7 @@ public class Font {
     public void initFonts() {
         gameFont = new BitFont(Art.FONT, "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
                 "abcdefghijklmnopqrstuvwxyz" +
-                "0123456789;'\"            \n" +
+                "0123456789;'\"             " +
                 "!@#$%^&*()-+_=~.,<>?/\\[]|:", 4, 26, new Dimension(6, 10));
         gameFont.addSpacingRule("sxItrf<>?", 5, 0);
         gameFont.addSpacingRule("^1*()+-;:/.,", 4, 0);
