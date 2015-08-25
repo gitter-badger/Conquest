@@ -9,10 +9,24 @@ import java.awt.*;
 
 public class Art {
 
-    public static final Bitmap UI_CURSOR = get("/ui_cursor.png", 2.0f);
+    public static final Bitmap UI_CURSOR = get("/ui/ui_cursor.png", 2.0f);
     public static final Spritesheet FONT = getSpritesheet("/font.png", 8, 10);
-    public static final Spritesheet UI_BUTTONS = getSpritesheet("/ui_buttons.png", 48, 11, 2.0f);
-    public static final Spritesheet UI_DIALOG = getSpritesheet("/ui_panel.png", 48, 48, 1.0f);
+    public static final Spritesheet UI_BIG_BUTTONS = getSpritesheet("/ui/ui_buttons.png", 48, 11, 2.0f);
+    public static final Spritesheet DIALOG_BUTTON = getSpritesheet("/provisional/ui_dialog_buttons.png", 6, 6);
+    public static final Spritesheet DIALOG = getSpritesheet("/ui/ui_panel.png", 48, 48, 1.0f);
+    public static final Spritesheet BARS = getSpritesheet("/ui/ui_bars.png", 54, 4);
+
+    public static final Bitmap DOMINANCE_BAR = get("/ui/ui_dominance_bar.png");
+
+    public static final Spritesheet STATS_BUTTONS = getSpritesheet("/ui/stats/ui_stats_buttons.png", 24, 13);
+    public static final Spritesheet STATS_BACKGROUND = getSpritesheet("/ui/stats/ui_stats_background.png", 24, 13);
+    public static final Spritesheet STATS_BARS = getSpritesheet("/ui/stats/ui_stats_bars.png", 53, 14);
+
+    public static final Spritesheet UI_HERO_ABILITY_SLOT = getSpritesheet("/ui/hero/ui_hero_ability_slot.png", 17, 30);
+    public static final Bitmap UI_HERO_BACKGROUND = get("/ui/hero/ui_hero_background.png");
+    public static final Bitmap UI_HERO_SLOT = get("/ui/hero/ui_hero_slot.png");
+
+    public static final Bitmap UI_TEST = get("/ui/ui_example.png");
 
 	public static final Spritesheet UNIT_HUMAN_MELEE = getSpritesheet("/actors/human/hum_melee.png", 8, 8, Actor.SPRITE_SCALE);
 	public static final Spritesheet UNIT_HUMAN_RANGER = getSpritesheet("/actors/human/hum_ranger.png", 8, 8, Actor.SPRITE_SCALE);

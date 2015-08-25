@@ -2,12 +2,9 @@ package tk.hes.conquest;
 
 import me.deathjockey.tinypixel.TinyPixelGame;
 import me.deathjockey.tinypixel.TinyPixelStateBasedGame;
-import me.deathjockey.tinypixel.graphics.BitFont;
 import me.deathjockey.tinypixel.graphics.Colors;
 import me.deathjockey.tinypixel.graphics.RenderContext;
 import tk.hes.conquest.font.Font;
-import tk.hes.conquest.game.Origin;
-import tk.hes.conquest.game.Race;
 import tk.hes.conquest.states.GameState;
 import tk.hes.conquest.states.StateID;
 import tk.hes.conquest.states.TestState;
@@ -30,7 +27,7 @@ public class ConquestGame extends TinyPixelStateBasedGame {
         return instance;
     }
 
-	public void indexStates() {
+    public void indexStates() {
         addState(new GameState(this));
         addState(new TestState(this));
         enterState(StateID.GAME_STATE.getID());
@@ -38,6 +35,7 @@ public class ConquestGame extends TinyPixelStateBasedGame {
 
     @Override
     protected void init(TinyPixelGame game, RenderContext renderContext) {
+        renderContext.setClearColor(Colors.toInt(1280, 128, 128, 255));
         Font font = new Font();
         font.initFonts();
         font.addFonts(renderContext);

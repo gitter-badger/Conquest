@@ -15,7 +15,8 @@ import java.util.ArrayList;
 public abstract class Actor implements ActionKeyFrameListener {
 
     public static final int SPRITE_SCALE = 2;
-
+    protected static final int hurtTintDuration = 250;
+    protected static final int corpseDecayTime = 10000;
     protected Vector2f position;
     protected BB bb;
     protected AttributeTuple attributes;
@@ -28,10 +29,8 @@ public abstract class Actor implements ActionKeyFrameListener {
     protected boolean hurt = false;
     protected long hurtTime;
 	protected float hurtAlpha = 1.0f;
-    protected static final int hurtTintDuration = 250;
     protected boolean dead = false;
     protected long deadTime;
-    protected static final int corpseDecayTime = 10000;
 
 	protected boolean shouldAttack = true;
 

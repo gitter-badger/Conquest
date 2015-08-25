@@ -1,25 +1,22 @@
 package tk.hes.conquest.gui.button;
 
-import me.deathjockey.tinypixel.graphics.Bitmap;
 import me.deathjockey.tinypixel.graphics.RenderContext;
 import me.deathjockey.tinypixel.util.Vector2f;
 import tk.hes.conquest.graphics.Art;
-import tk.hes.conquest.gui.base.GButtonColor;
 import tk.hes.conquest.gui.base.GComponent;
 import tk.hes.conquest.gui.base.GLabel;
-import tk.hes.conquest.gui.base.GState;
+import tk.hes.conquest.gui.base.enums.GButtonColor;
 
 
 /**
- * This {@code GTextButton} class is the generic rectangular button class. It is built off {@code GAbstractButton},
+ *  It is built off {@code GAbstractButton},
  * which provides the basic mouse over detection capabilities.
  *
  * @author James Roberts
  */
-public class GTextButton extends GAbstractButton {
+public class GTextButton extends GButton {
 
-    protected Bitmap buttonNormal;
-    protected Bitmap buttonPressed;
+
     private GButtonColor buttonColor;
     private GLabel label;
 
@@ -54,21 +51,21 @@ public class GTextButton extends GAbstractButton {
     private void updateButtonBitmaps() {
         switch (buttonColor) {
             case GREY:
-                buttonNormal = Art.UI_BUTTONS.getSprite(0, 0);
-                buttonPressed = Art.UI_BUTTONS.getSprite(0, 1);
+                buttonNormal = Art.UI_BIG_BUTTONS.getSprite(0, 0);
+                buttonPressed = Art.UI_BIG_BUTTONS.getSprite(0, 1);
                 break;
             default:
             case BLUE:
-                buttonNormal = Art.UI_BUTTONS.getSprite(0, 2);
-                buttonPressed = Art.UI_BUTTONS.getSprite(0, 3);
+                buttonNormal = Art.UI_BIG_BUTTONS.getSprite(0, 2);
+                buttonPressed = Art.UI_BIG_BUTTONS.getSprite(0, 3);
                 break;
             case GREEN:
-                buttonNormal = Art.UI_BUTTONS.getSprite(1, 0);
-                buttonPressed = Art.UI_BUTTONS.getSprite(1, 1);
+                buttonNormal = Art.UI_BIG_BUTTONS.getSprite(1, 0);
+                buttonPressed = Art.UI_BIG_BUTTONS.getSprite(1, 1);
                 break;
             case RED:
-                buttonNormal = Art.UI_BUTTONS.getSprite(1, 2);
-                buttonPressed = Art.UI_BUTTONS.getSprite(1, 3);
+                buttonNormal = Art.UI_BIG_BUTTONS.getSprite(1, 2);
+                buttonPressed = Art.UI_BIG_BUTTONS.getSprite(1, 3);
                 break;
         }
     }
@@ -82,13 +79,8 @@ public class GTextButton extends GAbstractButton {
 
     @Override
     public void render(RenderContext c) {
-        if (currentState == GState.NORMAL || currentState == GState.HOVERED)
-            c.render(buttonNormal, (int) position.getX(), (int) position.getY());
-        else if (currentState == GState.PRESSED)
-            c.render(buttonPressed, (int) position.getX(), (int) position.getY());
-
-        label.render(c);
         super.render(c);
+        label.render(c);
     }
 
     @Override

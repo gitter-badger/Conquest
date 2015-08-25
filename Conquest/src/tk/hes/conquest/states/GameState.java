@@ -1,13 +1,16 @@
 package tk.hes.conquest.states;
 
+
 import me.deathjockey.tinypixel.TinyPixelStateBasedGame;
 import me.deathjockey.tinypixel.graphics.RenderContext;
 import me.deathjockey.tinypixel.state.PixelState;
-import tk.hes.conquest.game.GameBoard;
-import tk.hes.conquest.game.Origin;
-import tk.hes.conquest.game.Player;
-import tk.hes.conquest.game.Race;
+import me.deathjockey.tinypixel.util.Vector2f;
+import tk.hes.conquest.game.*;
+import tk.hes.conquest.gui.dialog.GTextDialog;
+import tk.hes.conquest.gui.game.GGameOverlay;
 import tk.hes.conquest.particle.ParticleManager;
+
+import java.awt.*;
 
 /**
  * GameState where the primary gameplay will take place
@@ -17,6 +20,9 @@ import tk.hes.conquest.particle.ParticleManager;
 public class GameState extends PixelState {
 
     private GameBoard board;
+    private GGameOverlay overlay;
+
+    private GameManager manager;
 
     public GameState(TinyPixelStateBasedGame game) {
         super(game);
@@ -24,22 +30,35 @@ public class GameState extends PixelState {
 
     @Override
     public void init(RenderContext c) {
+        overlay = new GGameOverlay(new Vector2f(0, 0));
+        overlay.init(c);
+
         Player player1 = new Player("Kevin", Race.HUMAN, Origin.WEST, 100);
         Player player2 = new Player("Dumhead", Race.HUMAN, Origin.EAST, 100);
-
         board = new GameBoard(player1, player2, 6, 50, 600000);
+
+        manager = new GameManager(overlay, player1, board);
+
+        String name = System.getProperty("user.name");
+        GTextDialog dialog = new GTextDialog("Hello, " + name + "!", new Vector2f(2, 80), new Dimension(100, 50));
+        dialog.setMessage("Try closing me!\nIt works!");
+        dialog.init(c);
+        overlay.addDialogBox(dialog);
     }
 
     @Override
     public void update() {
         board.update();
 		ParticleManager.get().update();
+        overlay.update();
+        manager.sync();
     }
 
     @Override
     public void render(RenderContext c) {
         board.render(c);
 		ParticleManager.get().render(c);
+        overlay.render(c);
     }
 
     @Override
