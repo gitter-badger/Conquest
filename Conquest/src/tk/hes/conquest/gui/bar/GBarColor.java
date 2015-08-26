@@ -2,7 +2,6 @@ package tk.hes.conquest.gui.bar;
 
 import me.deathjockey.tinypixel.graphics.RenderContext;
 import me.deathjockey.tinypixel.util.Vector2f;
-import tk.hes.conquest.gui.base.GBar;
 import tk.hes.conquest.gui.base.GComponent;
 
 import java.awt.*;
@@ -33,13 +32,21 @@ public class GBarColor extends GBar {
 
     @Override
     public void render(RenderContext c) {
-        c.fillRegion((int) position.getX(), (int) position.getY(), (int) (position.getX() + amountFilled), (int) (position.getY() + getSize().getHeight()), fillColor);
+        int aW = (int) (getSize().getWidth() - amountFilled);
+        int aH = (int) (getSize().getHeight() - amountFilled);
+        c.fillRegion(
+                (int) position.getX() + (isFlipped && isHorizontal() ? aW : 0),
+                (int) position.getY() + (isFlipped && !isHorizontal() ? aH : 0),
+                (int) (position.getX() + (isHorizontal() ? amountFilled : getSize().getWidth()) + (isFlipped && isHorizontal() ? aW : 0)),
+                (int) (position.getY() + (!isHorizontal() ? amountFilled : getSize().getHeight())) + (isFlipped && !isHorizontal() ? aH : 0),
+                fillColor);
     }
 
     @Override
     public void update() {
 
     }
+
 
     public void setFillColor(int fillColor) {
         this.fillColor = fillColor;

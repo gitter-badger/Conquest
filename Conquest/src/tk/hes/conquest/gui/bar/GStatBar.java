@@ -3,7 +3,6 @@ package tk.hes.conquest.gui.bar;
 import me.deathjockey.tinypixel.graphics.RenderContext;
 import me.deathjockey.tinypixel.util.Vector2f;
 import tk.hes.conquest.graphics.Art;
-import tk.hes.conquest.gui.base.GBar;
 import tk.hes.conquest.gui.base.GComponent;
 import tk.hes.conquest.gui.base.GImage;
 import tk.hes.conquest.gui.base.enums.GBarOrigin;
@@ -70,7 +69,7 @@ public class GStatBar extends GBar {
             int xx = (int) position.getX() + ((drawOrigin == GBarOrigin.LEFT) ? 0 : a);
             int yy = (int) position.getY();
 
-            c.render(barOverlay.getImage().getFlipped(false, isFlipped).getBitmapRegion(x0, y0, x1, y1), xx, yy);
+            c.render(barOverlay.getImage().getFlipped(false, isFlipped).getBitmapRegion((drawOrigin == GBarOrigin.LEFT) ? 0 : a, y0, x1, y1), xx, yy);
         }
     }
 
