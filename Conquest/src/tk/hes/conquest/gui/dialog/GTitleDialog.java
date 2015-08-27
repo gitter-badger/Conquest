@@ -29,6 +29,7 @@ public class GTitleDialog extends GDialog implements GButtonActionListener {
         super(position);
         this.title = title;
         this.size = null;
+        this.shouldRemove = false;
     }
 
     public GTitleDialog(String title, Vector2f pos, Dimension size) {
@@ -38,6 +39,7 @@ public class GTitleDialog extends GDialog implements GButtonActionListener {
     public GTitleDialog(String title, Vector2f position, Dimension size, GDialogType type) {
         super(position, size, type);
         this.title = title;
+        this.shouldRemove = false;
         bitmapParts = new GDialogPart(type, true);
     }
 
@@ -48,6 +50,7 @@ public class GTitleDialog extends GDialog implements GButtonActionListener {
         closeButton.addActionListener(this);
 
         titleLabel = new GLabel(title, new Vector2f(14, 1), this);
+        titleLabel.init(c);
     }
 
     @Override

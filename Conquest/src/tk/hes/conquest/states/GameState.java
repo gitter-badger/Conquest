@@ -1,6 +1,7 @@
 package tk.hes.conquest.states;
 
 
+import me.deathjockey.tinypixel.Input;
 import me.deathjockey.tinypixel.TinyPixelStateBasedGame;
 import me.deathjockey.tinypixel.graphics.Colors;
 import me.deathjockey.tinypixel.graphics.RenderContext;
@@ -9,11 +10,11 @@ import me.deathjockey.tinypixel.util.Vector2f;
 import tk.hes.conquest.actor.Actor;
 import tk.hes.conquest.game.*;
 import tk.hes.conquest.gui.bar.GBarColor;
-import tk.hes.conquest.gui.dialog.GTextDialog;
 import tk.hes.conquest.gui.game.GGameOverlay;
 import tk.hes.conquest.particle.ParticleManager;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.LinkedHashMap;
 
 /**
@@ -45,11 +46,6 @@ public class GameState extends PixelState {
 		overlay = new GGameOverlay(board, player1);
 		overlay.init(c);
 
-        String name = System.getProperty("user.name");
-        GTextDialog dialog = new GTextDialog("Hello, " + name + "!", new Vector2f(2, 80), new Dimension(100, 50));
-        dialog.setMessage("Try closing me!\nIt works!");
-        dialog.init(c);
-        overlay.addDialogBox(dialog);
 
 		//TODO temporary, remove
 		timerBar = new GBarColor(new Vector2f(160, 65), new Dimension(100, 8), Colors.PURE_WHITE);
@@ -59,6 +55,7 @@ public class GameState extends PixelState {
 
     @Override
     public void update() {
+        if (Input.getKeyDown(KeyEvent.VK_ESCAPE)) System.exit(0);
         board.update();
         ParticleManager.get().update();
         overlay.update();

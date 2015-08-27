@@ -51,7 +51,7 @@ public class GGameOverlay extends GComponent {
 
         dialogBoxes = new ArrayList<>();
 
-        playerInfo = new GPlayerInfo(new Vector2f(0, (int) dominanceBar.getSize().getHeight() - 4));
+        playerInfo = new GPlayerInfo(this, new Vector2f(0, (int) dominanceBar.getSize().getHeight() - 4));
         playerInfo.init(c);
 
         heroInfo = new GHeroInfo(new Vector2f(64, 16), this);
@@ -83,7 +83,9 @@ public class GGameOverlay extends GComponent {
             if (d.shouldRemove()) dialogBoxes.remove(i);
             d.update();
         }
+
     }
+
 
     @Override
     public void render(RenderContext c) {

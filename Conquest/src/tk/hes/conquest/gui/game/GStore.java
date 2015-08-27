@@ -20,14 +20,12 @@ public class GStore extends GTitleDialog {
         super("Fighter Store", position);
         this.backgroundImage = new GImage(Art.UI_STORE, this);
         this.size = backgroundImage.getSize();
-        System.out.println(size);
     }
 
     @Override
     public void init(RenderContext c) {
         super.init(c);
         this.closeButton.setPosition((int) getSize().getWidth() - 66, 3);
-        System.out.println(titleLabel.getPosition().toString());
         this.titleLabel.setPosition(27, 2);
     }
 

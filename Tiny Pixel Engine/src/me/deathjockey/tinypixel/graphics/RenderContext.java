@@ -50,6 +50,7 @@ public class RenderContext {
 
     private float drawScale = 1f;
 
+    public static RenderContext instance;
 
     /**
      * Creates a render context with given dimensions.
@@ -59,6 +60,19 @@ public class RenderContext {
      */
     public RenderContext(int width, int height) {
         setSize(width, height);
+        RenderContext.instance = this;
+    }
+
+
+    /**
+     * TODO tell kevin that this is here.
+     * TODO kevin look here
+     * Return the RenderContext for methods which don't receive it as a paramater
+     *
+     * @return Current RenderContext instance
+     */
+    public static RenderContext getInstance() {
+        return instance;
     }
 
     /**
@@ -290,7 +304,8 @@ public class RenderContext {
         }
     }
 
-    /**
+    /** TODO this is here took
+     *  TODO also look here
      * Outlines a given rectangular region with a color.
      *
      * @param x0    Start X
