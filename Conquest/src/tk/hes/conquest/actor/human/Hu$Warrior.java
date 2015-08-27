@@ -44,6 +44,8 @@ public class Hu$Warrior extends Actor  {
 		tuple.name = "Warrior";
 		tuple.lore = "A warrior awaiting description to be added";
 		tuple.deployDelay = 3500;
+		tuple.hasShadow = true;
+		tuple.shadowType = 0;
 
 		int w = Art.UNIT_HUMAN_MELEE.getCellSize().width;
 		int h = Art.UNIT_HUMAN_MELEE.getCellSize().height;
@@ -68,6 +70,11 @@ public class Hu$Warrior extends Actor  {
 		bb.ry = 0;
 		bb.w = (w - (1 * Actor.SPRITE_SCALE));
 		bb.h = h;
+	}
+
+	@Override
+	protected void randomizeAttributes(AttributeTuple tuple) {
+
 	}
 
 	@Override

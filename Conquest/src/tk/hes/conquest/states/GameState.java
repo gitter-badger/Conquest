@@ -35,13 +35,13 @@ public class GameState extends PixelState {
         Player player1 = new Player("Kevin", Race.HUMAN, Origin.WEST, 100);
 		player1.updateActorBuffer(ActorType.MELEE);
 		player1.updateActorBuffer(ActorType.RANGER);
+		player1.updateActorBuffer(ActorType.CASTER);
 
         Player player2 = new Player("Dumhead", Race.HUMAN, Origin.EAST, 100);
 
-        board = new GameBoard(player1, player2, 6, 50, 600000);
+        board = new GameBoard(player1, player2, 8, 50, 600000);
 		player2.updateActorBuffer(ActorType.RANGER);
 
-        board = new GameBoard(player1, player2, 6, 50, 600000);
 		overlay = new GGameOverlay(board, player1);
 		overlay.init(c);
 
@@ -100,7 +100,7 @@ public class GameState extends PixelState {
 		String description = sample.getAttributes().lore;
 		c.getFont(tk.hes.conquest.font.Font.NORMAL).render(description, 160, 55, Colors.PURE_WHITE);
 		timerBar.render(c);
-		timerBar.setFilledPercent(100f - (float) (player1.getActorCooldown(selectedType)) * 100f);
+		timerBar.setFilledPercent(100f - (player1.getActorCooldown(selectedType)) * 100f);
     }
 
     @Override

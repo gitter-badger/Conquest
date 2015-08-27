@@ -216,15 +216,16 @@ public class RenderContext {
 		int[] pixelBuffer = Arrays.copyOf(pixels, pixels.length);
 		for(int i = 0;  i < pixelBuffer.length; i++) {
 			int[] pRGBA = Colors.fromInt(pixelBuffer[i]);
+			float ba = pRGBA[3] / 255f;
 			float br = pRGBA[0];
 			float bb = pRGBA[1];
 			float bg = pRGBA[2];
 			int r, g, b;
 
 			if(ta > 0f) {
-				r = (int) ((tr * ta) + (br * (1 - ta)));
-				g = (int) ((tg * ta) + (bg * (1 - ta)));
-				b = (int) ((tb * ta) + (bb * (1 - ta)));
+				r = (int) ((tr * ta) + (br * (1f - ta)));
+				g = (int) ((tg * ta) + (bg * (1f - ta)));
+				b = (int) ((tb * ta) + (bb * (1f - ta)));
 			} else {
 				continue;
 			}
@@ -274,7 +275,25 @@ public class RenderContext {
 
 		for(int xx = x0; xx < x1; xx++) {
 			for(int yy = y0; yy < y1; yy++) {
-				pixelData[yy * getWidth() + xx] = color;
+				int index = yy * getWidth() + xx;
+				if(index > pixelData.length - 1)
+					return;
+				int[] rgba = Colors.fromInt(color);
+				float fa = rgba[3] / 255f;
+				float fr = rgba[0] * fa;
+				float fg = rgba[1] * fa;
+				float fb = rgba[2] * fa;
+
+				int[] oRGBA = Colors.fromInt(color);
+				float ba = oRGBA[3] / 255f;
+				float br = oRGBA[0];
+				float bg = oRGBA[1];
+				float bb = oRGBA[2];
+
+				float r = fr + br * (1 - fa);
+				float g = fg + bg * (1 - fa);
+				float b = fb + bb * (1 - fa);
+				pixelData[yy * getWidth() + xx] = Colors.toInt((int) r, (int) g, (int) b, (int) ba * 255);
 			}
 		}
 	}

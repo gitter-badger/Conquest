@@ -1,5 +1,6 @@
 package tk.hes.conquest.particle;
 
+import me.deathjockey.tinypixel.Time;
 import me.deathjockey.tinypixel.graphics.Colors;
 import me.deathjockey.tinypixel.graphics.RenderContext;
 import me.deathjockey.tinypixel.util.Vector2f;
@@ -14,9 +15,8 @@ public abstract class Particle {
 
 	protected Vector2f position;
 	protected Vector2f velocity;
-	protected int size;
+	protected float size;
 	protected int[] tint = { 0, 0, 0, 0 }; //rgb tinting
-	protected long spawnTime;
 	protected boolean remove = false;
 
 	public abstract void onSpawn();
@@ -35,13 +35,15 @@ public abstract class Particle {
 		if(size > 0f) {
 			c.fillRegion((int) position.getX(),
 					(int) position.getY(),
-					(int) position.getX() + size,
-					(int) position.getY() + size,
+					(int) (position.getX() + size),
+					(int) (position.getY() + size),
 					Colors.toInt(tint));
 		}
 	}
 
 	public void update() {
+		this.position.setX(position.getX() + velocity.getX() * (float) Time.delta);
+		this.position.setY(position.getY() + velocity.getY() * (float) Time.delta);
 
 	}
 
@@ -54,6 +56,14 @@ public abstract class Particle {
 		tint[1] = g;
 		tint[2] = b;
 		tint[3] = a;
+	}
+
+	public float getSize() {
+		return size;
+	}
+
+	public void setSize(float size) {
+		this.size = size;
 	}
 
 	public void remove() {

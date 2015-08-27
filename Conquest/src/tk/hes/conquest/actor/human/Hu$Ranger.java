@@ -13,6 +13,10 @@ import tk.hes.conquest.particle.ParticleManager;
 
 import java.util.ArrayList;
 
+/**
+ *
+ * @author Kevin Yang
+ */
 public class Hu$Ranger extends Actor {
 
 	private long lastFireTime = System.currentTimeMillis();
@@ -52,6 +56,8 @@ public class Hu$Ranger extends Actor {
 		tuple.lore = "Pew pew pew";
 		tuple.deployDelay = 3500;
 		tuple.purchaseCost = 350;
+		tuple.hasShadow = true;
+		tuple.shadowType = 0;
 
 		int w = Art.UNIT_HUMAN_MELEE.getCellSize().width;
 		int h = Art.UNIT_HUMAN_MELEE.getCellSize().height;
@@ -69,10 +75,18 @@ public class Hu$Ranger extends Actor {
 				.addFrame(Art.UNIT_HUMAN_RANGER.getSprite(1, 1), 400, 0, 0, "release")
 				.addFrame(Art.UNIT_HUMAN_RANGER.getSprite(0, 0), 350, 0, 0, "$RANDOM_DELAY 0 450"));
 
+		actions.set(ActionType.DEATH, new Action()
+				.addFrame(Art.UNIT_HUMAN_RANGER.getSprite(2, 0), 500, 0, 0));
+
 		bb.rx = 1;
 		bb.ry = 0;
 		bb.w = (w - (1 * Actor.SPRITE_SCALE));
 		bb.h = h;
+	}
+
+	@Override
+	protected void randomizeAttributes(AttributeTuple tuple) {
+
 	}
 
 	@Override

@@ -10,24 +10,24 @@ import java.util.List;
 
 public class GameBoard {
 
-	public static final int LANE_SIZE = 25;
+	public static final int LANE_SIZE = 16;
 
 	private int time; //time remaining
 	private int dominance; //50 start, 0 = p2 win, 100 = p1 win
 	private Player player1, player2;
-	private int laneSize;
+	private int laneCount;
 
 	private final HashMap<Integer, ArrayList<Actor>> actorMap = new HashMap<>();
 
 	public GameBoard(Player player1, Player player2, int maxLaneSize, int startDominance, int timeLimit) {
 		this.player1 = player1;
 		this.player2 = player2;
-		this.laneSize = maxLaneSize;
+		this.laneCount = maxLaneSize;
 		this.dominance = startDominance;
 		this.time = timeLimit;
 
 		for(int i = 0; i < maxLaneSize; i++) {
-			actorMap.put(i, new ArrayList<Actor>());
+			actorMap.put(i, new ArrayList<>());
 		}
 		player1.setBoard(this);
 		player2.setBoard(this);
@@ -71,7 +71,7 @@ public class GameBoard {
 			case WEST: xPos = 25; break;
 			case EAST: xPos = ConquestGameDesktopLauncher.INIT_WIDTH / 2 - 25; break;
 		}
-		actor.setPosition(xPos, ConquestGameDesktopLauncher.INIT_HEIGHT / 3 - lane * 25);
+		actor.setPosition(xPos, 128 + lane * LANE_SIZE);
 		actor.assignBoard(this, lane);
 
 		ArrayList<Actor> actors = actorMap.get(lane);
@@ -102,7 +102,7 @@ public class GameBoard {
 	}
 
 	public void sendChargeWave(Player player, Race race, ActorType type) {
-		for(int i = 0; i < laneSize; i++) {
+		for(int i = 0; i < laneCount; i++) {
 			addActor(ActorFactory.make(player, race, type), i);
 		}
 	}
@@ -136,5 +136,9 @@ public class GameBoard {
 
 	public int getDominanceValue() {
 		return dominance;
+	}
+
+	public int getLaneCount() {
+		return laneCount;
 	}
 }
