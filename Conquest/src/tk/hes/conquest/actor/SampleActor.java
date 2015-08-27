@@ -20,8 +20,8 @@ public class SampleActor {
 	private BB bb;
 	private Actor sample;
 	private boolean flipped = false;
-	private boolean visible = false;
-	private boolean drawShadow = false;
+    private boolean visible = true;
+    private boolean drawShadow = false;
 
 	public SampleActor(Actor actor) {
 		this(actor, new Vector2f(0, 0));
@@ -117,4 +117,12 @@ public class SampleActor {
 	public void setVisible(boolean visible) {
 		this.visible = visible;
 	}
+
+    public void setPosition(Vector2f position) {
+        this.position = position;
+    }
+
+    public Vector2f getPosition() {
+        return position;
+    }
 }

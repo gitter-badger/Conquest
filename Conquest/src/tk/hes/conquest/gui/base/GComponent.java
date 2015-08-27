@@ -75,6 +75,12 @@ public abstract class GComponent {
         this.size.setSize(width, height);
     }
 
+    public void setParent(GComponent parent) {
+        this.parent = parent;
+        this.isChild = true;
+        this.position = calculatePosition(position);
+    }
+
     public boolean isChild() {
         return isChild;
     }
