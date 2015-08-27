@@ -9,6 +9,7 @@ import tk.hes.conquest.ConquestGameDesktopLauncher;
 import tk.hes.conquest.game.GameBoard;
 import tk.hes.conquest.game.Origin;
 import tk.hes.conquest.game.Player;
+import tk.hes.conquest.graphics.Art;
 
 import java.util.ArrayList;
 
@@ -42,6 +43,7 @@ public abstract class Actor implements ActionKeyFrameListener {
     }
 
     protected abstract void initializeAttributes(AttributeTuple tuple, BB bb, ActionSet actions);
+	protected abstract void randomizeAttributes(AttributeTuple tuple);
 
     //Decide which animation to use, what attack to go for...
     public abstract void preAttack();
@@ -68,6 +70,12 @@ public abstract class Actor implements ActionKeyFrameListener {
 			int drawX = (int) position.getX() + ((flipped) ? frame.getxOffset() : 0);
 			int drawY = (int) position.getY() + ((flipped) ? frame.getyOffset() : 0);
 
+			if(!dead && attributes.hasShadow) {
+				Bitmap shadow = Art.UNIT_SHADOW[attributes.shadowType];
+				c.render(shadow, (int) (getPosition().getX() + getBB().getRx() + getBB().getWidth() / 2 - shadow.getWidth() / 2),
+						(int) (getPosition().getY() + getBB().getRy() + getBB().getHeight() - getBB().getHeight() / 4 * 3), 0.7f);
+			}
+
             if (!hurt) {
 				if(!dead) {
 					c.render(sprite, drawX, drawY);
@@ -77,10 +85,11 @@ public abstract class Actor implements ActionKeyFrameListener {
 					c.render(sprite, drawX, drawY, decayAlpha);
 				}
             } else {
-                int tint = 128 - (int) ((float) (System.currentTimeMillis() - hurtTime) / (float) hurtTintDuration * 128);
+				float tintAlpha = (float) (System.currentTimeMillis() - hurtTime) / (float) hurtTintDuration;
+                int tint = 128 - (int) (tintAlpha * 128);
 				if(tint < 0) tint = 0;
 
-                c.render(sprite, drawX, drawY, 1.0f, Colors.toInt(255, 0, 0, tint));
+                c.render(sprite, drawX, drawY, 1.0f, Colors.toInt(128, 0, 0, tint));
             }
         }
     }
@@ -191,6 +200,8 @@ public abstract class Actor implements ActionKeyFrameListener {
     public void assignBoard(GameBoard board, int lane) {
         this.board = board;
         this.currentLane = lane;
+
+		randomizeAttributes(attributes);
     }
 
     public void setPosition(int x, int y) {
@@ -235,5 +246,21 @@ public abstract class Actor implements ActionKeyFrameListener {
 
 	public int getCurrentLane() {
 		return currentLane;
+	}
+
+	public SampleActor getSampleActor() {
+		return getSampleActor(new Vector2f(0, 0));
+	}
+
+	public SampleActor getSampleActor(Vector2f position) {
+		return getSampleActor(position, ActionType.STATIC);
+	}
+
+	public SampleActor getSampleActor(Vector2f position, ActionType action) {
+		return getSampleActor(position, action, 1.0f);
+	}
+
+	public SampleActor getSampleActor(Vector2f position, ActionType action, float scale) {
+		return new SampleActor(this, position, action, scale);
 	}
 }

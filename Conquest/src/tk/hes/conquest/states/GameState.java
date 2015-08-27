@@ -11,7 +11,6 @@ import tk.hes.conquest.game.*;
 import tk.hes.conquest.gui.bar.GBarColor;
 import tk.hes.conquest.gui.dialog.GTextDialog;
 import tk.hes.conquest.gui.game.GGameOverlay;
-import tk.hes.conquest.gui.game.GStore;
 import tk.hes.conquest.particle.ParticleManager;
 
 import java.awt.*;
@@ -27,8 +26,6 @@ public class GameState extends PixelState {
     private GameBoard board;
     private GGameOverlay overlay;
 
-    public GStore store;
-
     public GameState(TinyPixelStateBasedGame game) {
         super(game);
     }
@@ -38,15 +35,15 @@ public class GameState extends PixelState {
         Player player1 = new Player("Kevin", Race.HUMAN, Origin.WEST, 100);
 		player1.updateActorBuffer(ActorType.MELEE);
 		player1.updateActorBuffer(ActorType.RANGER);
+		player1.updateActorBuffer(ActorType.CASTER);
 
         Player player2 = new Player("Dumhead", Race.HUMAN, Origin.EAST, 100);
 
-        board = new GameBoard(player1, player2, 6, 50, 600000);
+        board = new GameBoard(player1, player2, 8, 50, 600000);
 		player2.updateActorBuffer(ActorType.RANGER);
 
-        board = new GameBoard(player1, player2, 6, 50, 600000);
-        overlay = new GGameOverlay(board, player1);
-        overlay.init(c);
+		overlay = new GGameOverlay(board, player1);
+		overlay.init(c);
 
         String name = System.getProperty("user.name");
         GTextDialog dialog = new GTextDialog("Hello, " + name + "!", new Vector2f(2, 80), new Dimension(100, 50));
@@ -57,9 +54,6 @@ public class GameState extends PixelState {
 		//TODO temporary, remove
 		timerBar = new GBarColor(new Vector2f(160, 65), new Dimension(100, 8), Colors.PURE_WHITE);
 		timerBar.init(c);
-
-        store = new GStore(new Vector2f(10, 100));
-        store.init(c);
     }
 
     @Override
@@ -67,7 +61,6 @@ public class GameState extends PixelState {
         board.update();
         ParticleManager.get().update();
         overlay.update();
-        store.update();
 
 		//TODO temporary remove
 		timerBar.update();

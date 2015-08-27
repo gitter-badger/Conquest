@@ -3,7 +3,6 @@ package tk.hes.conquest.game;
 import me.deathjockey.tinypixel.Input;
 import me.deathjockey.tinypixel.graphics.Bitmap;
 import me.deathjockey.tinypixel.graphics.RenderContext;
-import tk.hes.conquest.ConquestGameDesktopLauncher;
 import tk.hes.conquest.actor.Actor;
 import tk.hes.conquest.graphics.Art;
 
@@ -47,7 +46,7 @@ public class Player {
                 cursor = cursor.getFlipped(false, true);
                 break;
         }
-        ry = ConquestGameDesktopLauncher.INIT_HEIGHT / 3 - deployLane * 25;
+		ry = 128 + deployLane * GameBoard.LANE_SIZE;
         c.render(cursor, rx, ry);
 
 	}
@@ -55,11 +54,11 @@ public class Player {
     public void update() {
 		//TODO temporary
         if (Input.getKeyPressed(KeyEvent.VK_UP)) {
-            if (deployLane < 5)
-                deployLane++;
-        } else if (Input.getKeyPressed(KeyEvent.VK_DOWN)) {
             if (deployLane > 0)
                 deployLane--;
+        } else if (Input.getKeyPressed(KeyEvent.VK_DOWN)) {
+            if (deployLane < board.getLaneCount() - 1)
+                deployLane++;
         }
 		if (Input.getKeyPressed(KeyEvent.VK_LEFT)) {
 			if(actorSelectCaret > 0)
@@ -106,7 +105,7 @@ public class Player {
 			return -1;
 
 		Actor sample = actorBuffer.get(actorType);
-		float percentage = (float) ((System.currentTimeMillis() - lastDeployTime) / (float) sample.getAttributes().deployDelay);
+		float percentage = ((System.currentTimeMillis() - lastDeployTime) / (float) sample.getAttributes().deployDelay);
 		if(percentage > 1f) percentage = 1f;
 		return percentage;
 	}

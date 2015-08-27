@@ -1,8 +1,13 @@
 package tk.hes.conquest.actor;
 
-public class AttributeTuple {
+import com.sun.istack.internal.NotNull;
+import com.sun.istack.internal.Nullable;
+
+public class AttributeTuple implements Cloneable {
 
 	public boolean leaveCorpse;
+	public boolean hasShadow;
+	public int shadowType;
 
 	public int health;
 	public int healthMax;
@@ -34,4 +39,14 @@ public class AttributeTuple {
 	public String lore;
 	public int purchaseCost;
 	public int deployDelay;
+
+	@Nullable
+	public static final AttributeTuple getCopyOf(@NotNull AttributeTuple tuple) {
+		try {
+			return (AttributeTuple) tuple.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
