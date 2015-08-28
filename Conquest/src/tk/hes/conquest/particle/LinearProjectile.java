@@ -15,8 +15,14 @@ import java.util.ArrayList;
  */
 public abstract class LinearProjectile extends Projectile {
 
+	private int searchRange = 1;
+
 	public LinearProjectile(Actor owner, BB bb, Animation anim, Vector2f pos, float vh) {
 		super(owner, bb, anim, pos, new Vector2f((owner.getOwner().getOrigin().equals(Origin.WEST) ? Math.abs(vh) : -Math.abs(vh)), 0));
+	}
+
+	public void setSearchRange(int range) {
+		searchRange = range;
 	}
 
 	@Override
@@ -25,7 +31,10 @@ public abstract class LinearProjectile extends Projectile {
 
 	@Override
 	protected void updateCollision() {
-		ArrayList<Actor> actors = owner.getGameBoard().getActorsInLane( owner.getCurrentLane());
+		float vh = getVelocity().getX();
+
+//		ArrayList<Actor> actors = owner.getGameBoard().getNearbyActorsInLane(owner.getCurrentLane(), owner.getPosition(), searchRange, vh < 0f, vh > 0f);
+		ArrayList<Actor> actors = owner.getGameBoard().getActorsInLane(owner.getCurrentLane());
 		Rectangle bounds = new Rectangle((int) position.getX() + (int) bb.getRx(),
 				(int) position.getY() + (int) bb.getRy(),
 				(int) bb.getWidth(), (int) bb.getHeight());

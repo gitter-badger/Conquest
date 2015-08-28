@@ -115,12 +115,7 @@ public class Player {
 		if(charge >= chargeThreshold) {
 			charge = 0;
 			chargeThreshold += 20;
-
-			//TODO verify unit selection, hero units cannot be deployed as charge
-			//TODO get currently selected 'unit' for charge and send them to lane
-
-			//TODO TEMPORARY!!
-			board.sendChargeWave(this, race, ActorType.MELEE);
+			board.sendChargeWave(this, race, getSelectedActor());
 		}
 	}
 

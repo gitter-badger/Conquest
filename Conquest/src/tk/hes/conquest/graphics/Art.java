@@ -31,12 +31,16 @@ public class Art {
 			get("/actors/shadow_8x10.png", 2.0f),
 			get("/actors/shadow_10x12.png", 2.0f)
 	};
-	public static final Spritesheet UNIT_HUMAN_MELEE = getSpritesheet("/actors/human/hum_melee.png", 8, 8, Actor.SPRITE_SCALE);
-	public static final Spritesheet UNIT_HUMAN_RANGER = getSpritesheet("/actors/human/hum_ranger.png", 8, 8, Actor.SPRITE_SCALE);
-	public static final Spritesheet UNIT_HUMAN_CASTER = getSpritesheet("/actors/human/hum_caster.png", 8, 8, Actor.SPRITE_SCALE);
+	public static final Spritesheet UNIT_HUMAN_WARRIOR = getSpritesheet("/actors/human/hum_melee.png", 8, 8, Actor.SPRITE_SCALE);
+	public static final Spritesheet UNIT_HUMAN_ARCHER = getSpritesheet("/actors/human/hum_ranger.png", 8, 8, Actor.SPRITE_SCALE);
+	public static final Spritesheet UNIT_HUMAN_MAGE = getSpritesheet("/actors/human/hum_caster.png", 8, 8, Actor.SPRITE_SCALE);
+	public static final Spritesheet UNIT_HUMAN_ASSASSIN = getSpritesheet("/actors/human/hum_scout.png", 8, 8, Actor.SPRITE_SCALE);
+	public static final Spritesheet UNIT_HUMAN_PRIEST = getSpritesheet("/actors/human/hum_caster2.png", 8, 8, Actor.SPRITE_SCALE);
+	public static final Spritesheet UNIT_HUMAN_MYSTIC = getSpritesheet("/actors/human/hum_special.png", 8, 8, Actor.SPRITE_SCALE);
 
 	public static final Spritesheet PARTICLE_PROJECTILE_ARROW = getSpritesheet("/particles/arrows.png", 8, 8, Actor.SPRITE_SCALE);
 	public static final Spritesheet PARTICLE_PROJECTILE_BOLT = getSpritesheet("/particles/bolts.png", 8, 8, Actor.SPRITE_SCALE);
+	public static final Spritesheet PARTICLE_STATUS_EFFECTS = getSpritesheet("/particles/effects.png", 3, 3, Actor.SPRITE_SCALE);
 
     private static Bitmap get(String resource) {
         return get(resource, 1.0f);
