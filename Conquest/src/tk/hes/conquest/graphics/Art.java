@@ -35,40 +35,40 @@ public class Art {
 			get("/actors/shadow_8x10.png", 2.0f),
 			get("/actors/shadow_10x12.png", 2.0f)
 	};
+	public static final Spritesheet UNIT_HUMAN_WARRIOR = getSpritesheet("/actors/human/hum_melee.png", 8, 8, Actor.SPRITE_SCALE);
+	public static final Spritesheet UNIT_HUMAN_ARCHER = getSpritesheet("/actors/human/hum_ranger.png", 8, 8, Actor.SPRITE_SCALE);
+	public static final Spritesheet UNIT_HUMAN_MAGE = getSpritesheet("/actors/human/hum_caster.png", 8, 8, Actor.SPRITE_SCALE);
+	public static final Spritesheet UNIT_HUMAN_ASSASSIN = getSpritesheet("/actors/human/hum_scout.png", 8, 8, Actor.SPRITE_SCALE);
+	public static final Spritesheet UNIT_HUMAN_PRIEST = getSpritesheet("/actors/human/hum_caster2.png", 8, 8, Actor.SPRITE_SCALE);
+	public static final Spritesheet UNIT_HUMAN_MYSTIC = getSpritesheet("/actors/human/hum_special.png", 8, 8, Actor.SPRITE_SCALE);
     public static final Bitmap UI_STORE = get("/ui/store/ui_store.png");
 
+	public static final Spritesheet PARTICLE_PROJECTILE_ARROW = getSpritesheet("/particles/arrows.png", 8, 8, Actor.SPRITE_SCALE);
+	public static final Spritesheet PARTICLE_PROJECTILE_BOLT = getSpritesheet("/particles/bolts.png", 8, 8, Actor.SPRITE_SCALE);
+	public static final Spritesheet PARTICLE_STATUS_EFFECTS = getSpritesheet("/particles/effects.png", 3, 3, Actor.SPRITE_SCALE);
     //SLOT
     public static final Spritesheet UI_SLOTS = getSpritesheet("/ui/slot/ui_slots.png", 30, 36);
     public static final Bitmap UI_ARROW_LEFT = get("/ui/slot/ui_arrow_left.png");
     public static final Bitmap UI_ARROW_RIGHT = get("/ui/slot/ui_arrow_right.png");
 
-
-    // CHARACTERS
-    public static final Spritesheet UNIT_HUMAN_MELEE = getSpritesheet("/actors/human/hum_melee.png", 8, 8, Actor.SPRITE_SCALE);
-    public static final Spritesheet UNIT_HUMAN_RANGER = getSpritesheet("/actors/human/hum_ranger.png", 8, 8, Actor.SPRITE_SCALE);
-    public static final Spritesheet UNIT_HUMAN_CASTER = getSpritesheet("/actors/human/hum_caster.png", 8, 8, Actor.SPRITE_SCALE);
-
-    public static final Spritesheet PARTICLE_PROJECTILE_ARROW = getSpritesheet("/particles/arrows.png", 8, 8, Actor.SPRITE_SCALE);
-    public static final Spritesheet PARTICLE_PROJECTILE_BOLT = getSpritesheet("/particles/bolts.png", 8, 8, Actor.SPRITE_SCALE);
-
-    public static Bitmap get(String resource) {
+    private static Bitmap get(String resource) {
         return get(resource, 1.0f);
     }
 
-    public static Bitmap get(String resource, float scale) {
+    private static Bitmap get(String resource, float scale) {
         Bitmap result = BitmapLoader.loadInternalBitmap(resource);
         return result.getScaled(scale);
     }
 
-    public static Spritesheet getSpritesheet(String resource, int cellSize) {
+    private static Spritesheet getSpritesheet(String resource, int cellSize) {
         return getSpritesheet(resource, cellSize, cellSize);
     }
 
-    public static Spritesheet getSpritesheet(String resource, int cellWidth, int cellHeight) {
+    private static Spritesheet getSpritesheet(String resource, int cellWidth, int cellHeight) {
         return getSpritesheet(resource, cellWidth, cellHeight, 1.0f);
     }
 
-    public static Spritesheet getSpritesheet(String resource, int cellWidth, int cellHeight, float scale) {
+    private static Spritesheet getSpritesheet(String resource, int cellWidth, int cellHeight, float scale) {
         Spritesheet ss = BitmapLoader.loadInternalSpritesheet(resource, new Dimension(cellWidth, cellHeight),
                 new Point(0, 0), 0, 0);
         if (scale != 1.0f)

@@ -59,24 +59,24 @@ public class Hu$Ranger extends Actor {
 		tuple.hasShadow = true;
 		tuple.shadowType = 0;
 
-		int w = Art.UNIT_HUMAN_MELEE.getCellSize().width;
-		int h = Art.UNIT_HUMAN_MELEE.getCellSize().height;
+		int w = Art.UNIT_HUMAN_WARRIOR.getCellSize().width;
+		int h = Art.UNIT_HUMAN_WARRIOR.getCellSize().height;
 
 		actions.set(ActionType.STATIC, new Action()
-				.addFrame(Art.UNIT_HUMAN_RANGER.getSprite(0, 0), 500, 0, 0));
+				.addFrame(Art.UNIT_HUMAN_ARCHER.getSprite(0, 0), 500, 0, 0));
 
 		actions.set(ActionType.MOVE, new Action()
-				.addFrame(Art.UNIT_HUMAN_RANGER.getSprite(0, 0), 500, 0, 0)
-				.addFrame(Art.UNIT_HUMAN_RANGER.getSprite(1, 0), 500, 0, 0));
+				.addFrame(Art.UNIT_HUMAN_ARCHER.getSprite(0, 0), 500, 0, 0)
+				.addFrame(Art.UNIT_HUMAN_ARCHER.getSprite(1, 0), 500, 0, 0));
 
 		actions.set(ActionType.ATTACK1, new Action(this)
-				.addFrame(Art.UNIT_HUMAN_RANGER.getSprite(0, 1), 250, 0, 0)
-				.addFrame(Art.UNIT_HUMAN_RANGER.getSprite(1, 1), 100, 0, 0)
-				.addFrame(Art.UNIT_HUMAN_RANGER.getSprite(1, 1), 400, 0, 0, "release")
-				.addFrame(Art.UNIT_HUMAN_RANGER.getSprite(0, 0), 350, 0, 0, "$RANDOM_DELAY 0 450"));
+				.addFrame(Art.UNIT_HUMAN_ARCHER.getSprite(0, 1), 250, 0, 0)
+				.addFrame(Art.UNIT_HUMAN_ARCHER.getSprite(1, 1), 100, 0, 0)
+				.addFrame(Art.UNIT_HUMAN_ARCHER.getSprite(1, 1), 400, 0, 0, "release")
+				.addFrame(Art.UNIT_HUMAN_ARCHER.getSprite(0, 0), 350, 0, 0, "$RANDOM_DELAY 0 450"));
 
 		actions.set(ActionType.DEATH, new Action()
-				.addFrame(Art.UNIT_HUMAN_RANGER.getSprite(2, 0), 500, 0, 0));
+				.addFrame(Art.UNIT_HUMAN_ARCHER.getSprite(2, 0), 500, 0, 0));
 
 		bb.rx = 1;
 		bb.ry = 0;
@@ -99,13 +99,8 @@ public class Hu$Ranger extends Actor {
 	}
 
 	@Override
-	public void preAttack() {
-		currentAction = ActionType.ATTACK1;
-	}
-
-	@Override
 	public void onAttack() {
-
+		currentAction = ActionType.ATTACK1;
 	}
 
 	@Override

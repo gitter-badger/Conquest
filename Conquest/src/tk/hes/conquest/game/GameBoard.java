@@ -1,6 +1,7 @@
 package tk.hes.conquest.game;
 
 import me.deathjockey.tinypixel.graphics.RenderContext;
+import me.deathjockey.tinypixel.util.Vector2f;
 import tk.hes.conquest.ConquestGameDesktopLauncher;
 import tk.hes.conquest.actor.Actor;
 
@@ -122,6 +123,20 @@ public class GameBoard {
 		actors.remove(actor);
 	}
 
+	public ArrayList<Actor> getNearbyActorsInLane(int lane, Vector2f origin, int range, boolean searchLeft, boolean searchRight) {
+		ArrayList<Actor> actors = getActorsInLane(lane);
+		ArrayList<Actor> result = new ArrayList<>();
+		for(Actor actor : actors) {
+
+			Vector2f position = actor.getPosition();
+			float xDiff = origin.getX() - position.getX();
+			if(Math.abs(xDiff) <= range && xDiff < 0f && searchLeft) result.add(actor);
+			if(xDiff <= range && xDiff > 0f && searchRight) result.add(actor);
+			else result.add(actor);
+		}
+		return result;
+	}
+
 	public Player getPlayer1() {
 		return player1;
 	}
@@ -140,5 +155,21 @@ public class GameBoard {
 
 	public int getLaneCount() {
 		return laneCount;
+	}
+
+	public static ArrayList<Actor> filter(ArrayList<Actor> search, Player owner, boolean allied, boolean enemy, boolean dead) {
+		ArrayList<Actor> result = new ArrayList<>();
+		for(Actor actor : search) {
+			if(actor.getOwner().equals(owner) && allied)
+				result.add(actor);
+			else if(!actor.getOwner().equals(owner) && enemy)
+				result.add(actor);
+
+			if(actor.isDead() && dead)
+				result.add(actor);
+			else if(!actor.isDead() && !dead)
+				result.add(actor);
+		}
+		return result;
 	}
 }

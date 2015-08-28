@@ -6,6 +6,7 @@ import me.deathjockey.tinypixel.graphics.Colors;
 import me.deathjockey.tinypixel.graphics.RenderContext;
 import me.deathjockey.tinypixel.util.Vector2f;
 import tk.hes.conquest.ConquestGameDesktopLauncher;
+import tk.hes.conquest.actor.effect.StatusEffect;
 import tk.hes.conquest.game.GameBoard;
 import tk.hes.conquest.game.Origin;
 import tk.hes.conquest.game.Player;
@@ -32,9 +33,9 @@ public abstract class Actor implements ActionKeyFrameListener {
 	protected float hurtAlpha = 1.0f;
     protected boolean dead = false;
     protected long deadTime;
-
-	protected float moveSpeed;
 	protected boolean shouldAttack = true;
+
+	protected ArrayList<StatusEffect> statusEffectList = new ArrayList<>();
 
     //This constructor is invoked automatically via reflection in ActorFactory to create new actors
     public Actor(Player owner) {
@@ -46,9 +47,6 @@ public abstract class Actor implements ActionKeyFrameListener {
 	protected abstract void randomizeAttributes(AttributeTuple tuple);
 
     //Decide which animation to use, what attack to go for...
-    public abstract void preAttack();
-
-    //The actual 'hitbox calculation & apply damage logic'
     public abstract void onAttack();
 
     public abstract void onDeath();
@@ -91,13 +89,17 @@ public abstract class Actor implements ActionKeyFrameListener {
 
                 c.render(sprite, drawX, drawY, 1.0f, Colors.toInt(128, 0, 0, tint));
             }
+
+			for(StatusEffect effect : statusEffectList) {
+				effect.render(c);
+			}
         }
     }
 
     public void update() {
 		boolean canMove = true;
 
-        if (dead) {
+		if (dead) {
             currentAction = ActionType.DEATH;
 			hurt = false;
 			hurtAlpha = 0.7f;
@@ -134,7 +136,7 @@ public abstract class Actor implements ActionKeyFrameListener {
 					//TODO range check bugged (not hitting issue)
 					boolean canAttack = (xDiff > attributes.blindRange && xDiff <= attributes.range - 1 * Actor.SPRITE_SCALE);
 					if (canAttack) {
-						preAttack();
+						onAttack();
 						canMove = false;
 						break;
 					}
@@ -144,6 +146,13 @@ public abstract class Actor implements ActionKeyFrameListener {
 			if (canMove) {
 				move();
 			}
+		}
+
+		for(int i = 0; i < statusEffectList.size(); i++) {
+			StatusEffect effect = statusEffectList.get(i);
+			effect.update();
+			if(effect.hasExpired())
+				removeStatusEffect(effect);
 		}
 
         actionSet.update();
@@ -165,6 +174,14 @@ public abstract class Actor implements ActionKeyFrameListener {
 				}
 				break;
 		}
+	}
+
+	public void addStatusEffect(StatusEffect effect) {
+		this.statusEffectList.add(effect);
+	}
+
+	public void removeStatusEffect(StatusEffect effect) {
+		statusEffectList.remove(effect);
 	}
 
     public void hurt(Actor provoker) {

@@ -37,6 +37,8 @@ public class GameState extends PixelState {
 		player1.updateActorBuffer(ActorType.MELEE);
 		player1.updateActorBuffer(ActorType.RANGER);
 		player1.updateActorBuffer(ActorType.CASTER);
+		player1.updateActorBuffer(ActorType.SCOUT);
+		player1.updateActorBuffer(ActorType.CASTER2);
 
         Player player2 = new Player("Dumhead", Race.HUMAN, Origin.EAST, 100);
 

@@ -117,12 +117,4 @@ public class SampleActor {
 	public void setVisible(boolean visible) {
 		this.visible = visible;
 	}
-
-    public void setPosition(Vector2f position) {
-        this.position = position;
-    }
-
-    public Vector2f getPosition() {
-        return position;
-    }
 }

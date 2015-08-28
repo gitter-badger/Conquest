@@ -1,9 +1,7 @@
 package tk.hes.conquest.game;
 
 import tk.hes.conquest.actor.Actor;
-import tk.hes.conquest.actor.human.Hu$Caster;
-import tk.hes.conquest.actor.human.Hu$Ranger;
-import tk.hes.conquest.actor.human.Hu$Warrior;
+import tk.hes.conquest.actor.human.*;
 
 import java.util.HashMap;
 
@@ -17,7 +15,9 @@ public enum Race {
 		public void indexActorMap(HashMap<ActorType, Class<? extends Actor>> map) {
 			map.put(ActorType.MELEE, Hu$Warrior.class);
 			map.put(ActorType.RANGER, Hu$Ranger.class);
-			map.put(ActorType.CASTER, Hu$Caster.class);
+			map.put(ActorType.CASTER, Hu$Mage.class);
+			map.put(ActorType.SCOUT, Hu$Assassin.class);
+			map.put(ActorType.CASTER2, Hu$Priest.class);
 		}
 	},
 
