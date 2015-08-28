@@ -42,6 +42,10 @@ public class RenderContext {
 
     public static RenderContext instance;
 
+    public static RenderContext getInstance() {
+        return instance;
+    }
+
     /**
      * Creates a render context with given dimensions.
      *

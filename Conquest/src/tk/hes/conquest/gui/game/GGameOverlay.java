@@ -62,7 +62,7 @@ public class GGameOverlay extends GComponent {
         for (ActorType type : actorBuffer.keySet())
             actorBar.addSlot(new GActorSlot(actorBuffer.get(type).getSampleActor(), new Vector2f(0, 0), actorBar));
 
-
+        actorBar.init(c);
     }
 
 
