@@ -20,7 +20,7 @@ public class SampleActor {
 	private BB bb;
 	private Actor sample;
 	private boolean flipped = false;
-	private boolean visible = false;
+	private boolean visible = true;
 	private boolean drawShadow = false;
 
 	public SampleActor(Actor actor) {

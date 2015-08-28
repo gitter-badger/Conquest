@@ -284,7 +284,7 @@ public class RenderContext {
 				float fg = rgba[1] * fa;
 				float fb = rgba[2] * fa;
 
-				int[] oRGBA = Colors.fromInt(color);
+				int[] oRGBA = Colors.fromInt(pixelData[index]);
 				float ba = oRGBA[3] / 255f;
 				float br = oRGBA[0];
 				float bg = oRGBA[1];
