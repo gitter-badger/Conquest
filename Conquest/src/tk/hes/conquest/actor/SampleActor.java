@@ -125,4 +125,8 @@ public class SampleActor {
 	public ActionSet getActionSet() {
 		return actionSet;
 	}
+
+    public AttributeTuple getAttributes() {
+        return attributes;
+    }
 }
