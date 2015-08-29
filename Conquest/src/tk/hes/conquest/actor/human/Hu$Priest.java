@@ -22,7 +22,7 @@ public class Hu$Priest extends Actor {
 	private boolean channeling = false;
 	private long lastParticleSpawn = System.currentTimeMillis();
 	private long lastFireTime;
-	private int fireCooldown = 1000;
+	private int fireCooldown = 1500;
 	private boolean channelSpawn = false;
 
 	public Hu$Priest(Player owner) {
@@ -156,7 +156,7 @@ public class Hu$Priest extends Actor {
 		private ArrayList<Actor> actorsHealed = new ArrayList<>();
 
 		public BasicBolt(Actor owner) {
-			super(owner, new BB(2, 2, 6, 5), null, null, 0.6f);
+			super(owner, new BB(3, 2, 3, 5), null, null, 0.6f);
 			sprite = Art.PARTICLE_PROJECTILE_BOLT.getSprite(0, 1);
 			Animation anim = new Animation(new Bitmap[] { sprite }, 1000);
 
@@ -166,6 +166,8 @@ public class Hu$Priest extends Actor {
 			}
 			this.animation = anim;
 			this.position = pos;
+			setCollideAlly(true);
+			setCollideEnemy(true);
 		}
 
 		@Override
@@ -182,36 +184,42 @@ public class Hu$Priest extends Actor {
 		}
 
 		@Override
-		protected void collideWith(ArrayList<Actor> collisions) {
-			for(Actor actor : collisions) {
+		public void onSpawn() {
+			Hu$Priest.this.channeling = false;
+		}
+
+		@Override
+		public void onCollideWithAlly(ArrayList<Actor> actors) {
+			for(Actor actor : actors) {
 				if(actor.isDead()) continue;
+
 				if(actor.getOwner().equals(owner.getOwner())) {
-					//TODO apply a buff (TBI)
 					if(actorsHealed.contains(actor))
 						continue;
 
 					actor.addStatusEffect(new HealingEffect(actor, 3000, 500, (int) (Math.random() * 6 + 7)));
 					actorsHealed.add(actor);
-				} else if(!actor.getOwner().equals(owner.getOwner())) {
-					//TODO extra effects for undead units
-					actor.hurt(owner);
-					BasicBolt.this.remove();
-
-					int particles = (int) (Math.random() * 15 + 85);
-					for (int i = 0; i < particles; i++) {
-						Vector2f pos = new Vector2f(position.getX() + 2 * Actor.SPRITE_SCALE + (float) (Math.random() * 3),
-								position.getY() + this.getBB().getRy() + this.getBB().getHeight() / 2
-										+ (float) (Math.random() * (sprite.getHeight()) / 2f));
-						BoltCollisionParticle particle = new BoltCollisionParticle(pos, this.velocity, sprite);
-						ParticleManager.get().spawn(particle);
-					}
 				}
 			}
 		}
 
 		@Override
-		public void onSpawn() {
-			Hu$Priest.this.channeling = false;
+		public void onCollideWithEnemy(ArrayList<Actor> actors) {
+			for(Actor actor : actors) {
+				if(actor.isDead()) continue;
+				//TODO extra effects for undead units
+				actor.hurt(owner);
+
+				int particles = (int) (Math.random() * 15 + 85);
+				for (int i = 0; i < particles; i++) {
+					Vector2f pos = new Vector2f(position.getX() + 2 * Actor.SPRITE_SCALE + (float) (Math.random() * 3),
+							position.getY() + this.getBB().getRy() + this.getBB().getHeight() / 2
+									+ (float) (Math.random() * (sprite.getHeight()) / 2f));
+					BoltCollisionParticle particle = new BoltCollisionParticle(pos, this.velocity, sprite);
+					ParticleManager.get().spawn(particle);
+				}
+				BasicBolt.this.remove();
+			}
 		}
 	}
 

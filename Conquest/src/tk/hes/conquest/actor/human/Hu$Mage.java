@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class Hu$Mage extends Actor {
 
 	private long lastFireTime = System.currentTimeMillis();
-	private int fireCooldown = 1000; //ms
+	private int fireCooldown = 500; //ms
 	private long lastParticleSpawn = System.currentTimeMillis();
 	private boolean channeling = false;
 
@@ -157,7 +157,9 @@ public class Hu$Mage extends Actor {
 			}
 			this.animation = anim;
 			this.position = pos;
-			setSearchRange(200);
+			setEnemySearchRange(35);
+			setCollideEnemy(true);
+			setCollideAlly(false);
 		}
 
 		@Override
@@ -175,12 +177,20 @@ public class Hu$Mage extends Actor {
 		}
 
 		@Override
-		protected void collideWith(ArrayList<Actor> collisions) {
-			for(Actor actor : collisions) {
+		public void onSpawn() {
+			Hu$Mage.this.channeling = false;
+		}
+
+		@Override
+		public void onCollideWithAlly(ArrayList<Actor> actors) {
+
+		}
+
+		@Override
+		public void onCollideWithEnemy(ArrayList<Actor> actors) {
+			for(Actor actor : actors) {
 				if(actor.isDead()) continue;
-				if(actor.getOwner().equals(owner.getOwner())) continue;
 				actor.hurt(owner);
-				BasicBolt.this.remove();
 
 				int particles = (int) (Math.random() * 15 + 85);
 				for(int i = 0; i < particles; i++) {
@@ -190,15 +200,11 @@ public class Hu$Mage extends Actor {
 					BoltCollisionParticle particle = new BoltCollisionParticle(pos, this.velocity, sprite);
 					ParticleManager.get().spawn(particle);
 				}
+
+				BasicBolt.this.remove();
 			}
 		}
-
-		@Override
-		public void onSpawn() {
-			Hu$Mage.this.channeling = false;
-		}
 	}
-
 
 	private class BoltCollisionParticle extends Particle {
 

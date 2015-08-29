@@ -22,9 +22,6 @@ public abstract class Projectile extends Particle {
 	protected abstract void updateVelocity();
 	protected abstract void updateCollision();
 
-	/** Projectile travels through a target actor */
-	protected abstract void collideWith(ArrayList<Actor> collisions);
-
 	public Projectile(Actor owner, BB bb, Animation anim, Vector2f pos, Vector2f velo) {
 		super(pos, velo);
 		this.animation = anim;

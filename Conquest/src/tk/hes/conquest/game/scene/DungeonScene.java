@@ -6,7 +6,7 @@ import tk.hes.conquest.graphics.Art;
 public class DungeonScene extends Scene {
 
 	public DungeonScene() {
-		super(Art.SCENE_OUTPOST);
+		super(Art.SCENE_DUNGEON);
 	}
 
 	@Override

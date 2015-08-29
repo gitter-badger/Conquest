@@ -15,14 +15,46 @@ import java.util.ArrayList;
  */
 public abstract class LinearProjectile extends Projectile {
 
-	private int searchRange = 1;
+	private int enemySearchRange = 1, allySearchRange = 1;
+	private boolean collideAlly = false, collideEnemy = true;
+
+	public abstract void onCollideWithAlly(ArrayList<Actor> actors);
+	public abstract void onCollideWithEnemy(ArrayList<Actor> actors);
 
 	public LinearProjectile(Actor owner, BB bb, Animation anim, Vector2f pos, float vh) {
 		super(owner, bb, anim, pos, new Vector2f((owner.getOwner().getOrigin().equals(Origin.WEST) ? Math.abs(vh) : -Math.abs(vh)), 0));
 	}
 
-	public void setSearchRange(int range) {
-		searchRange = range;
+	public int getEnemySearchRange() {
+		return enemySearchRange;
+	}
+
+	public void setEnemySearchRange(int enemySearchRange) {
+		this.enemySearchRange = enemySearchRange;
+	}
+
+	public int getAllySearchRange() {
+		return allySearchRange;
+	}
+
+	public void setAllySearchRange(int allySearchRange) {
+		this.allySearchRange = allySearchRange;
+	}
+
+	public boolean isCollidingAlly() {
+		return collideAlly;
+	}
+
+	public boolean isCollidingEnemy() {
+		return collideEnemy;
+	}
+
+	public void setCollideAlly(boolean collideAlly) {
+		this.collideAlly = collideAlly;
+	}
+
+	public void setCollideEnemy(boolean collideEnemy) {
+		this.collideEnemy = collideEnemy;
 	}
 
 	@Override
@@ -33,22 +65,43 @@ public abstract class LinearProjectile extends Projectile {
 	protected void updateCollision() {
 		float vh = getVelocity().getX();
 
-//		ArrayList<Actor> actors = owner.getGameBoard().getNearbyActorsInLane(owner.getCurrentLane(), owner.getPosition(), searchRange, vh < 0f, vh > 0f);
-		ArrayList<Actor> actors = owner.getGameBoard().getActorsInLane(owner.getCurrentLane());
-		Rectangle bounds = new Rectangle((int) position.getX() + (int) bb.getRx(),
-				(int) position.getY() + (int) bb.getRy(),
-				(int) bb.getWidth(), (int) bb.getHeight());
+		int bx = (int) getPosition().getX();
+		int by = (int) getPosition().getY();
+		int bw = (int) getBB().getWidth();
+		int bh = (int) getBB().getHeight();
+		Rectangle bounds = new Rectangle(bx, by, bw, bh);
+		ArrayList<Actor> actors;
 		ArrayList<Actor> collisions = new ArrayList<>();
-		for(Actor actor : actors) {
-			if(actor.equals(owner)) continue;
-			Rectangle actorBounds = new Rectangle((int) (actor.getPosition().getX() + actor.getBB().getRx()),
-					(int) (actor.getPosition().getY() + actor.getBB().getRy()),
-					(int) actor.getBB().getWidth(), (int) actor.getBB().getHeight());
-			if(actorBounds.intersects(bounds)) {
-				collisions.add(actor);
+
+		if(isCollidingEnemy()) {
+			actors = owner.getGameBoard().getNearbyActorsInLane(owner.getCurrentLane(), this.getPosition(), enemySearchRange, vh < 0f, vh > 0f);
+			for (Actor actor : actors) {
+				if (actor.equals(owner) || actor.getOwner().equals(owner.getOwner())) continue;
+				Rectangle actorBounds = actor.getBounds();
+				if (actorBounds.intersects(bounds)) {
+					collisions.addAll(actors);
+					if (!collisions.contains(actor)) {
+						collisions.add(actor);
+					}
+					onCollideWithEnemy(collisions);
+				}
 			}
 		}
 
-		collideWith(collisions);
+		if(isCollidingAlly()) {
+			collisions.clear();
+			actors = owner.getGameBoard().getNearbyActorsInLane(owner.getCurrentLane(), getPosition(), allySearchRange, vh < 0f, vh > 0f);
+			for (Actor actor : actors) {
+				if (actor.equals(owner) && !actor.getOwner().equals(owner.getOwner())) continue;
+				Rectangle actorBounds = actor.getBounds();
+				if (actorBounds.intersects(bounds)) {
+					collisions.addAll(actors);
+					if (!collisions.contains(actor)) {
+						collisions.add(actor);
+					}
+					onCollideWithAlly(collisions);
+				}
+			}
+		}
 	}
 }
