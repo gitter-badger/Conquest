@@ -4,6 +4,7 @@ import me.deathjockey.tinypixel.graphics.RenderContext;
 import me.deathjockey.tinypixel.util.Vector2f;
 import tk.hes.conquest.ConquestGameDesktopLauncher;
 import tk.hes.conquest.actor.Actor;
+import tk.hes.conquest.game.scene.Scene;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,15 +18,17 @@ public class GameBoard {
 	private int dominance; //50 start, 0 = p2 win, 100 = p1 win
 	private Player player1, player2;
 	private int laneCount;
+	private Scene scene;
 
 	private final HashMap<Integer, ArrayList<Actor>> actorMap = new HashMap<>();
 
-	public GameBoard(Player player1, Player player2, int maxLaneSize, int startDominance, int timeLimit) {
+	public GameBoard(Scene scene, Player player1, Player player2, int maxLaneSize, int startDominance, int timeLimit) {
 		this.player1 = player1;
 		this.player2 = player2;
 		this.laneCount = maxLaneSize;
 		this.dominance = startDominance;
 		this.time = timeLimit;
+		this.scene = scene;
 
 		for(int i = 0; i < maxLaneSize; i++) {
 			actorMap.put(i, new ArrayList<>());
@@ -35,6 +38,7 @@ public class GameBoard {
 	}
 
 	public void render(RenderContext context) {
+		scene.render(context);
 		player1.render(context);
 		player2.render(context);
 
@@ -48,6 +52,7 @@ public class GameBoard {
 	}
 
     public void update() {
+		scene.update();
         player1.update();
         player2.update();
 

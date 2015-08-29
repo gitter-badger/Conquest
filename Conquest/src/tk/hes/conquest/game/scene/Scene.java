@@ -1,4 +1,4 @@
-package tk.hes.conquest.game;
+package tk.hes.conquest.game.scene;
 
 import me.deathjockey.tinypixel.graphics.Bitmap;
 import me.deathjockey.tinypixel.graphics.Colors;
