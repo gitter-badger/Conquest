@@ -31,4 +31,8 @@ public class GActor extends GComponent {
     public void update() {
 
     }
+
+	public SampleActor getSampleActor() {
+		return actor;
+	}
 }

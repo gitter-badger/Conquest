@@ -22,7 +22,7 @@ public class Player {
 	private long lastDeployTime = System.currentTimeMillis();
 	private final LinkedHashMap<ActorType, Actor> actorBuffer = new LinkedHashMap<>();
 	private final ArrayList<ActorType> actorsOwned = new ArrayList<>();
-	private int actorSelectCaret = 0;
+	private int actorSelectIndex = 0;
 
     private int deployLane = 0;
     private GameBoard board;
@@ -61,15 +61,15 @@ public class Player {
                 deployLane++;
         }
 		if (Input.getKeyPressed(KeyEvent.VK_LEFT)) {
-			if(actorSelectCaret > 0)
-				actorSelectCaret--;
+			if(actorSelectIndex > 0)
+				actorSelectIndex--;
 			else
-				actorSelectCaret = actorsOwned.size() - 1;
+				actorSelectIndex = actorsOwned.size() - 1;
 		} else if (Input.getKeyPressed(KeyEvent.VK_RIGHT)) {
-			if(actorSelectCaret < actorsOwned.size() - 1)
-				actorSelectCaret++;
+			if(actorSelectIndex < actorsOwned.size() - 1)
+				actorSelectIndex++;
 			else
-				actorSelectCaret = 0;
+				actorSelectIndex = 0;
 		}
 
 
@@ -144,7 +144,11 @@ public class Player {
 	}
 
 	public ActorType getSelectedActor() {
-		return actorsOwned.get(actorSelectCaret);
+		return actorsOwned.get(actorSelectIndex);
+	}
+
+	public int getSelectedActorIndex() {
+		return actorSelectIndex;
 	}
 
 	public int getCharge() {

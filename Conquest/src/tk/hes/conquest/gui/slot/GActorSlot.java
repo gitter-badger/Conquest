@@ -52,4 +52,8 @@ public class GActorSlot extends GComponent {
     public void setState(GSlotState state) {
         this.state = state;
     }
+
+	public GActor getGActor() {
+		return gActor;
+	}
 }

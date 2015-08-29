@@ -2,18 +2,14 @@ package tk.hes.conquest.gui.game;
 
 import me.deathjockey.tinypixel.graphics.RenderContext;
 import me.deathjockey.tinypixel.util.Vector2f;
-import tk.hes.conquest.actor.Actor;
-import tk.hes.conquest.game.ActorType;
 import tk.hes.conquest.game.GameBoard;
 import tk.hes.conquest.game.Player;
 import tk.hes.conquest.gui.base.GComponent;
 import tk.hes.conquest.gui.base.GDialog;
 import tk.hes.conquest.gui.dialog.GTitleDialog;
-import tk.hes.conquest.gui.slot.GActorSlot;
 import tk.hes.conquest.gui.slot.GActorSlotBar;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 
 /**
  * The game overlay which will be rendered on top of "tk.hes.conquest.game" gameplay.
@@ -56,11 +52,9 @@ public class GGameOverlay extends GComponent {
 
         heroInfo = new GHeroInfo(new Vector2f(64, 16), this);
         heroInfo.init(c);
+        heroInfo.init(c);
 
-        actorBar = new GActorSlotBar(new Vector2f(175, 30));
-        LinkedHashMap<ActorType, Actor> actorBuffer = player.getActorBuffer();
-        for (ActorType type : actorBuffer.keySet())
-            actorBar.addSlot(new GActorSlot(actorBuffer.get(type).getSampleActor(), new Vector2f(0, 0), actorBar));
+        actorBar = new GActorSlotBar(new Vector2f(175, 20), player);
 
         actorBar.init(c);
     }

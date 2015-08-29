@@ -30,8 +30,8 @@ public class GDominanceBar extends GStatBar {
 
     public GDominanceBar(Vector2f position, String playerName, String opponentName) {
         super(position, GStatBarType.CUSTOM);
-        this.opponentColor = Colors.toInt(255, 0, 0, 255);
-        this.topColor = Colors.toInt(0, 0, 255, 255);
+		this.topColor = Colors.toInt(172, 50, 50, 255);
+		this.opponentColor = Colors.toInt(0, 123, 255, 255);
         this.playerName = new GLabel(playerName, new Vector2f(0, 0), Colors.PURE_YELLOW, this);
         this.opponentName = new GLabel(opponentName, new Vector2f(0, 0), Colors.PURE_YELLOW, this);
     }
