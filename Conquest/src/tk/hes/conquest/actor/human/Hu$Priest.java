@@ -247,9 +247,7 @@ public class Hu$Priest extends Actor {
 	private class BoltCollisionParticle extends Particle {
 
 		private int r, g, b;
-		private float alpha = 125f;
-		private long spawnTime;
-		private int lifeTime = 1000;
+		private int alpha = 125;
 
 		protected BoltCollisionParticle(Vector2f pos, Vector2f projectileVelocity, Bitmap projectile) {
 			super(pos, new Vector2f(0, 0));
@@ -270,15 +268,15 @@ public class Hu$Priest extends Actor {
 		@Override
 		public void update() {
 			super.update();
-			alpha -= 255f / (float) lifeTime;
-			setColor(r / 255f, g / 255f, b / 255f, alpha / 255f);
-			if(System.currentTimeMillis() - spawnTime > lifeTime || alpha <= 0)
+			alpha -= 3 * Time.delta;
+			setColor(r, g, b, alpha);
+			if(alpha <= 0)
 				remove();
 		}
 
 		@Override
 		public void onSpawn() {
-			spawnTime = System.currentTimeMillis();
+
 		}
 	}
 

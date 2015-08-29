@@ -26,10 +26,10 @@ public class Hu$Assassin extends Actor {
 
 	@Override
 	protected void initializeAttributes(AttributeTuple tuple, BB bb, ActionSet actions) {
-		tuple.health = 85;
-		tuple.healthMax = 85;
-		tuple.mana = 30;
-		tuple.manaMax = 30;
+		tuple.health = 65;
+		tuple.healthMax = 65;
+		tuple.mana = 0;
+		tuple.manaMax = 0;
 		tuple.attackPhysical = 7;
 		tuple.attackRandomPhysical = 22;
 		tuple.defense = 3;
@@ -37,7 +37,7 @@ public class Hu$Assassin extends Actor {
 		tuple.evasion = 25;
 		tuple.heroExpReward = 6;
 		tuple.blindRange = 0;
-		tuple.range = 9;
+		tuple.range = 5;
 		tuple.magicDefense = 1;
 		tuple.speed = 0.42f;
 		tuple.attackMagic = 0;

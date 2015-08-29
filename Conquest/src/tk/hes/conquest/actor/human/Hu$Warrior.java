@@ -59,8 +59,8 @@ public class Hu$Warrior extends Actor  {
 
 		actions.set(ActionType.ATTACK1, new Action(this)
 				.addFrame(Art.UNIT_HUMAN_WARRIOR.getSprite(0, 1), 250, 0, 0)
-				.addFrame(Art.UNIT_HUMAN_WARRIOR.getBitmapRegion(1 * w, 1 * h, (1 + 2) * w, (1 + 1) * h), 100, -9 * Actor.SPRITE_SCALE, 0)
-				.addFrame(Art.UNIT_HUMAN_WARRIOR.getBitmapRegion(1 * w, 1 * h, (1 + 2) * w, (1 + 1) * h), 400, -9 * Actor.SPRITE_SCALE, 0, "swing-hit")
+				.addFrame(Art.UNIT_HUMAN_WARRIOR.getBitmapRegion(w, h, 3 * w, 2 * h), 100, -9 * Actor.SPRITE_SCALE, 0)
+				.addFrame(Art.UNIT_HUMAN_WARRIOR.getBitmapRegion(w, h, 3 * w, 2 * h), 400, -9 * Actor.SPRITE_SCALE, 0, "swing-hit")
 				.addFrame(Art.UNIT_HUMAN_WARRIOR.getSprite(0, 1), 950, 0, 0, "$RANDOM_DELAY 0 350"));
 
 		actions.set(ActionType.DEATH, new Action()

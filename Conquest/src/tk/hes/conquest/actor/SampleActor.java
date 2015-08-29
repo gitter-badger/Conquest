@@ -121,4 +121,8 @@ public class SampleActor {
     public void setPosition(Vector2f position) {
         this.position = position;
     }
+
+	public ActionSet getActionSet() {
+		return actionSet;
+	}
 }

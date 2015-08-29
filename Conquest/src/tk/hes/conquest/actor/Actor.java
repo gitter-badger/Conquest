@@ -124,17 +124,19 @@ public abstract class Actor implements ActionKeyFrameListener {
 					int xDiff = 0;
 					switch (this.owner.getOrigin()) {
 						case WEST:
-							xDiff = (int) Math.abs(this.position.getX() + bb.getRx() + bb.getWidth()
+							xDiff = (int) (this.position.getX() + bb.getRx() + bb.getWidth()
 									- actor.position.getX() - actor.getBB().getRx());
 							break;
 						case EAST:
-							xDiff = (int) Math.abs(this.position.getX() + bb.getRx()
+							xDiff = (int) (this.position.getX() + bb.getRx()
 									- (actor.position.getX() + actor.bb.getWidth() + actor.bb.getRx()));
 							break;
 					}
-					//xDiff < range - blindRage = can fire
-					//TODO range check bugged (not hitting issue)
-					boolean canAttack = (xDiff > attributes.blindRange && xDiff <= attributes.range - 1 * Actor.SPRITE_SCALE);
+
+					boolean canAttack = (xDiff > 0 && owner.getOrigin().equals(Origin.EAST) ||
+								xDiff < 0 && owner.getOrigin().equals(Origin.WEST))
+								&& Math.abs(xDiff) > attributes.blindRange
+								&& Math.abs(xDiff) <= attributes.range - Actor.SPRITE_SCALE;
 					if (canAttack) {
 						onAttack();
 						canMove = false;

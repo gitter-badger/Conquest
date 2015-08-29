@@ -71,7 +71,7 @@ public class HealingEffect extends StatusEffect {
 		public void render(RenderContext c) {
 			super.render(c);
 			c.render(sprite, (int) position.getX(), (int) position.getY(), alpha / 255f);
-			alpha -= 10 * Time.delta;
+			alpha -= 150 * Time.delta;
 
 			if(alpha <= 0)
 				remove();
