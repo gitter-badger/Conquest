@@ -18,6 +18,7 @@ public enum Race {
 			map.put(ActorType.CASTER, Hu$Mage.class);
 			map.put(ActorType.SCOUT, Hu$Assassin.class);
 			map.put(ActorType.CASTER2, Hu$Priest.class);
+			map.put(ActorType.SPECIAL, Hu$Mystic.class);
 		}
 	},
 
