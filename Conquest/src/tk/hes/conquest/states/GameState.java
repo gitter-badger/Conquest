@@ -9,7 +9,7 @@ import me.deathjockey.tinypixel.state.PixelState;
 import me.deathjockey.tinypixel.util.Vector2f;
 import tk.hes.conquest.actor.Actor;
 import tk.hes.conquest.game.*;
-import tk.hes.conquest.game.scene.OutpostScene;
+import tk.hes.conquest.game.scene.DungeonScene;
 import tk.hes.conquest.gui.bar.GBarColor;
 import tk.hes.conquest.gui.game.GGameOverlay;
 import tk.hes.conquest.particle.ParticleManager;
@@ -40,11 +40,12 @@ public class GameState extends PixelState {
 		player1.updateActorBuffer(ActorType.CASTER);
 		player1.updateActorBuffer(ActorType.SCOUT);
 		player1.updateActorBuffer(ActorType.CASTER2);
+		player1.updateActorBuffer(ActorType.SPECIAL);
 
         Player player2 = new Player("Dumhead", Race.HUMAN, Origin.EAST, 100);
 		player2.updateActorBuffer(ActorType.MELEE);
 
-		board = new GameBoard(new OutpostScene(), player1, player2, 8, 50, 600000);
+		board = new GameBoard(new DungeonScene(), player1, player2, 8, 50, 600000);
 
 		overlay = new GGameOverlay(board, player1);
 		overlay.init(c);
