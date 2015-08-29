@@ -4,7 +4,7 @@ import me.deathjockey.tinypixel.graphics.BitFont;
 import me.deathjockey.tinypixel.graphics.Colors;
 import me.deathjockey.tinypixel.graphics.RenderContext;
 import me.deathjockey.tinypixel.util.Vector2f;
-import tk.hes.conquest.font.Font;
+import tk.hes.conquest.Font;
 import tk.hes.conquest.graphics.Art;
 import tk.hes.conquest.gui.bar.GStatBar;
 import tk.hes.conquest.gui.base.GImage;

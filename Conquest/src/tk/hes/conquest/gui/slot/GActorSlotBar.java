@@ -78,7 +78,7 @@ public class GActorSlotBar extends GComponent {
             offset = 0;
         }
         if (currentSelectedIndex < offset + 1 && currentSelectedIndex != 0) offset--;
-        if (currentSelectedIndex > offset + 4 && currentSelectedIndex != actors.size()) offset++;
+        if (currentSelectedIndex > offset + 4 && currentSelectedIndex != actors.size() - 1) offset++;
 		if (currentSelectedIndex == 0) {
 			offset = 0;
 		}
