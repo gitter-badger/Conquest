@@ -4,7 +4,6 @@ import me.deathjockey.tinypixel.TinyPixelGame;
 import me.deathjockey.tinypixel.TinyPixelStateBasedGame;
 import me.deathjockey.tinypixel.graphics.Colors;
 import me.deathjockey.tinypixel.graphics.RenderContext;
-import tk.hes.conquest.font.Font;
 import tk.hes.conquest.states.GameState;
 import tk.hes.conquest.states.StateID;
 

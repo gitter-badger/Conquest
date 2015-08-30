@@ -12,6 +12,7 @@ import tk.hes.conquest.game.Origin;
 import tk.hes.conquest.game.Player;
 import tk.hes.conquest.graphics.Art;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public abstract class Actor implements ActionKeyFrameListener {
@@ -34,6 +35,7 @@ public abstract class Actor implements ActionKeyFrameListener {
     protected boolean dead = false;
     protected long deadTime;
 	protected boolean shouldAttack = true;
+	protected float moveSpeed;
 
 	protected ArrayList<StatusEffect> statusEffectList = new ArrayList<>();
 
@@ -57,6 +59,7 @@ public abstract class Actor implements ActionKeyFrameListener {
         actionSet = new ActionSet(this);
         position = new Vector2f(0, 0);
         initializeAttributes(attributes, bb, actionSet);
+		moveSpeed = attributes.speed;
     }
 
     public void render(RenderContext c) {
@@ -98,6 +101,7 @@ public abstract class Actor implements ActionKeyFrameListener {
 
     public void update() {
 		boolean canMove = true;
+		moveSpeed = attributes.speed;
 
 		if (dead) {
             currentAction = ActionType.DEATH;
@@ -113,14 +117,17 @@ public abstract class Actor implements ActionKeyFrameListener {
 				}
 				hurtAlpha = ((float) System.currentTimeMillis() - (float) hurtTime) / (float) hurtTintDuration;
 			}
-
-			if(shouldAttack) {
-				//check enemies
+			//check enemies
+			Rectangle bounds = getBounds();
 				ArrayList<Actor> actors = board.getOpponentActorsInLane(owner, currentLane);
 				for (int i = 0; i < actors.size(); i++) {
 					Actor actor = actors.get(i);
 					if (actor.isDead()) continue;
-
+					Rectangle abounds = actor.getBounds();
+					if(!actor.getOwner().equals(getOwner()) && bounds.intersects(abounds)) {
+						moveSpeed /= 3;
+						canMove = !actor.getCurrentAction().equals(ActionType.ATTACK1);
+					}
 					int xDiff = 0;
 					switch (this.owner.getOrigin()) {
 						case WEST:
@@ -133,17 +140,17 @@ public abstract class Actor implements ActionKeyFrameListener {
 							break;
 					}
 
-					boolean canAttack = (xDiff > 0 && owner.getOrigin().equals(Origin.EAST) ||
-								xDiff < 0 && owner.getOrigin().equals(Origin.WEST))
-								&& Math.abs(xDiff) > attributes.blindRange
-								&& Math.abs(xDiff) <= attributes.range - Actor.SPRITE_SCALE;
+					boolean canAttack = (xDiff > -this.getBB().getWidth() && owner.getOrigin().equals(Origin.EAST) ||
+							xDiff < this.getBB().getHeight() && owner.getOrigin().equals(Origin.WEST))
+							&& Math.abs(xDiff) > attributes.blindRange
+							&& Math.abs(xDiff) <= attributes.range - Actor.SPRITE_SCALE;
 					if (canAttack) {
 						onAttack();
 						canMove = false;
 						break;
 					}
 				}
-			}
+
 
 			if (canMove) {
 				move();
@@ -164,13 +171,13 @@ public abstract class Actor implements ActionKeyFrameListener {
 		currentAction = ActionType.MOVE;
 		switch (owner.getOrigin()) {
 			case WEST:
-				position.setX(position.getX() + attributes.speed * (float) Time.delta);
+				position.setX(position.getX() + moveSpeed * (float) Time.delta);
 				if(position.getX() > ConquestGameDesktopLauncher.INIT_WIDTH / ConquestGameDesktopLauncher.SCALE) {
 					board.actorReachEdge(this);
 				}
 				break;
 			case EAST:
-				position.setX(position.getX() - attributes.speed * (float) Time.delta);
+				position.setX(position.getX() - moveSpeed * (float) Time.delta);
 				if(position.getX() + bb.getWidth() + 2 < 0) {
 					board.actorReachEdge(this);
 				}
@@ -222,6 +229,12 @@ public abstract class Actor implements ActionKeyFrameListener {
 
 		randomizeAttributes(attributes);
     }
+
+	public Rectangle getBounds() {
+		return new Rectangle((int) (this.getPosition().getX() + this.getBB().getRx()),
+				(int) (this.getPosition().getY() + this.getBB().getRy()),
+				(int) (this.getBB().getWidth()), (int) (this.getBB().getHeight()));
+	}
 
     public void setPosition(int x, int y) {
         position.set(x, y);

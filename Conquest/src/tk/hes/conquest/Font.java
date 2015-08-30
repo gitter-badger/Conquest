@@ -1,4 +1,4 @@
-package tk.hes.conquest.font;
+package tk.hes.conquest;
 
 import me.deathjockey.tinypixel.graphics.BitFont;
 import me.deathjockey.tinypixel.graphics.RenderContext;

@@ -130,6 +130,9 @@ public class Hu$Ranger extends Actor {
 			}
 			this.animation = anim;
 			this.position = pos;
+			setEnemySearchRange(1);
+			setCollideAlly(false);
+			setCollideEnemy(true);
 		}
 
 		@Override
@@ -138,17 +141,22 @@ public class Hu$Ranger extends Actor {
 		}
 
 		@Override
-		protected void collideWith(ArrayList<Actor> collisions) {
-			for(Actor actor : collisions) {
+		public void onSpawn() {
+		}
+
+		@Override
+		public void onCollideWithAlly(ArrayList<Actor> actors) {
+
+		}
+
+		@Override
+		public void onCollideWithEnemy(ArrayList<Actor> actors) {
+			for(Actor actor : actors) {
 				if(actor.isDead()) continue;
 				if(actor.getOwner().equals(owner.getOwner())) continue;
 				actor.hurt(owner);
 				BasicArrow.this.remove();
 			}
-		}
-
-		@Override
-		public void onSpawn() {
 		}
 	}
 }

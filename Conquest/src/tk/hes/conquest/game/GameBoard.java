@@ -6,6 +6,7 @@ import tk.hes.conquest.ConquestGameDesktopLauncher;
 import tk.hes.conquest.actor.Actor;
 import tk.hes.conquest.game.scene.Scene;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -129,15 +130,22 @@ public class GameBoard {
 	}
 
 	public ArrayList<Actor> getNearbyActorsInLane(int lane, Vector2f origin, int range, boolean searchLeft, boolean searchRight) {
+		if(!searchLeft && !searchRight) return new ArrayList<>();
+
 		ArrayList<Actor> actors = getActorsInLane(lane);
 		ArrayList<Actor> result = new ArrayList<>();
+		int bx = (searchLeft) ? (int) origin.getX() - range : (int) origin.getX();
+		int by = (int) origin.getY();
+		int bw;
+		int bh = range;
+		if(searchLeft && searchRight) bw = 2 * range;
+		else bw = range;
+		Rectangle box = new Rectangle(bx, by, bw, bh);
 		for(Actor actor : actors) {
-
-			Vector2f position = actor.getPosition();
-			float xDiff = origin.getX() - position.getX();
-			if(Math.abs(xDiff) <= range && xDiff < 0f && searchLeft) result.add(actor);
-			if(xDiff <= range && xDiff > 0f && searchRight) result.add(actor);
-			else result.add(actor);
+			Rectangle bounds = actor.getBounds();
+			if(box.intersects(bounds)) {
+				result.add(actor);
+			}
 		}
 		return result;
 	}

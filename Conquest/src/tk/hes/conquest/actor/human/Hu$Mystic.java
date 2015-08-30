@@ -7,7 +7,6 @@ import me.deathjockey.tinypixel.graphics.Colors;
 import me.deathjockey.tinypixel.graphics.RenderContext;
 import me.deathjockey.tinypixel.util.Vector2f;
 import tk.hes.conquest.actor.*;
-import tk.hes.conquest.actor.effect.HealingEffect;
 import tk.hes.conquest.game.Origin;
 import tk.hes.conquest.game.Player;
 import tk.hes.conquest.graphics.Art;
@@ -17,38 +16,38 @@ import tk.hes.conquest.particle.ParticleManager;
 
 import java.util.ArrayList;
 
-public class Hu$Priest extends Actor {
+public class Hu$Mystic extends Actor {
 
-	private boolean channeling = false;
+	private long lastFireTime = System.currentTimeMillis();
+	private int fireCooldown = 1000; //ms
 	private long lastParticleSpawn = System.currentTimeMillis();
-	private long lastFireTime;
-	private int fireCooldown = 1500;
-	private boolean channelSpawn = false;
+	private boolean channeling = false;
 
-	public Hu$Priest(Player owner) {
+	public Hu$Mystic(Player owner) {
 		super(owner);
 	}
 
 	@Override
 	protected void initializeAttributes(AttributeTuple tuple, BB bb, ActionSet actions) {
-		tuple.health = 145;
-		tuple.healthMax = 45;
-		tuple.mana = 30;
-		tuple.manaMax = 30;
+
+		tuple.health = 80;
+		tuple.healthMax = 80;
+		tuple.mana = 50;
+		tuple.manaMax = 50;
 		tuple.attackPhysical = 0;
 		tuple.attackRandomPhysical = 0;
-		tuple.defense = 1;
+		tuple.defense = 3;
 		tuple.critChance = 0;
 		tuple.evasion = 0;
 		tuple.heroExpReward = 5;
 		tuple.blindRange = 70;
-		tuple.range = 220;
+		tuple.range = 250;
 		tuple.magicDefense = 0;
-		tuple.speed = 0.15f;
-		tuple.attackMagic = 16;
-		tuple.attackRandomMagical = 6;
+		tuple.speed = 0.17f;
+		tuple.attackMagic = 38;
+		tuple.attackRandomMagical = 20;
 		tuple.leaveCorpse = true;
-		tuple.goldReward = 7;
+		tuple.goldReward = 13;
 		tuple.chargeReward = 5;
 		tuple.knockback = 1;
 		tuple.knockbackResistance = 1;
@@ -57,30 +56,41 @@ public class Hu$Priest extends Actor {
 		tuple.expMax = 0;
 		tuple.level = 1;
 
-		tuple.name = "Priest";
-		tuple.lore = "Heals for days";
-		tuple.deployDelay = 4000;
+		tuple.name = "Mystic";
+		tuple.lore = "She's mysterious";
+		tuple.deployDelay = 6000;
 		tuple.hasShadow = true;
 		tuple.shadowType = 0;
 
-		int w = Art.UNIT_HUMAN_PRIEST.getCellSize().width;
-		int h = Art.UNIT_HUMAN_PRIEST.getCellSize().height;
+
+		int w = Art.UNIT_HUMAN_MYSTIC.getCellSize().width;
+		int h = Art.UNIT_HUMAN_MYSTIC.getCellSize().height;
 
 		actions.set(ActionType.STATIC, new Action()
-				.addFrame(Art.UNIT_HUMAN_PRIEST.getSprite(0, 0), 500, 0, 0));
+				.addFrame(Art.UNIT_HUMAN_MYSTIC.getSprite(0, 0), 500, 0, 0));
 
 		actions.set(ActionType.MOVE, new Action()
-				.addFrame(Art.UNIT_HUMAN_PRIEST.getSprite(0, 0), 500, 0, 0)
-				.addFrame(Art.UNIT_HUMAN_PRIEST.getSprite(1, 0), 500, 0, 0));
+				.addFrame(Art.UNIT_HUMAN_MYSTIC.getSprite(0, 0), 500, 0, 0)
+				.addFrame(Art.UNIT_HUMAN_MYSTIC.getSprite(1, 0), 500, 0, 0));
 
 		actions.set(ActionType.ATTACK1, new Action(this)
-				.addFrame(Art.UNIT_HUMAN_PRIEST.getSprite(0, 1), 10, 0, 0, "")
-				.addFrame(Art.UNIT_HUMAN_PRIEST.getSprite(0, 1), 1500, 0, 0, "channel")
-				.addFrame(Art.UNIT_HUMAN_PRIEST.getSprite(1, 1), 500, 0, 0, "shoot")
-				.addFrame(Art.UNIT_HUMAN_PRIEST.getSprite(1, 1), 500, 0, 0, "end-shoot"));
+				.addFrame(Art.UNIT_HUMAN_MYSTIC.getSprite(0, 1), 10, 0, 0, "")
+				.addFrame(Art.UNIT_HUMAN_MYSTIC.getSprite(0, 1), 1500, 0, 0, "channel")
+				.addFrame(Art.UNIT_HUMAN_MYSTIC.getBitmapRegion(2 * w, h, 4 * w, 2 * h), 500, -11, 0, "shoot")
+				.addFrame(Art.UNIT_HUMAN_MYSTIC.getSprite(0, 1), 500, 0, 0));
+
+		actions.set(ActionType.ATTACK2, new Action(this)
+				.addFrame(Art.UNIT_HUMAN_MYSTIC.getSprite(0, 1), 10, 0, 0, "")
+				.addFrame(Art.UNIT_HUMAN_MYSTIC.getSprite(0, 1), 250, 0, 0, "channel")
+				.addFrame(Art.UNIT_HUMAN_MYSTIC.getSprite(1, 1), 250, 0, 0)
+				.addFrame(Art.UNIT_HUMAN_MYSTIC.getSprite(0, 1), 250, 0, 0)
+				.addFrame(Art.UNIT_HUMAN_MYSTIC.getSprite(1, 1), 250, 0, 0)
+				.addFrame(Art.UNIT_HUMAN_MYSTIC.getSprite(0, 1), 250, 0, 0)
+				.addFrame(Art.UNIT_HUMAN_MYSTIC.getSprite(1, 1), 250, 0, 0)
+				.addFrame(Art.UNIT_HUMAN_MYSTIC.getSprite(1, 1), 500, 0, 0, "cast-teleport"));
 
 		actions.set(ActionType.DEATH, new Action()
-				.addFrame(Art.UNIT_HUMAN_PRIEST.getSprite(2, 0), 10000, 0, 0));
+				.addFrame(Art.UNIT_HUMAN_MYSTIC.getSprite(2, 0), 10000, 0, 0));
 
 		bb.rx = 1;
 		bb.ry = 0;
@@ -98,17 +108,13 @@ public class Hu$Priest extends Actor {
 		super.update();
 
 		if(channeling) {
-			if(!channelSpawn) {
-				double theta = 0d;
-				for(int i = 0; i < 36; i++) {
-					theta = theta + Math.toRadians(10);
-					float px, py;
-					px = (float) (getPosition().getX() + getBB().getWidth() / 2 + 8 * Actor.SPRITE_SCALE * Math.cos(theta));
-					py = (float) (getPosition().getY() + getBB().getHeight() / 2 + 8 * Actor.SPRITE_SCALE * Math.sin(theta));
-					ChannelParticle particle = new ChannelParticle(new Vector2f(px, py));
-					ParticleManager.get().spawn(particle);
-				}
-				channelSpawn = true;
+			if(System.currentTimeMillis() - lastParticleSpawn > 40) {
+				int px, py;
+				px = (int) (getPosition().getX() - 4 * Actor.SPRITE_SCALE + (int) (Math.random() * (getBB().getWidth() + 8 * Actor.SPRITE_SCALE)));
+				py = (int) (getPosition().getY() - 4 * Actor.SPRITE_SCALE + (int) (Math.random() * (getBB().getHeight() + 8 * Actor.SPRITE_SCALE)));
+				ChannelParticle particle = new ChannelParticle(new Vector2f(px, py));
+				ParticleManager.get().spawn(particle);
+				lastParticleSpawn = System.currentTimeMillis();
 			}
 		}
 
@@ -127,7 +133,7 @@ public class Hu$Priest extends Actor {
 
 	@Override
 	public void onAttack() {
-		currentAction = ActionType.ATTACK1;
+		currentAction = ActionType.ATTACK2;
 	}
 
 	@Override
@@ -137,27 +143,17 @@ public class Hu$Priest extends Actor {
 
 	@Override
 	public void keyFrameReached(String key) {
-		channeling = key.equals("channel");
-		if(key.equals("shoot")) {
-			BasicBolt bolt = new BasicBolt(this);
-			ParticleManager.get().spawn(bolt);
-		}
 
-		if(key.equals("end-shoot")) {
-			shouldAttack = false;
-			channelSpawn = false;
-			lastFireTime = System.currentTimeMillis();
-		}
 	}
+
 
 	private class BasicBolt extends LinearProjectile {
 
 		private Bitmap sprite;
-		private ArrayList<Actor> actorsHealed = new ArrayList<>();
 
 		public BasicBolt(Actor owner) {
-			super(owner, new BB(3, 2, 3, 5), null, null, 0.6f);
-			sprite = Art.PARTICLE_PROJECTILE_BOLT.getSprite(0, 1);
+			super(owner, new BB(2, 2, 6, 5), null, null, 1.8f);
+			sprite = Art.PARTICLE_PROJECTILE_BOLT.getSprite(0, 0);
 			Animation anim = new Animation(new Bitmap[] { sprite }, 1000);
 
 			Vector2f pos = new Vector2f(owner.getPosition().getX(), owner.getPosition().getY());
@@ -166,17 +162,19 @@ public class Hu$Priest extends Actor {
 			}
 			this.animation = anim;
 			this.position = pos;
-			setCollideAlly(true);
+			setEnemySearchRange(10);
 			setCollideEnemy(true);
+			setCollideAlly(false);
 		}
 
 		@Override
 		public void update() {
 			super.update();
 
-			if(System.currentTimeMillis() - lastParticleSpawn > 350) {
-				Vector2f pPos = new Vector2f(position.getX(), position.getY());
-				float vh = velocity.getX() / 3;
+			if(System.currentTimeMillis() - lastParticleSpawn > 50) {
+				Vector2f pPos = new Vector2f(position.getX() + sprite.getWidth() / 2,
+						position.getY() + sprite.getHeight() / 2);
+				float vh = velocity.getX() / (3 + (int) (Math.random() * 2));
 				BoltTrailParticle particle = new BoltTrailParticle(pPos, sprite, vh);
 				ParticleManager.get().spawn(particle);
 				lastParticleSpawn = System.currentTimeMillis();
@@ -185,33 +183,23 @@ public class Hu$Priest extends Actor {
 
 		@Override
 		public void onSpawn() {
-			Hu$Priest.this.channeling = false;
+			Hu$Mystic.this.channeling = false;
 		}
 
 		@Override
 		public void onCollideWithAlly(ArrayList<Actor> actors) {
-			for(Actor actor : actors) {
-				if(actor.isDead()) continue;
 
-				if(actor.getOwner().equals(owner.getOwner())) {
-					if(actorsHealed.contains(actor))
-						continue;
-
-					actor.addStatusEffect(new HealingEffect(actor, 3000, 500, (int) (Math.random() * 6 + 7)));
-					actorsHealed.add(actor);
-				}
-			}
 		}
 
 		@Override
 		public void onCollideWithEnemy(ArrayList<Actor> actors) {
 			for(Actor actor : actors) {
 				if(actor.isDead()) continue;
-				//TODO extra effects for undead units
+				if(actor.getOwner().equals(owner.getOwner())) continue;
 				actor.hurt(owner);
 
 				int particles = (int) (Math.random() * 15 + 85);
-				for (int i = 0; i < particles; i++) {
+				for(int i = 0; i < particles; i++) {
 					Vector2f pos = new Vector2f(position.getX() + 2 * Actor.SPRITE_SCALE + (float) (Math.random() * 3),
 							position.getY() + this.getBB().getRy() + this.getBB().getHeight() / 2
 									+ (float) (Math.random() * (sprite.getHeight()) / 2f));
@@ -223,39 +211,12 @@ public class Hu$Priest extends Actor {
 		}
 	}
 
-	private class BoltTrailParticle extends Particle {
-
-		private Bitmap projectile;
-		private int alpha = 125;
-
-		protected BoltTrailParticle(Vector2f pos, Bitmap projectile, float vh) {
-			super(pos, new Vector2f(vh, 0));
-			this.projectile = projectile;
-		}
-
-		@Override
-		public void render(RenderContext c) {
-			super.render(c);
-			c.render(projectile, (int) position.getX(), (int) position.getY(), (float) alpha / 255f);
-		}
-
-		@Override
-		public void update() {
-			super.update();
-			alpha -= 3 * Time.delta;
-			if(alpha <= 0)
-				remove();
-		}
-
-		@Override
-		public void onSpawn() {
-		}
-	}
-
 	private class BoltCollisionParticle extends Particle {
 
 		private int r, g, b;
-		private int alpha = 125;
+		private float alpha = 125f;
+		private long spawnTime;
+		private int lifeTime = 1000;
 
 		protected BoltCollisionParticle(Vector2f pos, Vector2f projectileVelocity, Bitmap projectile) {
 			super(pos, new Vector2f(0, 0));
@@ -276,7 +237,40 @@ public class Hu$Priest extends Actor {
 		@Override
 		public void update() {
 			super.update();
-			alpha -= 3 * Time.delta;
+			alpha -= 255f / (float) lifeTime;
+			setColor(r / 255f, g / 255f, b / 255f, alpha / 255f);
+			if(System.currentTimeMillis() - spawnTime > lifeTime || alpha <= 0)
+				remove();
+		}
+
+		@Override
+		public void onSpawn() {
+			spawnTime = System.currentTimeMillis();
+		}
+	}
+
+	private class BoltTrailParticle extends Particle {
+
+		private int r, g, b;
+		private int alpha = 255;
+
+		protected BoltTrailParticle(Vector2f pos, Bitmap projectile, float vh) {
+			super(pos, new Vector2f(vh, (float) (Math.random() * 0.3f - 0.15f)));
+			int[] pixel = Colors.fromInt(projectile.getPixels()[(int) (Math.random() * projectile.getPixels().length)]);
+			r = pixel[0];
+			g = pixel[1];
+			b = pixel[2];
+			if(r == 0 && g == 0 && b == 0 || pixel[3] == 0)
+				remove();
+
+			setColor(r, g, b, 255);
+			setSize((int) (Math.random() * 1 + 1));
+		}
+
+		@Override
+		public void update() {
+			super.update();
+			alpha -= 6 * Time.delta;
 			setColor(r, g, b, alpha);
 			if(alpha <= 0)
 				remove();
@@ -284,7 +278,6 @@ public class Hu$Priest extends Actor {
 
 		@Override
 		public void onSpawn() {
-
 		}
 	}
 
@@ -308,11 +301,11 @@ public class Hu$Priest extends Actor {
 			if(r < tr) r += 6f * Time.delta;
 			if(g < tg) g += 6f * Time.delta;
 			if(b > tb) b -= 6f * Time.delta;
-			a -= 2 * Time.delta;
+			a -= 6 * Time.delta;
 			setColor(r, g, b, a);
 
-			Vector2f destination = Hu$Priest.this.getPosition();
-			BB bb = Hu$Priest.this.getBB();
+			Vector2f destination = Hu$Mystic.this.getPosition();
+			BB bb = Hu$Mystic.this.getBB();
 			float x = position.getX(), y = position.getY();
 			float dx = destination.getX() + bb.getRx() + bb.getWidth() / 2,
 					dy = destination.getY() + bb.getRy() + bb.getHeight() / 4;

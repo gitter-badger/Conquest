@@ -75,8 +75,6 @@ public class GActorSlotBar extends GComponent {
 
     @Override
     public void update() {
-
-
         currentSelectedIndex = player.getSelectedActorIndex();
         if (currentSelectedIndex < 0) {
             currentSelectedIndex = actors.size() - 1;
@@ -87,10 +85,10 @@ public class GActorSlotBar extends GComponent {
             offset = 0;
         }
         if (currentSelectedIndex < offset + 1 && currentSelectedIndex != 0) offset--;
-        if (currentSelectedIndex > offset + 4 && currentSelectedIndex != actors.size()) offset++;
-        if (currentSelectedIndex == 0) {
-            offset = 0;
-        }
+        if (currentSelectedIndex > offset + 4 && currentSelectedIndex != actors.size() - 1) offset++;
+		if (currentSelectedIndex == 0) {
+			offset = 0;
+		}
         for (int i = 0; i < actors.size(); i++) {
             boolean selected = i == currentSelectedIndex;
             actors.get(i).setState(selected ? GSlotState.SELECTED : GSlotState.ENABLED);
