@@ -46,6 +46,7 @@ public class GDominanceBar extends GStatBar {
         int nameW = BitFont.widthOf(opponentName.getText(), c.getFont(Font.NORMAL));
         this.opponentName.setPosition(new Vector2f(c.getWidth() - nameW - 10, 4));
         this.opponentName.init(c);
+        super.init(c);
     }
 
     @Override

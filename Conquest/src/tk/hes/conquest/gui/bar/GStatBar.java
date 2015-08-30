@@ -17,6 +17,7 @@ public class GStatBar extends GBar {
 
     protected GImage barBackground, barOverlay;
     private GStatBarType type;
+    private GBarOrigin drawOrigin;
 
     public GStatBar(Vector2f position, GStatBarType type) {
         this(position, type, null);
@@ -49,6 +50,7 @@ public class GStatBar extends GBar {
 
     @Override
     public void init(RenderContext c) {
+        super.init(c);
         this.setSize(barBackground.getSize());
     }
 

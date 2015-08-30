@@ -7,17 +7,11 @@ import tk.hes.conquest.gui.base.GComponent;
 import java.awt.*;
 
 /**
- * A GBar with made for making color bars.
- *
- * @author James Roberts
+ * @author James
  */
 public class GBarColor extends GBar {
 
     private int fillColor;
-
-    public GBarColor(Vector2f position, Dimension size, int fillColor) {
-        this(position, size, fillColor, null);
-    }
 
     public GBarColor(Vector2f position, Dimension size, int fillColor, GComponent parent) {
         super(position, parent);
@@ -27,7 +21,7 @@ public class GBarColor extends GBar {
 
     @Override
     public void init(RenderContext c) {
-
+        super.init(c);
     }
 
     @Override
@@ -44,9 +38,7 @@ public class GBarColor extends GBar {
 
     @Override
     public void update() {
-
     }
-
 
     public void setFillColor(int fillColor) {
         this.fillColor = fillColor;

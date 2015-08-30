@@ -58,7 +58,7 @@ public class GActorSlotBar extends GComponent {
         this.buttonRight = new GImage(Art.UI_ARROW_RIGHT, new Vector2f(208, 12), this);
         this.buttonRight.init(c);
 
-        unitName = new GLabel("James", new Vector2f(0, 38), this);
+        unitName = new GLabel("", new Vector2f(0, 38), this);
         unitName.init(c);
     }
 
@@ -75,6 +75,8 @@ public class GActorSlotBar extends GComponent {
 
     @Override
     public void update() {
+
+
         currentSelectedIndex = player.getSelectedActorIndex();
         if (currentSelectedIndex < 0) {
             currentSelectedIndex = actors.size() - 1;
@@ -96,6 +98,10 @@ public class GActorSlotBar extends GComponent {
         }
         unitName.setText(actors.get(currentSelectedIndex).getGActor().getSampleActor().getAttributes().name);
         updateButtonPosition();
+
+        // Must be ran last for unknown reasons...
+        for (int i = 0; i < actors.size(); i++)
+            actors.get(i).setDisabledAmount(100f - player.getActorCooldown(i) * 100);
     }
 
     private void updateButtonPosition() {

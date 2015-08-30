@@ -3,6 +3,7 @@ package tk.hes.conquest.actor;
 import me.deathjockey.tinypixel.graphics.Bitmap;
 import me.deathjockey.tinypixel.graphics.RenderContext;
 import me.deathjockey.tinypixel.util.Vector2f;
+import tk.hes.conquest.game.ActorType;
 import tk.hes.conquest.graphics.Art;
 
 /**
@@ -14,7 +15,8 @@ public class SampleActor {
 
 	private Vector2f position;
 	private ActionSet actionSet;
-	private ActionType currentAction;
+    private ActorType type;
+    private ActionType currentAction;
 	private float drawScale = 1.0f;
 	private AttributeTuple attributes;
 	private BB bb;
@@ -128,5 +130,9 @@ public class SampleActor {
 
     public AttributeTuple getAttributes() {
         return attributes;
+    }
+
+    public Actor getActor() {
+        return sample;
     }
 }
