@@ -32,6 +32,8 @@ public class Art {
 
 	//SLOT
 	public static final Spritesheet UI_SLOTS = getSpritesheet("/ui/slot/ui_slots.png", 30, 36);
+	public static final Bitmap UI_DEPLOY_BAR = get("/ui/slot/ui_deploy_bar.png");
+
 	public static final Bitmap UI_ARROW_LEFT = get("/ui/slot/ui_arrow_left.png");
 	public static final Bitmap UI_ARROW_RIGHT = get("/ui/slot/ui_arrow_right.png");
 
@@ -48,6 +50,8 @@ public class Art {
 	public static final Spritesheet UNIT_HUMAN_ASSASSIN = getSpritesheet("/actors/human/hum_scout.png", 8, 8, Actor.SPRITE_SCALE);
 	public static final Spritesheet UNIT_HUMAN_PRIEST = getSpritesheet("/actors/human/hum_caster2.png", 8, 8, Actor.SPRITE_SCALE);
 	public static final Spritesheet UNIT_HUMAN_MYSTIC = getSpritesheet("/actors/human/hum_special.png", 8, 8, Actor.SPRITE_SCALE);
+	public static final Spritesheet UNIT_HUMAN_LONG_SWORDSMAN = getSpritesheet("/actors/human/hum_special2.png", 8, 10, Actor.SPRITE_SCALE);
+	public static final Spritesheet UNIT_HUMAN_KNIGHT = getSpritesheet("/actors/human/hum_special3.png", 8, 10, Actor.SPRITE_SCALE);
     public static final Bitmap UI_STORE = get("/ui/store/ui_store.png");
 
 	public static final Spritesheet PARTICLE_PROJECTILE_ARROW = getSpritesheet("/particles/arrows.png", 8, 8, Actor.SPRITE_SCALE);

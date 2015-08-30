@@ -124,10 +124,11 @@ public class Player {
 
     //Sends a row of units
     public void deployCharge() {
-        if (charge >= chargeThreshold) {
+        if (charge >= chargeThreshold && canDeployActor(getSelectedActor())) {
             charge = 0;
             chargeThreshold += 20;
             board.sendChargeWave(this, race, getSelectedActor());
+			lastDeployTime = System.currentTimeMillis();
         }
     }
 

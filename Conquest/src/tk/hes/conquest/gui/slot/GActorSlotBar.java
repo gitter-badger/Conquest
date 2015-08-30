@@ -80,15 +80,25 @@ public class GActorSlotBar extends GComponent {
             currentSelectedIndex = actors.size() - 1;
             offset = currentSelectedIndex - 6 < 0 ? 0 : currentSelectedIndex - 6;
         }
-        if (currentSelectedIndex > actors.size() - 1) {
+
+		if (currentSelectedIndex > actors.size() - 1) {
             currentSelectedIndex = 0;
             offset = 0;
         }
-        if (currentSelectedIndex < offset + 1 && currentSelectedIndex != 0) offset--;
-        if (currentSelectedIndex > offset + 4 && currentSelectedIndex != actors.size() - 1) offset++;
+        if (currentSelectedIndex < offset + 1 && currentSelectedIndex != 0)
+			offset--;
+
+		if (currentSelectedIndex > offset + 4 && currentSelectedIndex != actors.size() - 1)
+			offset++;
+
 		if (currentSelectedIndex == 0) {
 			offset = 0;
 		}
+
+		if (currentSelectedIndex == actors.size() - 1 && actors.size() > 6) {
+			offset = actors.size() - 6;
+		}
+
         for (int i = 0; i < actors.size(); i++) {
             boolean selected = i == currentSelectedIndex;
             actors.get(i).setState(selected ? GSlotState.SELECTED : GSlotState.ENABLED);
@@ -98,8 +108,11 @@ public class GActorSlotBar extends GComponent {
         updateButtonPosition();
 
         // Must be ran last for unknown reasons...
-        for (int i = 0; i < actors.size(); i++)
-            actors.get(i).setDisabledAmount(100f - player.getActorCooldown(i) * 100);
+        for (int i = 0; i < actors.size(); i++) {
+			float disabledAmount = 100f - player.getActorCooldown(i) * 100;
+			actors.get(i).setDisabledAmount(disabledAmount);
+			actors.get(i).setDeployBarEnabled(disabledAmount == 0f);
+		}
     }
 
     private void updateButtonPosition() {

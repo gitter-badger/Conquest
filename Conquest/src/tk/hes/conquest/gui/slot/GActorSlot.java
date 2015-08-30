@@ -20,6 +20,7 @@ public class GActorSlot extends GComponent {
     private SampleActor actorData;
     private GActor gActor;
     private GSlotState state;
+	private GImage deployBar;
 
     public GActorSlot(SampleActor actor, Vector2f position, GComponent parent) {
         super(position, parent);
@@ -32,6 +33,7 @@ public class GActorSlot extends GComponent {
         disabled = new GImage(Art.UI_SLOTS.getSprite(0, 0), new Vector2f(0, 0), this);
         enabled = new GImage(Art.UI_SLOTS.getSprite(1, 0), new Vector2f(0, 0), this);
         selected = new GImage(Art.UI_SLOTS.getSprite(2, 0), new Vector2f(0, 0), this);
+		deployBar = new GImage(Art.UI_DEPLOY_BAR, new Vector2f(3, 27), this);
         this.gActor = new GActor(actorData, new Vector2f(7, 8), this);
         this.gActor.init(c);
 
@@ -48,8 +50,10 @@ public class GActorSlot extends GComponent {
             disabled.render(c);
         else if (state == GSlotState.ENABLED)
             enabled.render(c);
-        else if (state == GSlotState.SELECTED)
-            selected.render(c);
+        else if (state == GSlotState.SELECTED) {
+			selected.render(c);
+			deployBar.render(c);
+		}
         barColor.render(c);
         gActor.render(c);
 
@@ -72,4 +76,7 @@ public class GActorSlot extends GComponent {
     }
 
 
+	public void setDeployBarEnabled(boolean deployBarEnabled) {
+		deployBar.setVisible(deployBarEnabled);
+	}
 }

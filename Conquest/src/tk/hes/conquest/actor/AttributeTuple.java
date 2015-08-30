@@ -5,40 +5,41 @@ import com.sun.istack.internal.Nullable;
 
 public class AttributeTuple implements Cloneable {
 
-	public boolean leaveCorpse;
-	public boolean hasShadow;
-	public int shadowType;
+	public boolean leaveCorpse = false;
+	public boolean hasShadow = false;
+	public int shadowType = 0;
 
-	public int health;
-	public int healthMax;
-	public int mana;
-	public int manaMax;
-	public int exp;
-	public int expMax;
-	public int heroExpReward;
-	public int goldReward;
-	public int chargeReward;
-	public int level;
+	public int health = 1;
+	public int healthMax = 1;
+	public int mana = 0;
+	public int manaMax = 0;
+	public int exp = 0;
+	public int expMax = 0;
+	public int heroExpReward = 0;
+	public int goldReward = 0;
+	public int chargeReward = 0;
+	public int dominanceReward = 0;
+	public int level = 0;
 
-	public int attackPhysical;
-	public int attackRandomPhysical; //max .random value
-	public int attackMagic;
-	public int attackRandomMagical;
-	public int defense;
-	public int magicDefense;
-	public int range;
-	public int blindRange;
+	public int attackPhysical = 0;
+	public int attackRandomPhysical = 0; //max .random value
+	public int attackMagic = 0;
+	public int attackRandomMagical = 0;
+	public int defense = 0;
+	public int magicDefense = 0;
+	public int range = 0;
+	public int blindRange = 0;
 
-	public int knockback;
-	public int knockbackResistance;
-	public float speed;
-	public int evasion;
-	public int critChance; //critical strike chance
+	public int knockback = 0;
+	public int knockbackResistance = 0;
+	public float speed = 0f;
+	public int evasion = 0;
+	public int critChance = 0; //critical strike chance
 
-	public String name;
-	public String lore;
-	public int purchaseCost;
-	public int deployDelay;
+	public String name = "null";
+	public String lore = "null";
+	public int purchaseCost = 0;
+	public int deployDelay = 0;
 
 	@Nullable
 	public static final AttributeTuple getCopyOf(@NotNull AttributeTuple tuple) {

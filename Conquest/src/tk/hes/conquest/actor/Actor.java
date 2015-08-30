@@ -128,26 +128,28 @@ public abstract class Actor implements ActionKeyFrameListener {
 						moveSpeed /= 3;
 						canMove = !actor.getCurrentAction().equals(ActionType.ATTACK1);
 					}
-					int xDiff = 0;
-					switch (this.owner.getOrigin()) {
-						case WEST:
-							xDiff = (int) (this.position.getX() + bb.getRx() + bb.getWidth()
-									- actor.position.getX() - actor.getBB().getRx());
-							break;
-						case EAST:
-							xDiff = (int) (this.position.getX() + bb.getRx()
-									- (actor.position.getX() + actor.bb.getWidth() + actor.bb.getRx()));
-							break;
-					}
+					if(shouldAttack) {
+						int xDiff = 0;
+						switch (this.owner.getOrigin()) {
+							case WEST:
+								xDiff = (int) (this.position.getX() + bb.getRx() + bb.getWidth()
+										- actor.position.getX() - actor.getBB().getRx());
+								break;
+							case EAST:
+								xDiff = (int) (this.position.getX() + bb.getRx()
+										- (actor.position.getX() + actor.bb.getWidth() + actor.bb.getRx()));
+								break;
+						}
 
-					boolean canAttack = (xDiff > -this.getBB().getWidth() && owner.getOrigin().equals(Origin.EAST) ||
-							xDiff < this.getBB().getHeight() && owner.getOrigin().equals(Origin.WEST))
-							&& Math.abs(xDiff) > attributes.blindRange
-							&& Math.abs(xDiff) <= attributes.range - Actor.SPRITE_SCALE;
-					if (canAttack) {
-						onAttack();
-						canMove = false;
-						break;
+						boolean canAttack = (xDiff > -this.getBB().getWidth() && owner.getOrigin().equals(Origin.EAST) ||
+								xDiff < this.getBB().getHeight() && owner.getOrigin().equals(Origin.WEST))
+								&& Math.abs(xDiff) > attributes.blindRange
+								&& Math.abs(xDiff) <= attributes.range - Actor.SPRITE_SCALE;
+						if (canAttack) {
+							onAttack();
+							canMove = false;
+							break;
+						}
 					}
 				}
 

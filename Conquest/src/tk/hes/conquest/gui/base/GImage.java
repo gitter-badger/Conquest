@@ -13,8 +13,9 @@ import me.deathjockey.tinypixel.util.Vector2f;
 public class GImage extends GComponent {
 
     private Bitmap image;
+	private boolean visible = true;
 
-    public GImage(Bitmap image, Vector2f position) {
+	public GImage(Bitmap image, Vector2f position) {
         this(image, position, null);
 
     }
@@ -35,6 +36,8 @@ public class GImage extends GComponent {
 
     @Override
     public void render(RenderContext c) {
+		if(!visible) return;
+
         c.render(image, (int) position.getX(), (int) position.getY());
     }
 
@@ -45,4 +48,8 @@ public class GImage extends GComponent {
     public Bitmap getImage() {
         return image;
     }
+
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+	}
 }

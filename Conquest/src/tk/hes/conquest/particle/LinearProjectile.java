@@ -17,6 +17,7 @@ public abstract class LinearProjectile extends Projectile {
 
 	private int enemySearchRange = 1, allySearchRange = 1;
 	private boolean collideAlly = false, collideEnemy = true;
+	private boolean collideEnemyCorpse = false, collideAllyCorpse = false;
 
 	public abstract void onCollideWithAlly(ArrayList<Actor> actors);
 	public abstract void onCollideWithEnemy(ArrayList<Actor> actors);
@@ -49,6 +50,22 @@ public abstract class LinearProjectile extends Projectile {
 		return collideEnemy;
 	}
 
+	public void setCollideEnemyCorpse(boolean collideEnemyCorpse) {
+		this.collideEnemyCorpse = collideEnemyCorpse;
+	}
+
+	public void setCollideAllyCorpse(boolean collideAllyCorpse) {
+		this.collideAllyCorpse = collideAllyCorpse;
+	}
+
+	public boolean isCollidingEnemyCorpse() {
+		return collideEnemyCorpse;
+	}
+
+	public boolean isCollidingAllyCorpse() {
+		return collideAllyCorpse;
+	}
+
 	public void setCollideAlly(boolean collideAlly) {
 		this.collideAlly = collideAlly;
 	}
@@ -77,6 +94,7 @@ public abstract class LinearProjectile extends Projectile {
 			actors = owner.getGameBoard().getNearbyActorsInLane(owner.getCurrentLane(), this.getPosition(), enemySearchRange, vh < 0f, vh > 0f);
 			for (Actor actor : actors) {
 				if (actor.equals(owner) || actor.getOwner().equals(owner.getOwner())) continue;
+				if (!collideEnemyCorpse && actor.isDead()) continue;
 				Rectangle actorBounds = actor.getBounds();
 				if (actorBounds.intersects(bounds)) {
 					collisions.addAll(actors);
@@ -93,6 +111,7 @@ public abstract class LinearProjectile extends Projectile {
 			actors = owner.getGameBoard().getNearbyActorsInLane(owner.getCurrentLane(), getPosition(), allySearchRange, vh < 0f, vh > 0f);
 			for (Actor actor : actors) {
 				if (actor.equals(owner) && !actor.getOwner().equals(owner.getOwner())) continue;
+				if (!collideAllyCorpse && actor.isDead()) continue;
 				Rectangle actorBounds = actor.getBounds();
 				if (actorBounds.intersects(bounds)) {
 					collisions.addAll(actors);

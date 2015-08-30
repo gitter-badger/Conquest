@@ -2,7 +2,6 @@ package tk.hes.conquest.game;
 
 import me.deathjockey.tinypixel.graphics.RenderContext;
 import me.deathjockey.tinypixel.util.Vector2f;
-import tk.hes.conquest.ConquestGameDesktopLauncher;
 import tk.hes.conquest.actor.Actor;
 import tk.hes.conquest.game.scene.Scene;
 
@@ -20,6 +19,7 @@ public class GameBoard {
 	private Player player1, player2;
 	private int laneCount;
 	private Scene scene;
+	private int boardWidth = 0;
 
 	private final HashMap<Integer, ArrayList<Actor>> actorMap = new HashMap<>();
 
@@ -50,6 +50,8 @@ public class GameBoard {
 				actor.render(context);
 			}
 		}
+
+		boardWidth = context.getWidth();
 	}
 
     public void update() {
@@ -71,12 +73,11 @@ public class GameBoard {
 	}
 
 	public void addActor(Actor actor, int lane) {
-		//TODO TEMPORARY!!
 		Player owner = actor.getOwner();
 		int xPos = 0;
 		switch(owner.getOrigin()) {
 			case WEST: xPos = 25; break;
-			case EAST: xPos = ConquestGameDesktopLauncher.INIT_WIDTH / 2 - 25; break;
+			case EAST: xPos = boardWidth - 35; break;
 		}
 		actor.setPosition(xPos, 128 + lane * LANE_SIZE);
 		actor.assignBoard(this, lane);
@@ -101,10 +102,10 @@ public class GameBoard {
 		actor.remove();
 		Player owner = actor.getOwner();
 		if(owner.equals(player1)) {
-			dominance += actor.getAttributes().chargeReward;
+			dominance += actor.getAttributes().dominanceReward;
 		}
 		if(owner.equals(player2)) {
-			dominance -= actor.getAttributes().chargeReward;
+			dominance -= actor.getAttributes().dominanceReward;
 		}
 	}
 

@@ -50,6 +50,7 @@ public class Hu$Priest extends Actor {
 		tuple.leaveCorpse = true;
 		tuple.goldReward = 7;
 		tuple.chargeReward = 5;
+		tuple.dominanceReward = 2;
 		tuple.knockback = 1;
 		tuple.knockbackResistance = 1;
 

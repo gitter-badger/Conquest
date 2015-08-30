@@ -49,6 +49,7 @@ public class Hu$Mystic extends Actor {
 		tuple.leaveCorpse = true;
 		tuple.goldReward = 13;
 		tuple.chargeReward = 5;
+		tuple.dominanceReward = 2;
 		tuple.knockback = 1;
 		tuple.knockbackResistance = 1;
 

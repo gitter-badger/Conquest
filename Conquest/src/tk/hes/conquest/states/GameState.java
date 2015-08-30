@@ -19,7 +19,7 @@ import java.awt.event.KeyEvent;
  */
 public class GameState extends PixelState {
 
-    private GameBoard board;
+	private GameBoard board;
     private GGameOverlay overlay;
 
     public GameState(TinyPixelStateBasedGame game) {
@@ -35,6 +35,8 @@ public class GameState extends PixelState {
 		player1.updateActorBuffer(ActorType.SCOUT);
 		player1.updateActorBuffer(ActorType.CASTER2);
 		player1.updateActorBuffer(ActorType.SPECIAL);
+		player1.updateActorBuffer(ActorType.SPECIAL2);
+		player1.updateActorBuffer(ActorType.SPECIAL3);
 
         Player player2 = new Player("Dumhead", Race.HUMAN, Origin.EAST, 100);
 		player2.updateActorBuffer(ActorType.MELEE);
