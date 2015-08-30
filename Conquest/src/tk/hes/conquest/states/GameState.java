@@ -7,8 +7,6 @@ import me.deathjockey.tinypixel.graphics.RenderContext;
 import me.deathjockey.tinypixel.state.PixelState;
 import tk.hes.conquest.game.*;
 import tk.hes.conquest.game.scene.DungeonScene;
-import tk.hes.conquest.gui.bar.GBarColor;
-import tk.hes.conquest.game.scene.OutpostScene;
 import tk.hes.conquest.gui.game.GGameOverlay;
 import tk.hes.conquest.particle.ParticleManager;
 

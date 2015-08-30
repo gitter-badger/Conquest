@@ -50,11 +50,11 @@ public class GGameOverlay extends GComponent {
         playerInfo = new GPlayerInfo(this, new Vector2f(0, (int) dominanceBar.getSize().getHeight() - 4));
         playerInfo.init(c);
 
-        heroInfo = new GHeroInfo(new Vector2f(64, 16), this);
+        heroInfo = new GHeroInfo(new Vector2f(310, 16), this);
         heroInfo.init(c);
         heroInfo.init(c);
 
-        actorBar = new GActorSlotBar(new Vector2f(175, 20), player);
+        actorBar = new GActorSlotBar(new Vector2f(85, 20), player);
 
         actorBar.init(c);
     }
@@ -68,7 +68,7 @@ public class GGameOverlay extends GComponent {
 
         dominanceBar.update();
         playerInfo.update();
-        heroInfo.update();
+        //heroInfo.update();
 
         actorBar.update();
 
