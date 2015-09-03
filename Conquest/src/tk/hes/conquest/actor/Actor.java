@@ -24,7 +24,7 @@ public abstract class Actor implements ActionKeyFrameListener {
     protected BB bb;
     protected AttributeTuple attributes;
     protected ActionSet actionSet;
-    protected ActionType currentAction = ActionType.MOVE;
+    protected ActionType currentAction = ActionType.MOVE, lastAction = ActionType.MOVE;
     protected boolean remove = false;
     protected Player owner;
     protected GameBoard board;
@@ -145,6 +145,7 @@ public abstract class Actor implements ActionKeyFrameListener {
 								xDiff < this.getBB().getHeight() && owner.getOrigin().equals(Origin.WEST))
 								&& Math.abs(xDiff) > attributes.blindRange
 								&& Math.abs(xDiff) <= attributes.range - Actor.SPRITE_SCALE;
+
 						if (canAttack) {
 							onAttack();
 							canMove = false;
@@ -166,6 +167,11 @@ public abstract class Actor implements ActionKeyFrameListener {
 				removeStatusEffect(effect);
 		}
 
+//		if(!currentAction.equals(lastAction)) {
+//			actionSet.get(currentAction).reset();
+//		}
+//
+		lastAction = currentAction;
         actionSet.update();
     }
 
@@ -185,6 +191,10 @@ public abstract class Actor implements ActionKeyFrameListener {
 				}
 				break;
 		}
+	}
+
+	public void setCurrentAction(ActionType currentAction) {
+		this.currentAction = currentAction;
 	}
 
 	public void addStatusEffect(StatusEffect effect) {

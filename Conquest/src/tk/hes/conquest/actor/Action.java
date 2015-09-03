@@ -12,10 +12,12 @@ public class Action {
 	private int currentDuration = 0;
 	private boolean firstTime = true;
 	private long lastUpdateTime;
+	private boolean customUpdateTime = false;
 
 	private ArrayList<ActionKeyFrameListener> listeners = new ArrayList<>();
+	private int currentFrameDuration;
 
-    public Action(ActionKeyFrameListener... listeners) {
+	public Action(ActionKeyFrameListener... listeners) {
         if (listeners != null) {
             for (ActionKeyFrameListener listener : listeners) {
 				this.listeners.add(listener);
@@ -29,9 +31,13 @@ public class Action {
 			firstTime = false;
 		}
 
-		if(System.currentTimeMillis() - lastUpdateTime > currentDuration) {
-			if(currentFrame < actionFrames.size() - 1) currentFrame++;
-			else currentFrame = 0;
+		currentDuration -= (int) (System.currentTimeMillis() - lastUpdateTime);
+		if(currentDuration <= 0) {
+			if(currentFrame < actionFrames.size() - 1) {
+				currentFrame++;
+			} else {
+				reset();
+			}
 			currentDuration = actionFrames.get(currentFrame).duration;
 			ArrayList<String> keyList = actionFrames.get(currentFrame).keyList;
 			for(String key : keyList) {
@@ -48,8 +54,10 @@ public class Action {
 					}
 				}
 			}
-			lastUpdateTime = System.currentTimeMillis();
 		}
+
+		if(!customUpdateTime)
+			lastUpdateTime = System.currentTimeMillis();
 	}
 
 	public Frame getCurrentFrame() {
@@ -63,8 +71,22 @@ public class Action {
 
 	public void reset() {
 		currentFrame = 0;
-		lastUpdateTime = 0;
+		currentDuration = getCurrentFrame().duration;
 		lastUpdateTime = System.currentTimeMillis();
+		customUpdateTime = false;
+	}
+
+	public void setLastUpdateTime(long lastUpdateTime) {
+		this.lastUpdateTime = lastUpdateTime;
+		customUpdateTime = true;
+	}
+
+	public long getLastUpdateTime() {
+		return lastUpdateTime;
+	}
+
+	public int getCurrentFrameDuration() {
+		return currentFrameDuration;
 	}
 
 	public class Frame {
@@ -101,6 +123,10 @@ public class Action {
 
 		public Bitmap getBitmap() {
 			return frame;
+		}
+
+		public int getDuration() {
+			return duration;
 		}
 	}
 

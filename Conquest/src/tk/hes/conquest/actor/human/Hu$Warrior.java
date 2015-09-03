@@ -15,8 +15,8 @@ public class Hu$Warrior extends Actor  {
 
 	@Override
 	protected void initializeAttributes(AttributeTuple tuple, BB bb, ActionSet actions) {
-		tuple.health = 125;
-		tuple.healthMax = 125;
+		tuple.health = 1125;
+		tuple.healthMax = 1125;
 		tuple.mana = 0;
 		tuple.manaMax = 0;
 		tuple.attackPhysical = 26;
@@ -55,14 +55,14 @@ public class Hu$Warrior extends Actor  {
 				.addFrame(Art.UNIT_HUMAN_WARRIOR.getSprite(0, 0), 500, 0, 0));
 
 		actions.set(ActionType.MOVE, new Action()
-				.addFrame(Art.UNIT_HUMAN_WARRIOR.getSprite(0, 0), 500, 0, 0)
-				.addFrame(Art.UNIT_HUMAN_WARRIOR.getSprite(1, 0), 500, 0, 0));
+				.addFrame(Art.UNIT_HUMAN_WARRIOR.getSprite(0, 0), 350, 0, 0)
+				.addFrame(Art.UNIT_HUMAN_WARRIOR.getSprite(1, 0), 350, 0, 0));
 
 		actions.set(ActionType.ATTACK1, new Action(this)
 				.addFrame(Art.UNIT_HUMAN_WARRIOR.getSprite(0, 1), 250, 0, 0)
 				.addFrame(Art.UNIT_HUMAN_WARRIOR.getBitmapRegion(w, h, 3 * w, 2 * h), 100, -9 * Actor.SPRITE_SCALE, 0)
-				.addFrame(Art.UNIT_HUMAN_WARRIOR.getBitmapRegion(w, h, 3 * w, 2 * h), 400, -9 * Actor.SPRITE_SCALE, 0, "swing-hit")
-				.addFrame(Art.UNIT_HUMAN_WARRIOR.getSprite(0, 1), 450, 0, 0, "$RANDOM_DELAY 0 350"));
+				.addFrame(Art.UNIT_HUMAN_WARRIOR.getBitmapRegion(w, h, 3 * w, 2 * h), 1, -9 * Actor.SPRITE_SCALE, 0, "swing-hit")
+				.addFrame(Art.UNIT_HUMAN_WARRIOR.getSprite(0, 0), 650, 0, 0));
 
 		actions.set(ActionType.DEATH, new Action()
 				.addFrame(Art.UNIT_HUMAN_WARRIOR.getSprite(2, 0), 10000, 0, 0));

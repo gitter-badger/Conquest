@@ -7,6 +7,10 @@ import tk.hes.conquest.graphics.Art;
 import java.awt.*;
 import java.util.ArrayList;
 
+/*
+ * TODO: Fix knock-back effect breaking attack speed
+ *
+ */
 public class Hu$Knight extends Actor {
 
 	public Hu$Knight(Player owner) {
@@ -15,8 +19,8 @@ public class Hu$Knight extends Actor {
 
 	@Override
 	protected void initializeAttributes(AttributeTuple tuple, BB bb, ActionSet actions) {
-		tuple.health = 205;
-		tuple.healthMax = 205;
+		tuple.health = 255;
+		tuple.healthMax = 255;
 		tuple.mana = 0;
 		tuple.manaMax = 0;
 		tuple.attackPhysical = 32;
@@ -59,13 +63,13 @@ public class Hu$Knight extends Actor {
 				.addFrame(Art.UNIT_HUMAN_KNIGHT.getSprite(1, 0), 500, 0, 0));
 
 		actions.set(ActionType.ATTACK1, new Action(this)
-				.addFrame(Art.UNIT_HUMAN_KNIGHT.getSprite(0, 1), 250, 0, 0)
+				.addFrame(Art.UNIT_HUMAN_KNIGHT.getSprite(0, 1), 150, 0, 0)
 				.addFrame(Art.UNIT_HUMAN_KNIGHT.getBitmapRegion(w, h, 3 * w, 2 * h), 100, -10 * Actor.SPRITE_SCALE, 0)
-				.addFrame(Art.UNIT_HUMAN_KNIGHT.getBitmapRegion(w, h, 3 * w, 2 * h), 400, -10 * Actor.SPRITE_SCALE, 0, "swing-hit")
-				.addFrame(Art.UNIT_HUMAN_KNIGHT.getSprite(0, 1), 750, 0, 0, "$RANDOM_DELAY 0 350"));
+				.addFrame(Art.UNIT_HUMAN_KNIGHT.getBitmapRegion(w, h, 3 * w, 2 * h), 1, -10 * Actor.SPRITE_SCALE, 0, "swing-hit")
+				.addFrame(Art.UNIT_HUMAN_KNIGHT.getSprite(0, 0), 950, 0, 0));
 
 		actions.set(ActionType.DEATH, new Action()
-				.addFrame(Art.UNIT_HUMAN_KNIGHT.getSprite(2, 0), 10000, 0, 0));
+				.addFrame(Art.UNIT_HUMAN_KNIGHT.getSprite(2, 0), 2000, 0, 0));
 
 		bb.rx = 1;
 		bb.ry = 0;
@@ -80,6 +84,7 @@ public class Hu$Knight extends Actor {
 
 	@Override
 	public void keyFrameReached(String key) {
+
 		if(key.equals("swing-hit")) {
 			attack();
 		}

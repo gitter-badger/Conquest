@@ -71,7 +71,8 @@ public class Hu$Assassin extends Actor {
 
 		actions.set(ActionType.ATTACK1, new Action(this)
 				.addFrame(Art.UNIT_HUMAN_ASSASSIN.getSprite(0, 1), 250, 0, 0)
-				.addFrame(Art.UNIT_HUMAN_ASSASSIN.getBitmapRegion(w, 1 * h, w * 2 + 2 * Actor.SPRITE_SCALE, 2 * h), 250, 0, -2 * Actor.SPRITE_SCALE, "hit")
+				.addFrame(Art.UNIT_HUMAN_ASSASSIN.getBitmapRegion(w, 1 * h, w * 2 + 2 * Actor.SPRITE_SCALE, 2 * h), 100, 0, -2 * Actor.SPRITE_SCALE, "hit")
+				.addFrame(Art.UNIT_HUMAN_ASSASSIN.getBitmapRegion(w, 1 * h, w * 2 + 2 * Actor.SPRITE_SCALE, 2 * h), 1, 0, -2 * Actor.SPRITE_SCALE, "hit")
 				.addFrame(Art.UNIT_HUMAN_ASSASSIN.getSprite(0, 1), 350, 0, 0, "$RANDOM_DELAY 20 100"));
 
 		actions.set(ActionType.DEATH, new Action()

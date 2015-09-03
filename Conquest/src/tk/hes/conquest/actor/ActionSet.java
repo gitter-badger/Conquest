@@ -10,7 +10,7 @@ import java.util.HashMap;
 public class ActionSet {
 
 	private Actor owner;
-	private ActionType lastOwnerAction;
+	private ActionType lastUniqueAction;
 	private HashMap<ActionType, Action> actionMap = new HashMap<>();
 
 	public ActionSet(Actor owner) {
@@ -22,11 +22,22 @@ public class ActionSet {
 		Action action = actionMap.get(current);
 		if(action == null) return;
 
-		if(!current.equals(lastOwnerAction)) {
-			action.reset();
+		if(lastUniqueAction != null && !current.equals(lastUniqueAction)) {
+			/*
+				TODO Fix attack speed bug
+			 */
+			Action lastAction = actionMap.get(lastUniqueAction);
+			long lastTime = lastAction.getLastUpdateTime();
+			if(System.currentTimeMillis() - lastTime > lastAction.getCurrentFrameDuration()){
+				lastAction.reset();
+			} else {
+				lastAction.setLastUpdateTime(System.currentTimeMillis());
+				System.out.println("test");
+			}
+			lastAction.update();
+			lastUniqueAction = current;
 		}
 		action.update();
-		lastOwnerAction = current;
 	}
 
 	public void set(ActionType action, Action animation) {
