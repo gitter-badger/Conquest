@@ -6,8 +6,6 @@ import me.deathjockey.tinypixel.util.Vector2f;
 import tk.hes.conquest.actor.Actor;
 import tk.hes.conquest.actor.BB;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author Kevin Yang
@@ -30,12 +28,13 @@ public abstract class Projectile extends Particle {
 	}
 
 	public void render(RenderContext c) {
+		super.render(c);
 		c.render(animation, (int) position.getX(), (int) position.getY());
 	}
 
 	public void update() {
 		updateVelocity();
-		position.set(position.getX() + velocity.getX(), position.getY() + velocity.getY());
+		super.update();
 		updateCollision();
 	}
 

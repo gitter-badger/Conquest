@@ -4,6 +4,7 @@ import me.deathjockey.tinypixel.Time;
 import me.deathjockey.tinypixel.graphics.Colors;
 import me.deathjockey.tinypixel.graphics.RenderContext;
 import me.deathjockey.tinypixel.util.Vector2f;
+import tk.hes.conquest.ConquestGameDesktopLauncher;
 
 /**
  * An instance of a visual effect which serves no particular function.
@@ -18,7 +19,6 @@ public abstract class Particle {
 	protected float size;
 	protected int[] tint = { 0, 0, 0, 0 }; //rgb tinting
 	protected boolean remove = false;
-
 	public abstract void onSpawn();
 
 	protected Particle(Vector2f pos, Vector2f v) {
@@ -45,6 +45,10 @@ public abstract class Particle {
 		this.position.setX(position.getX() + velocity.getX() * (float) Time.delta);
 		this.position.setY(position.getY() + velocity.getY() * (float) Time.delta);
 
+		int x = (int) this.position.getX();
+		if(x < -16 - size || x > ConquestGameDesktopLauncher.INIT_WIDTH / ConquestGameDesktopLauncher.SCALE) {
+			remove();
+		}
 	}
 
 	public void setColor(float r, float g, float b, float a) {

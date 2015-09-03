@@ -210,17 +210,17 @@ public class Hu$Priest extends Actor {
 				if(actor.isDead()) continue;
 				//TODO extra effects for undead units
 				actor.hurt(owner);
-
-				int particles = (int) (Math.random() * 15 + 85);
-				for (int i = 0; i < particles; i++) {
-					Vector2f pos = new Vector2f(position.getX() + 2 * Actor.SPRITE_SCALE + (float) (Math.random() * 3),
-							position.getY() + this.getBB().getRy() + this.getBB().getHeight() / 2
-									+ (float) (Math.random() * (sprite.getHeight()) / 2f));
-					BoltCollisionParticle particle = new BoltCollisionParticle(pos, this.velocity, sprite);
-					ParticleManager.get().spawn(particle);
-				}
-				BasicBolt.this.remove();
 			}
+
+			int particles = (int) (Math.random() * 15 + 85);
+			for (int i = 0; i < particles; i++) {
+				Vector2f pos = new Vector2f(position.getX() + 2 * Actor.SPRITE_SCALE + (float) (Math.random() * 3),
+						position.getY() + this.getBB().getRy() + this.getBB().getHeight() / 2
+								+ (float) (Math.random() * (sprite.getHeight()) / 2f));
+				BoltCollisionParticle particle = new BoltCollisionParticle(pos, this.velocity, sprite);
+				ParticleManager.get().spawn(particle);
+			}
+			BasicBolt.this.remove();
 		}
 	}
 
