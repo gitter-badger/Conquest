@@ -1,0 +1,41 @@
+HUMANS
+
+Warrior: Medium everything, melee, high-ish defense
+
+Empire Archer: Light armor, lowish HP, medium attack, piercing physical damage, medium range
+
+War Mage: Light armor, low HP, high attack, magic splash damage, shorter range
+
+Longswordsman: Longer range melee unit, higher defense, slower speed, medium HP, physical normal damage
+
+Knight: Horse mounting melee units, has knockback, faster speed, higher HP, medium armor, physical damage
+
+Assassin: (Low HP, light armor, high evasion against magic and piercing damages, fast melee)
+
+Holy Priest: (Supportive unit, heals for a small amount, slow, very low HP, low damage, medium magic damage if not healing, moderate range). Can also be upgraded to dispel debuffs randomly.
+
+Grand Sorceress: Cunning spell caster, can randomly freeze enemy units, randomly transports local lane units to some random other lane. Moderate magic damage, can buff nearby  units and cast anti-magic shields.
+
+Royal Guard: (Human top tier unit, high damage, medium speed, high HP, high defense and good evasion in melee battles. Skilled in melee combat)
+
+
+HEROES:
+
+Lysander - Hand of Judgement
+	Melee, heavy hitting slow attack unit
+	Abilities:
+		- Passive :
+
+		- Active :
+
+		- Active :
+
+
+Jesper - Holy Archbishop
+	Magical
+	Abliities:
+		- Passive :
+
+		- Active :
+
+		- Active :

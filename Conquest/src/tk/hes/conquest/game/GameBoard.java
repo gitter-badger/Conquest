@@ -48,6 +48,7 @@ public class GameBoard {
 			ArrayList<Actor> laneActors = actorMap.get(lane);
 			for(int i = 0; i < laneActors.size(); i++) {
 				Actor actor = laneActors.get(i);
+
 				if(actor.isDead())
 					actor.render(context);
 				else
@@ -87,7 +88,7 @@ public class GameBoard {
 			case WEST: xPos = 25; break;
 			case EAST: xPos = boardWidth - 35; break;
 		}
-		actor.setPosition(xPos, 128 + lane * LANE_SIZE);
+		actor.setPosition(xPos, 128 + lane * LANE_SIZE - (int) (actor.getBB().getHeight() - 8 * Actor.SPRITE_SCALE));
 		actor.assignBoard(this, lane);
 
 		ArrayList<Actor> actors = actorMap.get(lane);

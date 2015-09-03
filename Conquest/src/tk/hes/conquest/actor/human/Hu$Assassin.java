@@ -66,13 +66,13 @@ public class Hu$Assassin extends Actor {
 				.addFrame(Art.UNIT_HUMAN_ASSASSIN.getSprite(0, 0), 500, 0, 0));
 
 		actions.set(ActionType.MOVE, new Action()
-				.addFrame(Art.UNIT_HUMAN_ASSASSIN.getSprite(0, 0), 500, 0, 0)
-				.addFrame(Art.UNIT_HUMAN_ASSASSIN.getSprite(1, 0), 500, 0, 0));
+				.addFrame(Art.UNIT_HUMAN_ASSASSIN.getSprite(0, 0), 250, 0, 0)
+				.addFrame(Art.UNIT_HUMAN_ASSASSIN.getSprite(1, 0), 250, 0, 0));
 
 		actions.set(ActionType.ATTACK1, new Action(this)
 				.addFrame(Art.UNIT_HUMAN_ASSASSIN.getSprite(0, 1), 250, 0, 0)
-				.addFrame(Art.UNIT_HUMAN_ASSASSIN.getBitmapRegion(w, 1 * h, w * 2 + 2 * Actor.SPRITE_SCALE, 2 * h), 100, 0, -2 * Actor.SPRITE_SCALE, "hit")
-				.addFrame(Art.UNIT_HUMAN_ASSASSIN.getBitmapRegion(w, 1 * h, w * 2 + 2 * Actor.SPRITE_SCALE, 2 * h), 1, 0, -2 * Actor.SPRITE_SCALE, "hit")
+				.addFrame(Art.UNIT_HUMAN_ASSASSIN.getBitmapRegion(w, h, w * 2 + 2 * Actor.SPRITE_SCALE, 2 * h), 100, 0, -2 * Actor.SPRITE_SCALE, "hit")
+				.addFrame(Art.UNIT_HUMAN_ASSASSIN.getBitmapRegion(w, h, w * 2 + 2 * Actor.SPRITE_SCALE, 2 * h), 1, 0, -2 * Actor.SPRITE_SCALE, "hit")
 				.addFrame(Art.UNIT_HUMAN_ASSASSIN.getSprite(0, 1), 350, 0, 0, "$RANDOM_DELAY 20 100"));
 
 		actions.set(ActionType.DEATH, new Action()
@@ -80,7 +80,7 @@ public class Hu$Assassin extends Actor {
 
 		bb.rx = 1;
 		bb.ry = 0;
-		bb.w = (w - (1 * Actor.SPRITE_SCALE));
+		bb.w = (w - (Actor.SPRITE_SCALE));
 		bb.h = h;
 	}
 

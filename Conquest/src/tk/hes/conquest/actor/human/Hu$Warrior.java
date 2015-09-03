@@ -15,8 +15,8 @@ public class Hu$Warrior extends Actor  {
 
 	@Override
 	protected void initializeAttributes(AttributeTuple tuple, BB bb, ActionSet actions) {
-		tuple.health = 1125;
-		tuple.healthMax = 1125;
+		tuple.health = 125;
+		tuple.healthMax = 125;
 		tuple.mana = 0;
 		tuple.manaMax = 0;
 		tuple.attackPhysical = 26;

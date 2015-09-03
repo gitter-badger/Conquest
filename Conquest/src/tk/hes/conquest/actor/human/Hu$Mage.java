@@ -190,10 +190,7 @@ public class Hu$Mage extends Actor {
 		@Override
 		public void onCollideWithEnemy(ArrayList<Actor> actors) {
 			for(Actor actor : actors) {
-				if(actor.isDead()) continue;
 				actor.hurt(owner);
-
-				BasicBolt.this.remove();
 			}
 
 			int particles = (int) (Math.random() * 15 + 85);
@@ -204,6 +201,7 @@ public class Hu$Mage extends Actor {
 				BoltCollisionParticle particle = new BoltCollisionParticle(pos, this.velocity, sprite);
 				ParticleManager.get().spawn(particle);
 			}
+			BasicBolt.this.remove();
 		}
 	}
 

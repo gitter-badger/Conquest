@@ -74,7 +74,7 @@ public abstract class Actor implements ActionKeyFrameListener {
 			if(!dead && attributes.hasShadow) {
 				Bitmap shadow = Art.UNIT_SHADOW[attributes.shadowType];
 				c.render(shadow, (int) (getPosition().getX() + getBB().getRx() + getBB().getWidth() / 2 - shadow.getWidth() / 2),
-						(int) (getPosition().getY() + getBB().getRy() + getBB().getHeight() - getBB().getHeight() / 4 * 3), 0.7f);
+						(int) (128 + currentLane * GameBoard.LANE_SIZE + getBB().getHeight() / 5), 0.7f);
 			}
 
             if (!hurt) {

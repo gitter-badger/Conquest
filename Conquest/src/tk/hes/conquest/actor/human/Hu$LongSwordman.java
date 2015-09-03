@@ -60,9 +60,9 @@ public class Hu$LongSwordman extends Actor {
 
 		actions.set(ActionType.ATTACK1, new Action(this)
 				.addFrame(Art.UNIT_HUMAN_LONG_SWORDSMAN.getSprite(0, 1), 150, 0, 0)
-				.addFrame(Art.UNIT_HUMAN_LONG_SWORDSMAN.getBitmapRegion(w, h, 2 * w, 2 * h), 100, -10 * Actor.SPRITE_SCALE, 0)
-				.addFrame(Art.UNIT_HUMAN_LONG_SWORDSMAN.getBitmapRegion(3 * w, h, 5 * w, 2 * h), 100, -10 * Actor.SPRITE_SCALE, 0)
-				.addFrame(Art.UNIT_HUMAN_LONG_SWORDSMAN.getBitmapRegion(3 * w, h, 5 * w, 2 * h), 100, -10 * Actor.SPRITE_SCALE, 0, "swing-hit")
+				.addFrame(Art.UNIT_HUMAN_LONG_SWORDSMAN.getBitmapRegion(w, h, 3 * w, 2 * h), 100, -9 * Actor.SPRITE_SCALE, 0)
+				.addFrame(Art.UNIT_HUMAN_LONG_SWORDSMAN.getBitmapRegion(3 * w, h, 5 * w, 2 * h), 100, -9 * Actor.SPRITE_SCALE, 0)
+				.addFrame(Art.UNIT_HUMAN_LONG_SWORDSMAN.getBitmapRegion(3 * w, h, 5 * w, 2 * h), 100, -9 * Actor.SPRITE_SCALE, 0, "swing-hit")
 				.addFrame(Art.UNIT_HUMAN_LONG_SWORDSMAN.getSprite(5, 1), 200, 0, 0)
 				.addFrame(Art.UNIT_HUMAN_LONG_SWORDSMAN.getSprite(0, 1), 950, 0, 0, "$RANDOM_DELAY 0 100"));
 

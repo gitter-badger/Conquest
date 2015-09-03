@@ -207,7 +207,6 @@ public class Hu$Priest extends Actor {
 		@Override
 		public void onCollideWithEnemy(ArrayList<Actor> actors) {
 			for(Actor actor : actors) {
-				if(actor.isDead()) continue;
 				//TODO extra effects for undead units
 				actor.hurt(owner);
 			}
