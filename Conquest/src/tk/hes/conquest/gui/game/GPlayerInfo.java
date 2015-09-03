@@ -21,6 +21,9 @@ import java.awt.*;
  */
 public class GPlayerInfo extends GComponent implements GButtonActionListener {
 
+	private static final int COLOR_CHARGE_BAR = Colors.toInt(204, 212, 0, 255),
+							COLOR_CHARGE_BAR_READY = Colors.PURE_YELLOW;
+
     private GImage backgroundImage, chargeBar, moneyBar;
     private GButton storeButton, toolButton;
 
@@ -89,7 +92,7 @@ public class GPlayerInfo extends GComponent implements GButtonActionListener {
 
     public void setChargePercentage(float amount) {
         this.chargeFillBar.setFilledPercent(amount);
-        int color = (amount == 100f) ? Colors.PURE_YELLOW : Colors.PURE_CYAN;
+        int color = (amount == 100f) ? COLOR_CHARGE_BAR_READY : COLOR_CHARGE_BAR;
         chargeFillBar.setFillColor(color);
     }
 

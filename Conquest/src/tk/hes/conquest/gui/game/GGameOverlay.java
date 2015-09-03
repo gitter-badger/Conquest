@@ -55,7 +55,6 @@ public class GGameOverlay extends GComponent {
         heroInfo.init(c);
 
         actorBar = new GActorSlotBar(new Vector2f(85, 20), player);
-
         actorBar.init(c);
     }
 

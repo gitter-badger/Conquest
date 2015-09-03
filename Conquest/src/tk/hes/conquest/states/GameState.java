@@ -40,6 +40,13 @@ public class GameState extends PixelState {
 
         Player player2 = new Player("Dumhead", Race.HUMAN, Origin.EAST, 100);
 		player2.updateActorBuffer(ActorType.MELEE);
+//		player2.updateActorBuffer(ActorType.RANGER);
+//		player2.updateActorBuffer(ActorType.CASTER);
+//		player2.updateActorBuffer(ActorType.SCOUT);
+//		player2.updateActorBuffer(ActorType.CASTER2);
+//		player2.updateActorBuffer(ActorType.SPECIAL);
+//		player2.updateActorBuffer(ActorType.SPECIAL2);
+//		player2.updateActorBuffer(ActorType.SPECIAL3);
 
 		board = new GameBoard(new DungeonScene(), player1, player2, 8, 50, 600000);
 

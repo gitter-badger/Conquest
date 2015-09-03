@@ -23,6 +23,5 @@ public enum ActionType {
 	SPECIAL1,
 	SPECIAL2,
 	SPECIAL3,
-	DEATH
-
+	DEATH;
 }

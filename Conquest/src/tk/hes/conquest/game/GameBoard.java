@@ -43,12 +43,20 @@ public class GameBoard {
 		player1.render(context);
 		player2.render(context);
 
+		ArrayList<Actor> aliveActors = new ArrayList<>();
 		for(int lane : actorMap.keySet()) {
 			ArrayList<Actor> laneActors = actorMap.get(lane);
 			for(int i = 0; i < laneActors.size(); i++) {
 				Actor actor = laneActors.get(i);
-				actor.render(context);
+				if(actor.isDead())
+					actor.render(context);
+				else
+					aliveActors.add(actor);
 			}
+		}
+
+		for (Actor actor : aliveActors) {
+			actor.render(context);
 		}
 
 		boardWidth = context.getWidth();
