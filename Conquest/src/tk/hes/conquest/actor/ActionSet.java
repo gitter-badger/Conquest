@@ -23,16 +23,12 @@ public class ActionSet {
 		if(action == null) return;
 
 		if(lastUniqueAction != null && !current.equals(lastUniqueAction)) {
-			/*
-				TODO Fix attack speed bug
-			 */
 			Action lastAction = actionMap.get(lastUniqueAction);
 			long lastTime = lastAction.getLastUpdateTime();
 			if(System.currentTimeMillis() - lastTime > lastAction.getCurrentFrameDuration()){
 				lastAction.reset();
 			} else {
 				lastAction.setLastUpdateTime(System.currentTimeMillis());
-				System.out.println("test");
 			}
 			lastAction.update();
 			lastUniqueAction = current;
