@@ -217,6 +217,12 @@ public abstract class Actor implements ActionKeyFrameListener {
             //TODO evasion skillset / animation / etc.
             return;
         }
+		boolean parried = (int) (Math.random() * 100) < attributes.parry;
+		if(parried) {
+			if(actionSet.get(ActionType.DEFEND) != null)
+				currentAction = ActionType.DEFEND;
+			return;
+		}
 		int knockback = provoker.attributes.knockback - attributes.knockbackResistance;
 		if(knockback > 0)
 			position.setX(position.getX() + (owner.getOrigin().equals(Origin.WEST) ? -knockback : knockback));

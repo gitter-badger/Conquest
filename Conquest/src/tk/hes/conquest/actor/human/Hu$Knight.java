@@ -41,6 +41,7 @@ public class Hu$Knight extends Actor {
 		tuple.dominanceReward = 3;
 		tuple.knockback = 6;
 		tuple.knockbackResistance = 6;
+		tuple.parry = 25;
 
 		tuple.exp = 0;
 		tuple.expMax = 0;
@@ -67,6 +68,10 @@ public class Hu$Knight extends Actor {
 				.addFrame(Art.UNIT_HUMAN_KNIGHT.getBitmapRegion(w, h, 3 * w, 2 * h), 100, -10 * Actor.SPRITE_SCALE, 0)
 				.addFrame(Art.UNIT_HUMAN_KNIGHT.getBitmapRegion(w, h, 3 * w, 2 * h), 1, -10 * Actor.SPRITE_SCALE, 0, "swing-hit")
 				.addFrame(Art.UNIT_HUMAN_KNIGHT.getSprite(0, 0), 950, 0, 0));
+
+		actions.set(ActionType.DEFEND, new Action()
+				.addFrame(Art.UNIT_HUMAN_KNIGHT.getSprite(0, 2), 500, 0, 0)
+				.addFrame(Art.UNIT_HUMAN_KNIGHT.getSprite(1, 2), 500, 0, 0));
 
 		actions.set(ActionType.DEATH, new Action()
 				.addFrame(Art.UNIT_HUMAN_KNIGHT.getSprite(2, 0), 2000, 0, 0));
@@ -119,7 +124,8 @@ public class Hu$Knight extends Actor {
 
 	@Override
 	public void onAttack() {
-		currentAction = ActionType.ATTACK1;
+		if(!currentAction.equals(ActionType.DEFEND))
+			currentAction = ActionType.ATTACK1;
 	}
 
 	@Override

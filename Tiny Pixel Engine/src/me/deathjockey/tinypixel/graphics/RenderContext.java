@@ -191,7 +191,7 @@ public class RenderContext {
 					int cr = (int) (r * alpha + crgba[0] * (1 - alpha));
 					int cg = (int) (g * alpha + crgba[1] * (1 - alpha));
 					int cb = (int) (b * alpha + crgba[2] * (1 - alpha));
-					pxl = Colors.toInt(cr, cg, cb, (int) ((float) crgba[3] * alpha));
+					pxl = Colors.toInt(cr, cg, cb, 255);
 					pixelData[contextIndex] = pxl;
 				}
 			}

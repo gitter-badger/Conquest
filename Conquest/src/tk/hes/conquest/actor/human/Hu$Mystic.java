@@ -22,6 +22,7 @@ public class Hu$Mystic extends Actor {
 	private int fireCooldown = 1000; //ms
 	private long lastParticleSpawn = System.currentTimeMillis();
 	private boolean channeling = false;
+	private boolean attacking = false;
 
 	public Hu$Mystic(Player owner) {
 		super(owner);
@@ -30,22 +31,22 @@ public class Hu$Mystic extends Actor {
 	@Override
 	protected void initializeAttributes(AttributeTuple tuple, BB bb, ActionSet actions) {
 
-		tuple.health = 80;
-		tuple.healthMax = 80;
+		tuple.health = 90;
+		tuple.healthMax = 90;
 		tuple.mana = 50;
 		tuple.manaMax = 50;
 		tuple.attackPhysical = 0;
 		tuple.attackRandomPhysical = 0;
-		tuple.defense = 3;
+		tuple.defense = 4;
 		tuple.critChance = 0;
 		tuple.evasion = 0;
 		tuple.heroExpReward = 5;
 		tuple.blindRange = 70;
-		tuple.range = 250;
+		tuple.range = 270;
 		tuple.magicDefense = 0;
 		tuple.speed = 0.17f;
-		tuple.attackMagic = 38;
-		tuple.attackRandomMagical = 20;
+		tuple.attackMagic = 22;
+		tuple.attackRandomMagical = 16;
 		tuple.leaveCorpse = true;
 		tuple.goldReward = 13;
 		tuple.chargeReward = 5;
@@ -76,19 +77,20 @@ public class Hu$Mystic extends Actor {
 
 		actions.set(ActionType.ATTACK1, new Action(this)
 				.addFrame(Art.UNIT_HUMAN_MYSTIC.getSprite(0, 1), 10, 0, 0, "")
-				.addFrame(Art.UNIT_HUMAN_MYSTIC.getSprite(0, 1), 1500, 0, 0, "channel")
-				.addFrame(Art.UNIT_HUMAN_MYSTIC.getBitmapRegion(2 * w, h, 4 * w, 2 * h), 500, -11, 0, "shoot")
-				.addFrame(Art.UNIT_HUMAN_MYSTIC.getSprite(0, 1), 500, 0, 0));
+				.addFrame(Art.UNIT_HUMAN_MYSTIC.getSprite(0, 1), 750, 0, 0, "channel")
+				.addFrame(Art.UNIT_HUMAN_MYSTIC.getBitmapRegion(2 * w, h, 4 * w, 2 * h), 500, -8 * Actor.SPRITE_SCALE, 0, "shoot")
+				.addFrame(Art.UNIT_HUMAN_MYSTIC.getSprite(0, 1), 500, 0, 0, "end-attack"));
 
 		actions.set(ActionType.ATTACK2, new Action(this)
 				.addFrame(Art.UNIT_HUMAN_MYSTIC.getSprite(0, 1), 10, 0, 0, "")
-				.addFrame(Art.UNIT_HUMAN_MYSTIC.getSprite(0, 1), 250, 0, 0, "channel")
+				.addFrame(Art.UNIT_HUMAN_MYSTIC.getSprite(0, 1), 250, 0, 0, "channel-2")
 				.addFrame(Art.UNIT_HUMAN_MYSTIC.getSprite(1, 1), 250, 0, 0)
 				.addFrame(Art.UNIT_HUMAN_MYSTIC.getSprite(0, 1), 250, 0, 0)
 				.addFrame(Art.UNIT_HUMAN_MYSTIC.getSprite(1, 1), 250, 0, 0)
 				.addFrame(Art.UNIT_HUMAN_MYSTIC.getSprite(0, 1), 250, 0, 0)
 				.addFrame(Art.UNIT_HUMAN_MYSTIC.getSprite(1, 1), 250, 0, 0)
-				.addFrame(Art.UNIT_HUMAN_MYSTIC.getSprite(1, 1), 500, 0, 0, "cast-teleport"));
+				.addFrame(Art.UNIT_HUMAN_MYSTIC.getSprite(1, 1), 500, 0, 0, "cast-teleport")
+				.addFrame(Art.UNIT_HUMAN_MYSTIC.getSprite(1, 1), 500, 0, 0, "end-attack"));
 
 		actions.set(ActionType.DEATH, new Action()
 				.addFrame(Art.UNIT_HUMAN_MYSTIC.getSprite(2, 0), 10000, 0, 0));
@@ -112,8 +114,8 @@ public class Hu$Mystic extends Actor {
 			if(System.currentTimeMillis() - lastParticleSpawn > 40) {
 				int px, py;
 				px = (int) (getPosition().getX() - 4 * Actor.SPRITE_SCALE + (int) (Math.random() * (getBB().getWidth() + 8 * Actor.SPRITE_SCALE)));
-				py = (int) (getPosition().getY() - 4 * Actor.SPRITE_SCALE + (int) (Math.random() * (getBB().getHeight() + 8 * Actor.SPRITE_SCALE)));
-				ChannelParticle particle = new ChannelParticle(new Vector2f(px, py));
+				py = (int) (getPosition().getY() + getBB().getRy() + getBB().getHeight() + (int) (Math.random() * 4 + 1));
+				ChannelShootParticle particle = new ChannelShootParticle(new Vector2f(px, py));
 				ParticleManager.get().spawn(particle);
 				lastParticleSpawn = System.currentTimeMillis();
 			}
@@ -134,7 +136,11 @@ public class Hu$Mystic extends Actor {
 
 	@Override
 	public void onAttack() {
-		currentAction = ActionType.ATTACK2;
+		attacking = currentAction.equals(ActionType.ATTACK1) ||
+				currentAction.equals(ActionType.ATTACK2);
+		if(attacking) return;
+		currentAction = ActionType.ATTACK1;
+		attacking = true;
 	}
 
 	@Override
@@ -144,7 +150,17 @@ public class Hu$Mystic extends Actor {
 
 	@Override
 	public void keyFrameReached(String key) {
+		channeling = key.equals("channel") && currentAction.equals(ActionType.ATTACK1);
 
+		if(key.equals("shoot")) {
+			BasicBolt bolt = new BasicBolt(this);
+			ParticleManager.get().spawn(bolt);
+		}
+
+		if(key.equals("end-attack")) {
+			shouldAttack = false;
+			lastFireTime = System.currentTimeMillis();
+		}
 	}
 
 
@@ -154,8 +170,12 @@ public class Hu$Mystic extends Actor {
 
 		public BasicBolt(Actor owner) {
 			super(owner, new BB(2, 2, 6, 5), null, null, 1.8f);
-			sprite = Art.PARTICLE_PROJECTILE_BOLT.getSprite(0, 0);
-			Animation anim = new Animation(new Bitmap[] { sprite }, 1000);
+			sprite = Art.PARTICLE_PROJECTILE_BOLT.getSprite(0, 2);
+			Animation anim = new Animation(new Bitmap[] {
+					Art.PARTICLE_PROJECTILE_BOLT.getSprite(0, 2),
+					Art.PARTICLE_PROJECTILE_BOLT.getSprite(1, 2),
+			}, 250);
+			anim.setLooping(true);
 
 			Vector2f pos = new Vector2f(owner.getPosition().getX(), owner.getPosition().getY());
 			if(owner.getOwner().getOrigin().equals(Origin.EAST)) {
@@ -163,7 +183,7 @@ public class Hu$Mystic extends Actor {
 			}
 			this.animation = anim;
 			this.position = pos;
-			setEnemySearchRange(10);
+			setEnemySearchRange(15);
 			setCollideEnemy(true);
 			setCollideAlly(false);
 		}
@@ -172,7 +192,7 @@ public class Hu$Mystic extends Actor {
 		public void update() {
 			super.update();
 
-			if(System.currentTimeMillis() - lastParticleSpawn > 50) {
+			if(System.currentTimeMillis() - lastParticleSpawn > 10) {
 				Vector2f pPos = new Vector2f(position.getX() + sprite.getWidth() / 2,
 						position.getY() + sprite.getHeight() / 2);
 				float vh = velocity.getX() / (3 + (int) (Math.random() * 2));
@@ -195,20 +215,18 @@ public class Hu$Mystic extends Actor {
 		@Override
 		public void onCollideWithEnemy(ArrayList<Actor> actors) {
 			for(Actor actor : actors) {
-				if(actor.isDead()) continue;
-				if(actor.getOwner().equals(owner.getOwner())) continue;
 				actor.hurt(owner);
-
-				int particles = (int) (Math.random() * 15 + 85);
-				for(int i = 0; i < particles; i++) {
-					Vector2f pos = new Vector2f(position.getX() + 2 * Actor.SPRITE_SCALE + (float) (Math.random() * 3),
-							position.getY() + this.getBB().getRy() + this.getBB().getHeight() / 2
-									+ (float) (Math.random() * (sprite.getHeight()) / 2f));
-					BoltCollisionParticle particle = new BoltCollisionParticle(pos, this.velocity, sprite);
-					ParticleManager.get().spawn(particle);
-				}
-				BasicBolt.this.remove();
 			}
+
+			int particles = (int) (Math.random() * 15 + 85);
+			for(int i = 0; i < particles; i++) {
+				Vector2f pos = new Vector2f(position.getX() + 2 * Actor.SPRITE_SCALE + (float) (Math.random() * 3),
+						position.getY() + this.getBB().getRy() + this.getBB().getHeight() / 2
+								+ (float) (Math.random() * (sprite.getHeight()) / 2f));
+				BoltCollisionParticle particle = new BoltCollisionParticle(pos, this.velocity, sprite);
+				ParticleManager.get().spawn(particle);
+			}
+			BasicBolt.this.remove();
 		}
 	}
 
@@ -265,7 +283,7 @@ public class Hu$Mystic extends Actor {
 				remove();
 
 			setColor(r, g, b, 255);
-			setSize((int) (Math.random() * 1 + 1));
+			setSize(2);
 		}
 
 		@Override
@@ -282,18 +300,18 @@ public class Hu$Mystic extends Actor {
 		}
 	}
 
-	private class ChannelParticle extends Particle {
+	private class ChannelShootParticle extends Particle {
 
 		private int r, g, b, a;
-		private final int tr = 242, tg = 250, tb = 0, ta = 255;
+		private final int tr = 255, tg = 235, tb = 59, ta = 255;
 		private long spawnTime;
 		private final int lifeTime = 1500;
 
-		protected ChannelParticle(Vector2f pos) {
+		protected ChannelShootParticle(Vector2f pos) {
 			super(pos, new Vector2f(0f, 0f));
-			r = 99; g = 155; b = 255; a = 255;
+			r = 225; g = 115; b = 0; a = 255;
 			setColor(r, g, b, a);
-			setSize(2);
+			setSize(3);
 		}
 
 		@Override
@@ -306,13 +324,9 @@ public class Hu$Mystic extends Actor {
 			setColor(r, g, b, a);
 
 			Vector2f destination = Hu$Mystic.this.getPosition();
-			BB bb = Hu$Mystic.this.getBB();
-			float x = position.getX(), y = position.getY();
-			float dx = destination.getX() + bb.getRx() + bb.getWidth() / 2,
-					dy = destination.getY() + bb.getRy() + bb.getHeight() / 4;
-			if(x < dx) velocity.setX(0.2f);
+			float y = position.getY();
+			float dy = destination.getY() - (int) (Math.random() * 5 * Actor.SPRITE_SCALE + 12 * Actor.SPRITE_SCALE);
 			if(y < dy) velocity.setY(0.2f);
-			if(x > dx) velocity.setX(-0.2f);
 			if(y > dy) velocity.setY(-0.2f);
 			if(a <= 0)
 				remove();
@@ -321,6 +335,18 @@ public class Hu$Mystic extends Actor {
 		@Override
 		public void onSpawn() {
 			spawnTime = System.currentTimeMillis();
+		}
+	}
+
+	private class ChannelTeleportParticle extends Particle {
+
+		protected ChannelTeleportParticle(Vector2f pos, Vector2f v) {
+			super(pos, v);
+		}
+
+		@Override
+		public void onSpawn() {
+
 		}
 	}
 }

@@ -34,6 +34,7 @@ public class AttributeTuple implements Cloneable {
 	public int knockbackResistance = 0;
 	public float speed = 0f;
 	public int evasion = 0;
+	public int parry = 0;
 	public int critChance = 0; //critical strike chance
 
 	public String name = "null";
