@@ -1,6 +1,6 @@
 package tk.hes.conquest.particle;
 
-import me.deathjockey.tinypixel.graphics.RenderContext;
+import me.nibby.pix.RenderContext;
 
 import java.util.ArrayList;
 
@@ -20,10 +20,10 @@ public class ParticleManager {
 		}
 	}
 
-	public void update() {
+	public void update(double delta) {
 		for(int i = 0; i < particles.size(); i++) {
 			Particle p = particles.get(i);
-			p.update();
+			p.update(delta);
 			if(p.isRemoved()) {
 				particles.remove(p);
 				i--;

@@ -1,7 +1,8 @@
 package tk.hes.conquest.gui.base;
 
-import me.deathjockey.tinypixel.graphics.RenderContext;
-import me.deathjockey.tinypixel.util.Vector2f;
+import me.nibby.pix.Input;
+import me.nibby.pix.RenderContext;
+import me.nibby.pix.util.Vector2f;
 import tk.hes.conquest.gui.base.enums.GDialogType;
 import tk.hes.conquest.gui.dialog.GDialogPart;
 
@@ -42,10 +43,7 @@ public class GDialog extends GComponent {
         centerWidthAddition = (int) sizeInPixels.getWidth() % 16;
         centerHeight = (int) (sizeInPixels.getHeight() / 16);
         centerHeightAddition = (int) (sizeInPixels.getHeight() % 16);
-    }
 
-    @Override
-    public void init(RenderContext c) {
         bitmapParts = new GDialogPart(type, false);
     }
 
@@ -54,13 +52,13 @@ public class GDialog extends GComponent {
         //TOP
         for (int i = 0; i < centerWidth; i++) {
             if (i == 0)
-                c.render(bitmapParts.getTopLeftCorner(), (int) position.getX(), (int) position.getY());
+                c.renderBitmap(bitmapParts.getTopLeftCorner(), (int) position.getX(), (int) position.getY());
             else if (i == centerWidth - 1)
-                c.render(bitmapParts.getTopRightCorner(), (int) position.getX() + (16 * i) + centerWidthAddition, (int) position.getY());
+                c.renderBitmap(bitmapParts.getTopRightCorner(), (int) position.getX() + (16 * i) + centerWidthAddition, (int) position.getY());
             else
-                c.render(bitmapParts.getTopCenterEdge(), (int) position.getX() + (16 * i) + centerWidthAddition, (int) position.getY());
+                c.renderBitmap(bitmapParts.getTopCenterEdge(), (int) position.getX() + (16 * i) + centerWidthAddition, (int) position.getY());
             if (centerWidthAddition != 0)
-                c.render(bitmapParts.getTopCenterEdge().getBitmapRegion(0, 0, centerWidthAddition, 16), (int) position.getX() + 16, (int) position.getY());
+                c.renderBitmap(bitmapParts.getTopCenterEdge().getRegionAsBitmap(0, 0, centerWidthAddition, 16), (int) position.getX() + 16, (int) position.getY());
         }
 
         // MIDDLE
@@ -68,13 +66,13 @@ public class GDialog extends GComponent {
             int yy = (int) position.getY() + (16 * y);
             for (int x = 0; x < centerWidth; x++) {
                 if (x == 0)
-                    c.render(bitmapParts.getMidLeftEdge(), (int) position.getX(), yy);
+                    c.renderBitmap(bitmapParts.getMidLeftEdge(), (int) position.getX(), yy);
                 else if (x == centerWidth - 1)
-                    c.render(bitmapParts.getMidRightEdge(), (int) position.getX() + (16 * x) + centerWidthAddition, yy);
+                    c.renderBitmap(bitmapParts.getMidRightEdge(), (int) position.getX() + (16 * x) + centerWidthAddition, yy);
                 else
-                    c.render(bitmapParts.getCenter(), (int) position.getX() + (16 * x) + centerWidthAddition, yy);
+                    c.renderBitmap(bitmapParts.getCenter(), (int) position.getX() + (16 * x) + centerWidthAddition, yy);
                 if (centerWidthAddition != 0)
-                    c.render(bitmapParts.getCenter().getBitmapRegion(0, 0, centerWidthAddition, 16), (int) position.getX() + 16, yy);
+                    c.renderBitmap(bitmapParts.getCenter().getRegionAsBitmap(0, 0, centerWidthAddition, 16), (int) position.getX() + 16, yy);
             }
         }
 
@@ -82,20 +80,20 @@ public class GDialog extends GComponent {
         for (int x = 1; x <= centerWidth; x++) {
             int yy = (int) position.getY() + (16 * centerHeight) - 16;
             if (x == 1) {
-                c.render(bitmapParts.getLowLeftCorner(), (int) position.getX(), yy);
+                c.renderBitmap(bitmapParts.getLowLeftCorner(), (int) position.getX(), yy);
             } else if (x == centerWidth) {
-                c.render(bitmapParts.getLowRightCorner(), (int) position.getX() + (16 * x) - 16 + centerWidthAddition, yy);
+                c.renderBitmap(bitmapParts.getLowRightCorner(), (int) position.getX() + (16 * x) - 16 + centerWidthAddition, yy);
             } else {
-                c.render(bitmapParts.getLowCenterEdge(), (int) position.getX() + (16 * x) - 16 + centerWidthAddition, yy);
+                c.renderBitmap(bitmapParts.getLowCenterEdge(), (int) position.getX() + (16 * x) - 16 + centerWidthAddition, yy);
             }
             if (centerWidthAddition != 0)
-                c.render(bitmapParts.getLowCenterEdge().getBitmapRegion(0, 0, centerWidthAddition, 16), (int) position.getX() + 16, yy);
+                c.renderBitmap(bitmapParts.getLowCenterEdge().getRegionAsBitmap(0, 0, centerWidthAddition, 16), (int) position.getX() + 16, yy);
         }
 
     }
 
     @Override
-    public void update() {
+    public void update(Input input) {
     }
 
 }

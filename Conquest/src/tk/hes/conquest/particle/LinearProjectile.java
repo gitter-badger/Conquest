@@ -1,7 +1,7 @@
 package tk.hes.conquest.particle;
 
-import me.deathjockey.tinypixel.graphics.Animation;
-import me.deathjockey.tinypixel.util.Vector2f;
+import me.nibby.pix.Animation;
+import me.nibby.pix.util.Vector2f;
 import tk.hes.conquest.actor.Actor;
 import tk.hes.conquest.actor.BB;
 import tk.hes.conquest.game.Origin;

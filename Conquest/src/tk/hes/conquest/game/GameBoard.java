@@ -1,7 +1,8 @@
 package tk.hes.conquest.game;
 
-import me.deathjockey.tinypixel.graphics.RenderContext;
-import me.deathjockey.tinypixel.util.Vector2f;
+import me.nibby.pix.Input;
+import me.nibby.pix.RenderContext;
+import me.nibby.pix.util.Vector2f;
 import tk.hes.conquest.actor.Actor;
 import tk.hes.conquest.game.scene.Scene;
 
@@ -54,25 +55,26 @@ public class GameBoard {
 				else
 					aliveActors.add(actor);
 			}
-		}
 
-		for (Actor actor : aliveActors) {
-			actor.render(context);
-		}
+            for (Actor actor : aliveActors) {
+                actor.render(context);
+            }
+        }
+
 
 		boardWidth = context.getWidth();
 	}
 
-    public void update() {
-		scene.update();
-        player1.update();
-        player2.update();
+    public void update(Input input, double delta) {
+		scene.update(delta);
+        player1.update(input);
+        player2.update(input);
 
 		for(int lane : actorMap.keySet()) {
 			ArrayList<Actor> laneActors = actorMap.get(lane);
 			for(int i = 0; i < laneActors.size(); i++) {
 				Actor actor = laneActors.get(i);
-                actor.update();
+                actor.update(delta);
                 if (actor.canRemove()) {
                     removeActor(actor, lane);
 					i--;
@@ -93,6 +95,7 @@ public class GameBoard {
 
 		ArrayList<Actor> actors = actorMap.get(lane);
 		actors.add(actor);
+        System.out.println(actors.size());
 	}
 
 	public void actorDeath(Actor actor) {

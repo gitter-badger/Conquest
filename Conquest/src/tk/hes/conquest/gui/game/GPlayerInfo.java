@@ -1,8 +1,9 @@
 package tk.hes.conquest.gui.game;
 
-import me.deathjockey.tinypixel.graphics.Colors;
-import me.deathjockey.tinypixel.graphics.RenderContext;
-import me.deathjockey.tinypixel.util.Vector2f;
+import me.nibby.pix.Input;
+import me.nibby.pix.PixColor;
+import me.nibby.pix.RenderContext;
+import me.nibby.pix.util.Vector2f;
 import tk.hes.conquest.graphics.Art;
 import tk.hes.conquest.gui.bar.GBarColor;
 import tk.hes.conquest.gui.base.GComponent;
@@ -21,8 +22,8 @@ import java.awt.*;
  */
 public class GPlayerInfo extends GComponent implements GButtonActionListener {
 
-	private static final int COLOR_CHARGE_BAR = Colors.toInt(204, 212, 0, 255),
-							COLOR_CHARGE_BAR_READY = Colors.PURE_YELLOW;
+	private static final int COLOR_CHARGE_BAR = PixColor.toPixelInt(204, 212, 0, 255),
+							COLOR_CHARGE_BAR_READY = PixColor.YELLOW;
 
     private GImage backgroundImage, chargeBar, moneyBar;
     private GButton storeButton, toolButton;
@@ -35,32 +36,23 @@ public class GPlayerInfo extends GComponent implements GButtonActionListener {
     public GPlayerInfo(GGameOverlay overlay, Vector2f position) {
         super(position);
         this.overlay = overlay;
-    }
-
-    @Override
-    public void init(RenderContext c) {
         this.backgroundImage = new GImage(Art.STATS_BACKGROUND, new Vector2f(0, 0), this);
 
         storeButton = new GButton(new Vector2f(2, 34), this);
         storeButton.setButtonNormal(Art.STATS_BUTTONS.getSprite(0, 0));
         storeButton.setButtonPressed(Art.STATS_BUTTONS.getSprite(1, 0));
-        storeButton.init(c);
         storeButton.addActionListener(this);
 
         toolButton = new GButton(new Vector2f(31, 34), this);
         toolButton.setButtonNormal(Art.STATS_BUTTONS.getSprite(0, 1));
         toolButton.setButtonPressed(Art.STATS_BUTTONS.getSprite(1, 1));
-        toolButton.init(c);
 
         chargeBar = new GImage(Art.STATS_BARS.getSprite(0, 0), new Vector2f(2, 2), this);
-        chargeBar.init(c);
-        chargeFillBar = new GBarColor(new Vector2f(13, 2), new Dimension(39, 10), Colors.PURE_CYAN, chargeBar);
-        chargeFillBar.init(c);
+        chargeFillBar = new GBarColor(new Vector2f(13, 2), new Dimension(39, 10), PixColor.CYAN, chargeBar);
         chargeFillBar.setFilledPercent(0);
 
         moneyBar = new GImage(Art.STATS_BARS.getSprite(1, 0), new Vector2f(2, 18), this);
-        moneyLabel = new GLabel("0", new Vector2f(15, 3), Colors.toInt(207, 214, 0, 255), moneyBar);
-        moneyLabel.init(c);
+        moneyLabel = new GLabel("0", new Vector2f(15, 3), PixColor.toPixelInt(207, 214, 0, 255), moneyBar);
 
         this.backgroundImage = new GImage(Art.STATS_BACKGROUND, new Vector2f(0, 0), this);
     }
@@ -81,9 +73,9 @@ public class GPlayerInfo extends GComponent implements GButtonActionListener {
 
 
     @Override
-    public void update() {
-        storeButton.update();
-        toolButton.update();
+    public void update(Input input) {
+        storeButton.update(input);
+        toolButton.update(input);
     }
 
     public void setMoneyAmount(int amount) {
@@ -109,7 +101,6 @@ public class GPlayerInfo extends GComponent implements GButtonActionListener {
         if (button == storeButton) {
             //TODO Check later if this is a good location for store creation
             GStore store = new GStore(new Vector2f(10, 100));
-            store.init(RenderContext.getInstance());
             overlay.addDialogBox(store);
         }
     }

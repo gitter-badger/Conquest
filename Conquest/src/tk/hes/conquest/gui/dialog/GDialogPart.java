@@ -1,6 +1,6 @@
 package tk.hes.conquest.gui.dialog;
 
-import me.deathjockey.tinypixel.graphics.Bitmap;
+import me.nibby.pix.Bitmap;
 import tk.hes.conquest.graphics.Art;
 import tk.hes.conquest.gui.base.enums.GDialogType;
 
@@ -44,17 +44,17 @@ public class GDialogPart {
 
     private void genTypeInfo() {
         Bitmap info = !isTitleDialog ? getBitmapOfType(type) : getBitmapOfTitleType(type);
-        this.topLeftCorner = info.getBitmapRegion(0, 0, 16, 16);
-        this.topCenterEdge = info.getBitmapRegion(16, 0, 32, 16);
-        this.topRightCorner = info.getBitmapRegion(32, 0, 48, 16);
+        this.topLeftCorner = info.getRegionAsBitmap(0, 0, 16, 16);
+        this.topCenterEdge = info.getRegionAsBitmap(16, 0, 32, 16);
+        this.topRightCorner = info.getRegionAsBitmap(32, 0, 48, 16);
 
-        this.midLeftEdge = info.getBitmapRegion(0, 16, 16, 32);
-        this.center = info.getBitmapRegion(16, 16, 32, 32);
-        this.midRightEdge = info.getBitmapRegion(32, 16, 48, 32);
+        this.midLeftEdge = info.getRegionAsBitmap(0, 16, 16, 32);
+        this.center = info.getRegionAsBitmap(16, 16, 32, 32);
+        this.midRightEdge = info.getRegionAsBitmap(32, 16, 48, 32);
 
-        this.lowLeftCorner = info.getBitmapRegion(0, 32, 16, 48);
-        this.lowCenterEdge = info.getBitmapRegion(16, 32, 32, 48);
-        this.lowRightCorner = info.getBitmapRegion(32, 32, 48, 48);
+        this.lowLeftCorner = info.getRegionAsBitmap(0, 32, 16, 48);
+        this.lowCenterEdge = info.getRegionAsBitmap(16, 32, 32, 48);
+        this.lowRightCorner = info.getRegionAsBitmap(32, 32, 48, 48);
     }
 
     private Bitmap getBitmapOfType(GDialogType type) {

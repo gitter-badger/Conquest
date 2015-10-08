@@ -1,6 +1,7 @@
 package tk.hes.conquest.game.scene;
 
-import me.deathjockey.tinypixel.graphics.RenderContext;
+import me.nibby.pix.Input;
+import me.nibby.pix.RenderContext;
 import tk.hes.conquest.graphics.Art;
 
 public class DungeonScene extends Scene {
@@ -20,7 +21,7 @@ public class DungeonScene extends Scene {
 	}
 
 	@Override
-	public void update() {
+	public void update(double delta) {
 
 	}
 }

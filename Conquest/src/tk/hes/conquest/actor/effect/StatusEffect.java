@@ -1,6 +1,6 @@
 package tk.hes.conquest.actor.effect;
 
-import me.deathjockey.tinypixel.graphics.RenderContext;
+import me.nibby.pix.RenderContext;
 import tk.hes.conquest.actor.Actor;
 
 public abstract class StatusEffect {

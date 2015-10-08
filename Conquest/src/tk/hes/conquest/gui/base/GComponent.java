@@ -1,7 +1,10 @@
 package tk.hes.conquest.gui.base;
 
-import me.deathjockey.tinypixel.graphics.RenderContext;
-import me.deathjockey.tinypixel.util.Vector2f;
+import me.nibby.pix.Input;
+import me.nibby.pix.RenderContext;
+import me.nibby.pix.util.Vector2f;
+import tk.hes.conquest.gui.slot.GActorSlot;
+import tk.hes.conquest.gui.slot.GActorSlotBar;
 
 import java.awt.*;
 
@@ -34,11 +37,9 @@ public abstract class GComponent {
         this.size = new Dimension(0, 0);
     }
 
-    public abstract void init(RenderContext c);
-
     public abstract void render(RenderContext c);
 
-    public abstract void update();
+    public abstract void update(Input input);
 
     public GComponent getParent() {
         return parent;
@@ -57,10 +58,11 @@ public abstract class GComponent {
     }
 
     private Vector2f calculatePosition(Vector2f position) {
-        if (!isChild)
+        if (!isChild) {
             return position;
-        else
+        } else {
             return new Vector2f(position.getX() + parent.getPosition().getX(), position.getY() + parent.getPosition().getY());
+        }
     }
 
     public Dimension getSize() {

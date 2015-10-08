@@ -1,7 +1,6 @@
 package tk.hes.conquest.gui.bar;
 
-import me.deathjockey.tinypixel.graphics.RenderContext;
-import me.deathjockey.tinypixel.util.Vector2f;
+import me.nibby.pix.util.Vector2f;
 import tk.hes.conquest.gui.base.GComponent;
 import tk.hes.conquest.gui.base.enums.GOrientation;
 
@@ -17,10 +16,7 @@ public abstract class GBar extends GComponent {
 
     public GBar(Vector2f position, GComponent parent) {
         super(position, parent);
-    }
 
-    @Override
-    public void init(RenderContext c) {
         this.orientation = GOrientation.HORIZONTAL;
         this.isFlipped = false;
         setFilledPercent(100);

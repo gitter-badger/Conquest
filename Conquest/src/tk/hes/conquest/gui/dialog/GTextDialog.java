@@ -1,7 +1,8 @@
 package tk.hes.conquest.gui.dialog;
 
-import me.deathjockey.tinypixel.graphics.RenderContext;
-import me.deathjockey.tinypixel.util.Vector2f;
+import me.nibby.pix.Input;
+import me.nibby.pix.RenderContext;
+import me.nibby.pix.util.Vector2f;
 import tk.hes.conquest.gui.base.GLabel;
 import tk.hes.conquest.gui.base.enums.GDialogType;
 
@@ -24,11 +25,6 @@ public class GTextDialog extends GTitleDialog {
     public GTextDialog(String title, Vector2f position, Dimension size, GDialogType type) {
         super(title, position, size, type);
         this.message = "";
-    }
-
-    @Override
-    public void init(RenderContext c) {
-        super.init(c);
         textLabel = new GLabel(message, new Vector2f(5, 16), this);
     }
 
@@ -39,13 +35,12 @@ public class GTextDialog extends GTitleDialog {
     }
 
     @Override
-    public void update() {
-        super.update();
-        textLabel.update();
+    public void update(Input input) {
+        super.update(input);
+        textLabel.update(input);
     }
 
     public void setMessage(String text) {
         this.message = text;
     }
-
 }

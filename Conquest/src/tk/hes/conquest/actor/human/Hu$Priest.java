@@ -1,11 +1,10 @@
 package tk.hes.conquest.actor.human;
 
-import me.deathjockey.tinypixel.Time;
-import me.deathjockey.tinypixel.graphics.Animation;
-import me.deathjockey.tinypixel.graphics.Bitmap;
-import me.deathjockey.tinypixel.graphics.Colors;
-import me.deathjockey.tinypixel.graphics.RenderContext;
-import me.deathjockey.tinypixel.util.Vector2f;
+import me.nibby.pix.Animation;
+import me.nibby.pix.Bitmap;
+import me.nibby.pix.PixColor;
+import me.nibby.pix.RenderContext;
+import me.nibby.pix.util.Vector2f;
 import tk.hes.conquest.actor.*;
 import tk.hes.conquest.actor.effect.HealingEffect;
 import tk.hes.conquest.game.Origin;
@@ -15,6 +14,7 @@ import tk.hes.conquest.particle.LinearProjectile;
 import tk.hes.conquest.particle.Particle;
 import tk.hes.conquest.particle.ParticleManager;
 
+import java.sql.Time;
 import java.util.ArrayList;
 
 public class Hu$Priest extends Actor {
@@ -64,8 +64,8 @@ public class Hu$Priest extends Actor {
 		tuple.hasShadow = true;
 		tuple.shadowType = 0;
 
-		int w = Art.UNIT_HUMAN_PRIEST.getCellSize().width;
-		int h = Art.UNIT_HUMAN_PRIEST.getCellSize().height;
+		int w = Art.UNIT_HUMAN_PRIEST.getCellSize().x;
+		int h = Art.UNIT_HUMAN_PRIEST.getCellSize().y;
 
 		actions.set(ActionType.STATIC, new Action()
 				.addFrame(Art.UNIT_HUMAN_PRIEST.getSprite(0, 0), 500, 0, 0));
@@ -95,8 +95,8 @@ public class Hu$Priest extends Actor {
 	}
 
 	@Override
-	public void update() {
-		super.update();
+	public void update(double delta) {
+		super.update(delta);
 
 		if(channeling) {
 			if(!channelSpawn) {
@@ -172,8 +172,8 @@ public class Hu$Priest extends Actor {
 		}
 
 		@Override
-		public void update() {
-			super.update();
+		public void update(double delta) {
+			super.update(delta);
 
 			if(System.currentTimeMillis() - lastParticleSpawn > 350) {
 				Vector2f pPos = new Vector2f(position.getX(), position.getY());
@@ -236,13 +236,13 @@ public class Hu$Priest extends Actor {
 		@Override
 		public void render(RenderContext c) {
 			super.render(c);
-			c.render(projectile, (int) position.getX(), (int) position.getY(), (float) alpha / 255f);
+			c.renderBitmap(projectile, (int) position.getX(), (int) position.getY(), (float) alpha / 255f);
 		}
 
 		@Override
-		public void update() {
-			super.update();
-			alpha -= 3 * Time.delta;
+		public void update(double delta) {
+			super.update(delta);
+			alpha -= 3 * delta;
 			if(alpha <= 0)
 				remove();
 		}
@@ -260,7 +260,7 @@ public class Hu$Priest extends Actor {
 		protected BoltCollisionParticle(Vector2f pos, Vector2f projectileVelocity, Bitmap projectile) {
 			super(pos, new Vector2f(0, 0));
 			setSize((int) (Math.random() * 2 + 1));
-			int[] rgba = Colors.fromInt(projectile.getPixels()[(int) (Math.random() * projectile.getPixels().length)]);
+			int[] rgba = PixColor.fromPixelInt(projectile.getPixels()[(int) (Math.random() * projectile.getPixels().length)]);
 			r = rgba[0];
 			g = rgba[1];
 			b = rgba[2];
@@ -274,9 +274,9 @@ public class Hu$Priest extends Actor {
 		}
 
 		@Override
-		public void update() {
-			super.update();
-			alpha -= 3 * Time.delta;
+		public void update(double delta) {
+			super.update(delta);
+			alpha -= 3 * delta;
 			setColor(r, g, b, alpha);
 			if(alpha <= 0)
 				remove();
@@ -303,12 +303,12 @@ public class Hu$Priest extends Actor {
 		}
 
 		@Override
-		public void update() {
-			super.update();
-			if(r < tr) r += 6f * Time.delta;
-			if(g < tg) g += 6f * Time.delta;
-			if(b > tb) b -= 6f * Time.delta;
-			a -= 2 * Time.delta;
+		public void update(double delta) {
+			super.update(delta);
+			if(r < tr) r += 6f * delta;
+			if(g < tg) g += 6f * delta;
+			if(b > tb) b -= 6f * delta;
+			a -= 2 * delta;
 			setColor(r, g, b, a);
 
 			Vector2f destination = Hu$Priest.this.getPosition();

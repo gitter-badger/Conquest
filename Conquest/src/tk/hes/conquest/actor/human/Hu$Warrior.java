@@ -48,8 +48,8 @@ public class Hu$Warrior extends Actor  {
 		tuple.hasShadow = true;
 		tuple.shadowType = 0;
 
-		int w = Art.UNIT_HUMAN_WARRIOR.getCellSize().width;
-		int h = Art.UNIT_HUMAN_WARRIOR.getCellSize().height;
+		int w = Art.UNIT_HUMAN_WARRIOR.getCellSize().x;
+		int h = Art.UNIT_HUMAN_WARRIOR.getCellSize().y;
 
 		actions.set(ActionType.STATIC, new Action()
 				.addFrame(Art.UNIT_HUMAN_WARRIOR.getSprite(0, 0), 500, 0, 0));
@@ -60,8 +60,8 @@ public class Hu$Warrior extends Actor  {
 
 		actions.set(ActionType.ATTACK1, new Action(this)
 				.addFrame(Art.UNIT_HUMAN_WARRIOR.getSprite(0, 1), 250, 0, 0)
-				.addFrame(Art.UNIT_HUMAN_WARRIOR.getBitmapRegion(w, h, 3 * w, 2 * h), 100, -9 * Actor.SPRITE_SCALE, 0)
-				.addFrame(Art.UNIT_HUMAN_WARRIOR.getBitmapRegion(w, h, 3 * w, 2 * h), 1, -9 * Actor.SPRITE_SCALE, 0, "swing-hit")
+				.addFrame(Art.UNIT_HUMAN_WARRIOR.getRegionAsBitmap(w, h, 3 * w, 2 * h), 100, -9 * Actor.SPRITE_SCALE, 0)
+				.addFrame(Art.UNIT_HUMAN_WARRIOR.getRegionAsBitmap(w, h, 3 * w, 2 * h), 1, -9 * Actor.SPRITE_SCALE, 0, "swing-hit")
 				.addFrame(Art.UNIT_HUMAN_WARRIOR.getSprite(0, 0), 650, 0, 0));
 
 		actions.set(ActionType.DEATH, new Action()

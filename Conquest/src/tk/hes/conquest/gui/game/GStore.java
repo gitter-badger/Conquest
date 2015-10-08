@@ -1,11 +1,11 @@
 package tk.hes.conquest.gui.game;
 
-import me.deathjockey.tinypixel.graphics.RenderContext;
-import me.deathjockey.tinypixel.util.Vector2f;
+import me.nibby.pix.Input;
+import me.nibby.pix.RenderContext;
+import me.nibby.pix.util.Vector2f;
 import tk.hes.conquest.graphics.Art;
 import tk.hes.conquest.gui.base.GImage;
 import tk.hes.conquest.gui.dialog.GTitleDialog;
-
 
 /**
  * The UI element responsible for the Store page.
@@ -20,11 +20,7 @@ public class GStore extends GTitleDialog {
         super("Fighter Store", position);
         this.backgroundImage = new GImage(Art.UI_STORE, this);
         this.size = backgroundImage.getSize();
-    }
 
-    @Override
-    public void init(RenderContext c) {
-        super.init(c);
         this.closeButton.setPosition((int) getSize().getWidth() - 66, 3);
         this.titleLabel.setPosition(27, 2);
     }
@@ -36,7 +32,7 @@ public class GStore extends GTitleDialog {
     }
 
     @Override
-    public void update() {
-        super.update();
+    public void update(Input input) {
+        super.update(input);
     }
 }

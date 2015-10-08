@@ -1,9 +1,8 @@
 package tk.hes.conquest.particle;
 
-import me.deathjockey.tinypixel.Time;
-import me.deathjockey.tinypixel.graphics.Colors;
-import me.deathjockey.tinypixel.graphics.RenderContext;
-import me.deathjockey.tinypixel.util.Vector2f;
+import me.nibby.pix.PixColor;
+import me.nibby.pix.RenderContext;
+import me.nibby.pix.util.Vector2f;
 import tk.hes.conquest.ConquestGameDesktopLauncher;
 
 /**
@@ -33,17 +32,16 @@ public abstract class Particle {
 
 	public void render(RenderContext c) {
 		if(size > 0f) {
-			c.fillRegion((int) position.getX(),
+			c.renderFilledRectangle((int) position.getX(),
 					(int) position.getY(),
-					(int) (position.getX() + size),
-					(int) (position.getY() + size),
-					Colors.toInt(tint));
+					(int) size, (int) size,
+					PixColor.toPixelInt(tint));
 		}
 	}
 
-	public void update() {
-		this.position.setX(position.getX() + velocity.getX() * (float) Time.delta);
-		this.position.setY(position.getY() + velocity.getY() * (float) Time.delta);
+	public void update(double delta) {
+		this.position.setX(position.getX() + velocity.getX() * (float) delta);
+		this.position.setY(position.getY() + velocity.getY() * (float) delta);
 
 		int x = (int) this.position.getX();
 		if(x < -16 - size || x > ConquestGameDesktopLauncher.INIT_WIDTH / ConquestGameDesktopLauncher.SCALE) {

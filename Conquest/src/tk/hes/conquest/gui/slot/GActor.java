@@ -1,7 +1,8 @@
 package tk.hes.conquest.gui.slot;
 
-import me.deathjockey.tinypixel.graphics.RenderContext;
-import me.deathjockey.tinypixel.util.Vector2f;
+import me.nibby.pix.Input;
+import me.nibby.pix.RenderContext;
+import me.nibby.pix.util.Vector2f;
 import tk.hes.conquest.actor.SampleActor;
 import tk.hes.conquest.gui.base.GComponent;
 
@@ -15,10 +16,6 @@ public class GActor extends GComponent {
     public GActor(SampleActor actor, Vector2f position, GComponent parent) {
         super(position, parent);
         this.actor = actor;
-    }
-
-    @Override
-    public void init(RenderContext c) {
         actor.setPosition(position);
     }
 
@@ -28,7 +25,7 @@ public class GActor extends GComponent {
     }
 
     @Override
-    public void update() {
+    public void update(Input input) {
 
     }
 

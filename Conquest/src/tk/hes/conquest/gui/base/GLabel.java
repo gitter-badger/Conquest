@@ -1,10 +1,12 @@
 package tk.hes.conquest.gui.base;
 
-import me.deathjockey.tinypixel.graphics.BitFont;
-import me.deathjockey.tinypixel.graphics.Colors;
-import me.deathjockey.tinypixel.graphics.RenderContext;
-import me.deathjockey.tinypixel.util.Vector2f;
-import tk.hes.conquest.Font;
+import me.nibby.pix.BitmapFont;
+import me.nibby.pix.Input;
+import me.nibby.pix.PixColor;
+import me.nibby.pix.RenderContext;
+import me.nibby.pix.util.Vector2f;
+
+import java.awt.*;
 
 /**
  * A basic GUI label with color customization and capable of acting as a child
@@ -13,16 +15,15 @@ import tk.hes.conquest.Font;
  */
 public class GLabel extends GComponent {
 
-    private String fontType;
     private String text;
     private int color;
 
     public GLabel(String text) {
-        this(text, new Vector2f(0, 0), Colors.PURE_WHITE);
+        this(text, new Vector2f(0, 0), PixColor.WHITE);
     }
 
     public GLabel(String text, Vector2f position) {
-        this(text, position, Colors.PURE_WHITE, null);
+        this(text, position, PixColor.WHITE, null);
     }
 
     public GLabel(String text, Vector2f position, int color) {
@@ -30,7 +31,7 @@ public class GLabel extends GComponent {
     }
 
     public GLabel(String text, Vector2f position, GComponent parent) {
-        this(text, position, Colors.PURE_WHITE, parent);
+        this(text, position, PixColor.WHITE, parent);
     }
 
     public GLabel(String text, Vector2f position, int color, GComponent parent) {
@@ -43,21 +44,16 @@ public class GLabel extends GComponent {
     private void create(String text, int color) {
         this.text = text;
         this.color = color;
-        fontType = Font.NORMAL;
-    }
-
-    @Override
-    public void init(RenderContext c) {
-        this.size.width = BitFont.widthOf(text, c.getFont(fontType));
+        this.size.width = BitmapFont.getDefaultFont().widthOf(text);
     }
 
     @Override
     public void render(RenderContext c) {
-        c.getFont(fontType).render(text, (int) position.getX(), (int) position.getY(), color);
+        c.renderText(text, (int) position.getX(), (int) position.getY(), color);
     }
 
     @Override
-    public void update() {
+    public void update(Input input) {
     }
 
     public String getText() {

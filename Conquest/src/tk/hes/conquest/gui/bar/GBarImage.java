@@ -1,8 +1,9 @@
 package tk.hes.conquest.gui.bar;
 
-import me.deathjockey.tinypixel.graphics.Bitmap;
-import me.deathjockey.tinypixel.graphics.RenderContext;
-import me.deathjockey.tinypixel.util.Vector2f;
+import me.nibby.pix.Bitmap;
+import me.nibby.pix.Input;
+import me.nibby.pix.RenderContext;
+import me.nibby.pix.util.Vector2f;
 import tk.hes.conquest.gui.base.GComponent;
 import tk.hes.conquest.gui.base.GImage;
 
@@ -20,26 +21,22 @@ public class GBarImage extends GBar {
     }
 
     @Override
-    public void init(RenderContext c) {
-        super.init(c);
-
-    }
-
-    @Override
     public void render(RenderContext c) {
-        int aW = (int) (getSize().getWidth() - amountFilled);
-        int aH = (int) (getSize().getHeight() - amountFilled);
-        c.render(image.getImage(),
-                (isFlipped && isHorizontal() ? aW : 0),
-                (isFlipped && !isHorizontal() ? aH : 0),
-                (int) (isHorizontal() ? amountFilled : getSize().getWidth()) + (isFlipped && isHorizontal() ? aW : 0),
-                (int) (!isHorizontal() ? amountFilled : getSize().getHeight()) + (isFlipped && !isHorizontal() ? aH : 0),
-                (int) position.getX(), (int) position.getY());
+        int actualWidth = (int) (getSize().getWidth() - amountFilled);
+        int actualHeight = (int) (getSize().getHeight() - amountFilled);
 
+        int trimX = (isFlipped && isHorizontal() ? actualWidth : 0);
+        int trimY = (isFlipped && !isHorizontal() ? actualHeight : 0);
+        int trimWidth = (int) (isHorizontal() ? amountFilled : getSize().getWidth()) + (isFlipped && isHorizontal() ? actualWidth : 0);
+        int trimHeight = (int) (!isHorizontal() ? amountFilled : getSize().getHeight()) + (isFlipped && !isHorizontal() ? actualHeight : 0);
+        if(trimWidth > trimX && trimHeight > trimY) {
+            c.renderBitmap(image.getImage().getRegionAsBitmap(trimX, trimY, trimWidth, trimHeight),
+                    (int) position.getX(), (int) position.getY());
+        }
     }
 
     @Override
-    public void update() {
+    public void update(Input input) {
 
     }
 }

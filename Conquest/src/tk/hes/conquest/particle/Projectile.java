@@ -1,8 +1,8 @@
 package tk.hes.conquest.particle;
 
-import me.deathjockey.tinypixel.graphics.Animation;
-import me.deathjockey.tinypixel.graphics.RenderContext;
-import me.deathjockey.tinypixel.util.Vector2f;
+import me.nibby.pix.Animation;
+import me.nibby.pix.RenderContext;
+import me.nibby.pix.util.Vector2f;
 import tk.hes.conquest.actor.Actor;
 import tk.hes.conquest.actor.BB;
 
@@ -29,12 +29,12 @@ public abstract class Projectile extends Particle {
 
 	public void render(RenderContext c) {
 		super.render(c);
-		c.render(animation, (int) position.getX(), (int) position.getY());
+		animation.render(c, (int) position.getX(), (int) position.getY());
 	}
 
-	public void update() {
+	public void update(double delta) {
 		updateVelocity();
-		super.update();
+		super.update(delta);
 		updateCollision();
 	}
 

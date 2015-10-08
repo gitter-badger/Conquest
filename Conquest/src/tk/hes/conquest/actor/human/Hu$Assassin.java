@@ -1,6 +1,6 @@
 package tk.hes.conquest.actor.human;
 
-import me.deathjockey.tinypixel.graphics.RenderContext;
+import me.nibby.pix.RenderContext;
 import tk.hes.conquest.actor.*;
 import tk.hes.conquest.game.Player;
 import tk.hes.conquest.graphics.Art;
@@ -15,8 +15,8 @@ public class Hu$Assassin extends Actor {
 	}
 
 	@Override
-	public void update() {
-		super.update();
+	public void update(double delta) {
+		super.update(delta);
 	}
 
 	@Override
@@ -59,8 +59,8 @@ public class Hu$Assassin extends Actor {
 		tuple.hasShadow = true;
 		tuple.shadowType = 0;
 
-		int w = Art.UNIT_HUMAN_ARCHER.getCellSize().width;
-		int h = Art.UNIT_HUMAN_ARCHER.getCellSize().height;
+		int w = Art.UNIT_HUMAN_ASSASSIN.getCellSize().x;
+		int h = Art.UNIT_HUMAN_ASSASSIN.getCellSize().y;
 
 		actions.set(ActionType.STATIC, new Action()
 				.addFrame(Art.UNIT_HUMAN_ASSASSIN.getSprite(0, 0), 500, 0, 0));
@@ -71,8 +71,8 @@ public class Hu$Assassin extends Actor {
 
 		actions.set(ActionType.ATTACK1, new Action(this)
 				.addFrame(Art.UNIT_HUMAN_ASSASSIN.getSprite(0, 1), 250, 0, 0)
-				.addFrame(Art.UNIT_HUMAN_ASSASSIN.getBitmapRegion(w, h, w * 2 + 2 * Actor.SPRITE_SCALE, 2 * h), 100, 0, -2 * Actor.SPRITE_SCALE, "hit")
-				.addFrame(Art.UNIT_HUMAN_ASSASSIN.getBitmapRegion(w, h, w * 2 + 2 * Actor.SPRITE_SCALE, 2 * h), 1, 0, -2 * Actor.SPRITE_SCALE, "hit")
+				.addFrame(Art.UNIT_HUMAN_ASSASSIN.getRegionAsBitmap(w, h, w * 2 + 2 * Actor.SPRITE_SCALE, 2 * h), 100, 0, -2 * Actor.SPRITE_SCALE, "hit")
+				.addFrame(Art.UNIT_HUMAN_ASSASSIN.getRegionAsBitmap(w, h, w * 2 + 2 * Actor.SPRITE_SCALE, 2 * h), 1, 0, -2 * Actor.SPRITE_SCALE, "hit")
 				.addFrame(Art.UNIT_HUMAN_ASSASSIN.getSprite(0, 1), 350, 0, 0, "$RANDOM_DELAY 20 100"));
 
 		actions.set(ActionType.DEATH, new Action()

@@ -1,6 +1,6 @@
 package tk.hes.conquest.gui.button;
 
-import me.deathjockey.tinypixel.util.Vector2f;
+import me.nibby.pix.util.Vector2f;
 import tk.hes.conquest.graphics.Art;
 import tk.hes.conquest.gui.base.GComponent;
 import tk.hes.conquest.gui.base.enums.GDialogButtonType;

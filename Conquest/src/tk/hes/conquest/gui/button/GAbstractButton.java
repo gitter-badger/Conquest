@@ -1,9 +1,10 @@
 package tk.hes.conquest.gui.button;
 
-import me.deathjockey.tinypixel.Input;
-import me.deathjockey.tinypixel.graphics.Bitmap;
-import me.deathjockey.tinypixel.graphics.RenderContext;
-import me.deathjockey.tinypixel.util.Vector2f;
+import me.nibby.pix.Bitmap;
+import me.nibby.pix.Input;
+import me.nibby.pix.RenderContext;
+import me.nibby.pix.util.Tuple2i;
+import me.nibby.pix.util.Vector2f;
 import tk.hes.conquest.gui.base.GComponent;
 import tk.hes.conquest.gui.base.enums.GState;
 import tk.hes.conquest.gui.listener.GButtonActionListener;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
  */
 public abstract class GAbstractButton extends GComponent {
 
-    public ArrayList<GButtonActionListener> listeners;
+    public ArrayList<GButtonActionListener> listeners = new ArrayList<>();
     protected Bitmap buttonNormal = null;
     protected Bitmap buttonPressed = null;
     protected GState currentState;
@@ -26,14 +27,6 @@ public abstract class GAbstractButton extends GComponent {
     public GAbstractButton(Vector2f position) {
         super(position);
 
-    }
-
-    public GAbstractButton(Vector2f position, GComponent parent) {
-        super(position, parent);
-    }
-
-    @Override
-    public void init(RenderContext c) {
         currentState = GState.NORMAL;
         listeners = new ArrayList<>();
         if (buttonNormal == null)
@@ -42,20 +35,25 @@ public abstract class GAbstractButton extends GComponent {
         this.setSize(buttonNormal.getWidth(), buttonNormal.getHeight());
     }
 
-    @Override
-    public void render(RenderContext c) {
-        if (currentState == GState.NORMAL || currentState == GState.HOVERED)
-            c.render(buttonNormal, (int) position.getX(), (int) position.getY());
-        else if (currentState == GState.PRESSED)
-            c.render(buttonPressed, (int) position.getX(), (int) position.getY());
+    public GAbstractButton(Vector2f position, GComponent parent) {
+        super(position, parent);
     }
 
     @Override
-    public void update() {
-        Vector2f mouse = Input.getCursorPosition();
-        if (mouse.getX() > position.getX() && mouse.getX() < position.getX() + size.getWidth() && mouse.getY() > position.getY() && mouse.getY() < position.getY() + size.getHeight()) {
+    public void render(RenderContext c) {
+        if (currentState == GState.NORMAL || currentState == GState.HOVERED)
+            c.renderBitmap(buttonNormal, (int) position.getX(), (int) position.getY());
+        else if (currentState == GState.PRESSED)
+            c.renderBitmap(buttonPressed, (int) position.getX(), (int) position.getY());
+    }
+
+    @Override
+    public void update(Input input) {
+        Tuple2i mouse = input.getCursorPosition();
+        if (mouse.x > position.getX() && mouse.x < position.getX() + size.getWidth()
+                && mouse.y > position.getY() && mouse.y < position.getY() + size.getHeight()) {
             currentState = GState.PRESSED;
-            if (Input.getMouseClicked(Input.MOUSE_LEFT)) {
+            if (input.isMouseClicked(Input.MOUSE_LEFT)) {
                 for (GButtonActionListener l : listeners) l.actionPreformed(this);
             }
         } else {

@@ -53,8 +53,8 @@ public class Hu$Knight extends Actor {
 		tuple.hasShadow = true;
 		tuple.shadowType = 0;
 
-		int w = Art.UNIT_HUMAN_KNIGHT.getCellSize().width;
-		int h = Art.UNIT_HUMAN_KNIGHT.getCellSize().height;
+		int w = Art.UNIT_HUMAN_KNIGHT.getCellSize().x;
+		int h = Art.UNIT_HUMAN_KNIGHT.getCellSize().y;
 
 		actions.set(ActionType.STATIC, new Action()
 				.addFrame(Art.UNIT_HUMAN_KNIGHT.getSprite(0, 0), 500, 0, 0));
@@ -65,8 +65,8 @@ public class Hu$Knight extends Actor {
 
 		actions.set(ActionType.ATTACK1, new Action(this)
 				.addFrame(Art.UNIT_HUMAN_KNIGHT.getSprite(0, 1), 150, 0, 0)
-				.addFrame(Art.UNIT_HUMAN_KNIGHT.getBitmapRegion(w, h, 3 * w, 2 * h), 100, -10 * Actor.SPRITE_SCALE, 0)
-				.addFrame(Art.UNIT_HUMAN_KNIGHT.getBitmapRegion(w, h, 3 * w, 2 * h), 1, -10 * Actor.SPRITE_SCALE, 0, "swing-hit")
+				.addFrame(Art.UNIT_HUMAN_KNIGHT.getRegionAsBitmap(w, h, 3 * w, 2 * h), 100, -10 * Actor.SPRITE_SCALE, 0)
+				.addFrame(Art.UNIT_HUMAN_KNIGHT.getRegionAsBitmap(w, h, 3 * w, 2 * h), 1, -10 * Actor.SPRITE_SCALE, 0, "swing-hit")
 				.addFrame(Art.UNIT_HUMAN_KNIGHT.getSprite(0, 0), 950, 0, 0));
 
 		actions.set(ActionType.DEFEND, new Action()

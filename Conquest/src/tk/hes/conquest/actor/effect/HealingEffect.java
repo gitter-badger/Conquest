@@ -1,9 +1,8 @@
 package tk.hes.conquest.actor.effect;
 
-import me.deathjockey.tinypixel.Time;
-import me.deathjockey.tinypixel.graphics.Bitmap;
-import me.deathjockey.tinypixel.graphics.RenderContext;
-import me.deathjockey.tinypixel.util.Vector2f;
+import me.nibby.pix.Bitmap;
+import me.nibby.pix.RenderContext;
+import me.nibby.pix.util.Vector2f;
 import tk.hes.conquest.actor.Actor;
 import tk.hes.conquest.graphics.Art;
 import tk.hes.conquest.particle.Particle;
@@ -70,11 +69,16 @@ public class HealingEffect extends StatusEffect {
 		@Override
 		public void render(RenderContext c) {
 			super.render(c);
-			c.render(sprite, (int) position.getX(), (int) position.getY(), alpha / 255f);
-			alpha -= 150 * Time.delta;
+			c.renderBitmap(sprite, (int) position.getX(), (int) position.getY(), alpha / 255f);
 
 			if(alpha <= 0)
 				remove();
+		}
+
+		@Override
+		public void update(double delta) {
+			alpha -= 5 * delta;
+			this.position.set(position.getX(), (int) (position.getY() - 0.05f * delta));
 		}
 
 		@Override

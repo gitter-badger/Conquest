@@ -1,8 +1,8 @@
 package tk.hes.conquest.game;
 
-import me.deathjockey.tinypixel.Input;
-import me.deathjockey.tinypixel.graphics.Bitmap;
-import me.deathjockey.tinypixel.graphics.RenderContext;
+import me.nibby.pix.Bitmap;
+import me.nibby.pix.Input;
+import me.nibby.pix.RenderContext;
 import tk.hes.conquest.actor.Actor;
 import tk.hes.conquest.graphics.Art;
 
@@ -47,25 +47,25 @@ public class Player {
                 break;
         }
         ry = 128 + deployLane * GameBoard.LANE_SIZE;
-        c.render(cursor, rx, ry);
+        c.renderBitmap(cursor, rx, ry);
 
     }
 
-    public void update() {
+    public void update(Input input) {
         //TODO temporary
-        if (Input.getKeyPressed(KeyEvent.VK_UP)) {
+        if (input.isKeyPressed(KeyEvent.VK_UP)) {
             if (deployLane > 0)
                 deployLane--;
-        } else if (Input.getKeyPressed(KeyEvent.VK_DOWN)) {
+        } else if (input.isKeyPressed(KeyEvent.VK_DOWN)) {
             if (deployLane < board.getLaneCount() - 1)
                 deployLane++;
         }
-        if (Input.getKeyPressed(KeyEvent.VK_LEFT)) {
+        if (input.isKeyPressed(KeyEvent.VK_LEFT)) {
             if (actorSelectIndex > 0)
                 actorSelectIndex--;
             else
                 actorSelectIndex = actorsOwned.size() - 1;
-        } else if (Input.getKeyPressed(KeyEvent.VK_RIGHT)) {
+        } else if (input.isKeyPressed(KeyEvent.VK_RIGHT)) {
             if (actorSelectIndex < actorsOwned.size() - 1)
                 actorSelectIndex++;
             else
@@ -73,11 +73,11 @@ public class Player {
         }
 
 
-        if (Input.getKeyPressed(KeyEvent.VK_SPACE)) {
+        if (input.isKeyPressed(KeyEvent.VK_SPACE)) {
             deployActor(getSelectedActor());
         }
 
-        if (Input.getKeyPressed(KeyEvent.VK_C)) {
+        if (input.isKeyPressed(KeyEvent.VK_C)) {
             deployCharge();
         }
     }
@@ -125,10 +125,10 @@ public class Player {
     //Sends a row of units
     public void deployCharge() {
         if (charge >= chargeThreshold && canDeployActor(getSelectedActor())) {
-            charge = 0;
-            chargeThreshold += 20;
+//            charge = 0;
+//            chargeThreshold += 20;
             board.sendChargeWave(this, race, getSelectedActor());
-			lastDeployTime = System.currentTimeMillis();
+//			lastDeployTime = System.currentTimeMillis();
         }
     }
 

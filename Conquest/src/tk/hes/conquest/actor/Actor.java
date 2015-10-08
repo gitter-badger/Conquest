@@ -1,10 +1,9 @@
 package tk.hes.conquest.actor;
 
-import me.deathjockey.tinypixel.Time;
-import me.deathjockey.tinypixel.graphics.Bitmap;
-import me.deathjockey.tinypixel.graphics.Colors;
-import me.deathjockey.tinypixel.graphics.RenderContext;
-import me.deathjockey.tinypixel.util.Vector2f;
+import me.nibby.pix.Bitmap;
+import me.nibby.pix.PixColor;
+import me.nibby.pix.RenderContext;
+import me.nibby.pix.util.Vector2f;
 import tk.hes.conquest.ConquestGameDesktopLauncher;
 import tk.hes.conquest.actor.effect.StatusEffect;
 import tk.hes.conquest.game.GameBoard;
@@ -64,6 +63,7 @@ public abstract class Actor implements ActionKeyFrameListener {
 
     public void render(RenderContext c) {
         Action action = actionSet.get(currentAction);
+
         if (action != null) {
             Action.Frame frame = action.getCurrentFrame();
             boolean flipped = owner.getOrigin().equals(Origin.EAST);
@@ -73,24 +73,24 @@ public abstract class Actor implements ActionKeyFrameListener {
 
 			if(!dead && attributes.hasShadow) {
 				Bitmap shadow = Art.UNIT_SHADOW[attributes.shadowType];
-				c.render(shadow, (int) (getPosition().getX() + getBB().getRx() + getBB().getWidth() / 2 - shadow.getWidth() / 2),
+				c.renderBitmap(shadow, (int) (getPosition().getX() + getBB().getRx() + getBB().getWidth() / 2 - shadow.getWidth() / 2),
 						(int) (128 + currentLane * GameBoard.LANE_SIZE + getBB().getHeight() / 5), 0.7f);
 			}
 
             if (!hurt) {
 				if(!dead) {
-					c.render(sprite, drawX, drawY);
+					c.renderBitmap(sprite, drawX, drawY);
 				} else {
 					float decayAlpha = 1f - ((float) (System.currentTimeMillis() - deadTime) / (float) corpseDecayTime);
 					if(decayAlpha < 0) decayAlpha = 0;
-					c.render(sprite, drawX, drawY, decayAlpha);
+					c.renderBitmap(sprite, drawX, drawY, decayAlpha);
 				}
             } else {
 				float tintAlpha = (float) (System.currentTimeMillis() - hurtTime) / (float) hurtTintDuration;
                 int tint = 128 - (int) (tintAlpha * 128);
 				if(tint < 0) tint = 0;
 
-                c.render(sprite, drawX, drawY, 1.0f, Colors.toInt(128, 0, 0, tint));
+                c.renderBitmap(sprite, drawX, drawY, 1.0f, PixColor.toPixelInt(128, 0, 0, tint));
             }
 
 			for(StatusEffect effect : statusEffectList) {
@@ -99,7 +99,7 @@ public abstract class Actor implements ActionKeyFrameListener {
         }
     }
 
-    public void update() {
+    public void update(double delta) {
 		boolean canMove = true;
 		moveSpeed = attributes.speed;
 
@@ -156,7 +156,7 @@ public abstract class Actor implements ActionKeyFrameListener {
 
 
 			if (canMove) {
-				move();
+				move(delta);
 			}
 		}
 
@@ -175,17 +175,17 @@ public abstract class Actor implements ActionKeyFrameListener {
         actionSet.update();
     }
 
-	public void move() {
+	public void move(double delta) {
 		currentAction = ActionType.MOVE;
 		switch (owner.getOrigin()) {
 			case WEST:
-				position.setX(position.getX() + moveSpeed * (float) Time.delta);
+				position.setX(position.getX() + moveSpeed * (float) delta);
 				if(position.getX() > ConquestGameDesktopLauncher.INIT_WIDTH / ConquestGameDesktopLauncher.SCALE) {
 					board.actorReachEdge(this);
 				}
 				break;
 			case EAST:
-				position.setX(position.getX() - moveSpeed * (float) Time.delta);
+				position.setX(position.getX() - moveSpeed * (float) delta);
 				if(position.getX() + bb.getWidth() + 2 < 0) {
 					board.actorReachEdge(this);
 				}

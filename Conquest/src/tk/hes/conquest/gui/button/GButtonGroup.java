@@ -1,8 +1,9 @@
 package tk.hes.conquest.gui.button;
 
-import me.deathjockey.tinypixel.graphics.Bitmap;
-import me.deathjockey.tinypixel.graphics.RenderContext;
-import me.deathjockey.tinypixel.util.Vector2f;
+import me.nibby.pix.Bitmap;
+import me.nibby.pix.Input;
+import me.nibby.pix.RenderContext;
+import me.nibby.pix.util.Vector2f;
 import tk.hes.conquest.graphics.Art;
 import tk.hes.conquest.gui.base.GComponent;
 import tk.hes.conquest.gui.base.enums.GAlignment;
@@ -27,10 +28,7 @@ public class GButtonGroup extends GComponent {
         this.buttonSpacing = buttonSpacing;
         this.alignment = alignment;
         this.selectorBitmap = Art.UI_CURSOR;
-    }
 
-    @Override
-    public void init(RenderContext c) {
         if (buttons.size() <= 1)
             throw new IllegalArgumentException("GTextButton group must have at least two buttons!");
         for (int i = 0; i < buttons.size(); i++) {
@@ -39,10 +37,7 @@ public class GButtonGroup extends GComponent {
             button.getPosition().add(new Vector2f(
                     (alignment == GAlignment.HORIZONTAL) ? ((int) button.getSize().getWidth() * i) + (buttonSpacing * i) : 0,
                     (alignment == GAlignment.VERTICAL) ? ((int) button.getSize().getHeight() * i) + (buttonSpacing * i) : 0));
-            button.init(c);
         }
-
-
     }
 
     @Override
@@ -52,8 +47,10 @@ public class GButtonGroup extends GComponent {
     }
 
     @Override
-    public void update() {
-        buttons.forEach(GTextButton::update);
+    public void update(Input input) {
+        for (GTextButton button : buttons) {
+            button.update(input);
+        }
     }
 
     public void addButton(GTextButton button) {

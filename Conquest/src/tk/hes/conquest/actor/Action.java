@@ -1,6 +1,6 @@
 package tk.hes.conquest.actor;
 
-import me.deathjockey.tinypixel.graphics.Bitmap;
+import me.nibby.pix.Bitmap;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

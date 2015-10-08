@@ -1,10 +1,9 @@
 package tk.hes.conquest.actor.human;
 
-import me.deathjockey.tinypixel.Time;
-import me.deathjockey.tinypixel.graphics.Animation;
-import me.deathjockey.tinypixel.graphics.Bitmap;
-import me.deathjockey.tinypixel.graphics.Colors;
-import me.deathjockey.tinypixel.util.Vector2f;
+import me.nibby.pix.Animation;
+import me.nibby.pix.Bitmap;
+import me.nibby.pix.PixColor;
+import me.nibby.pix.util.Vector2f;
 import tk.hes.conquest.actor.*;
 import tk.hes.conquest.game.Origin;
 import tk.hes.conquest.game.Player;
@@ -65,8 +64,8 @@ public class Hu$Mage extends Actor {
 		tuple.hasShadow = true;
 		tuple.shadowType = 0;
 
-		int w = Art.UNIT_HUMAN_WARRIOR.getCellSize().width;
-		int h = Art.UNIT_HUMAN_WARRIOR.getCellSize().height;
+		int w = Art.UNIT_HUMAN_MAGE.getCellSize().x;
+		int h = Art.UNIT_HUMAN_MAGE.getCellSize().y;
 
 		actions.set(ActionType.STATIC, new Action()
 				.addFrame(Art.UNIT_HUMAN_MAGE.getSprite(0, 0), 500, 0, 0));
@@ -91,8 +90,8 @@ public class Hu$Mage extends Actor {
 	}
 
 	@Override
-	public void update() {
-		super.update();
+	public void update(double delta) {
+		super.update(delta);
 
 		if(channeling) {
 			if(System.currentTimeMillis() - lastParticleSpawn > 40) {
@@ -164,8 +163,8 @@ public class Hu$Mage extends Actor {
 		}
 
 		@Override
-		public void update() {
-			super.update();
+		public void update(double delta) {
+			super.update(delta);
 
 			if(System.currentTimeMillis() - lastParticleSpawn > 50) {
 				Vector2f pPos = new Vector2f(position.getX() + sprite.getWidth() / 2,
@@ -215,7 +214,7 @@ public class Hu$Mage extends Actor {
 		protected BoltCollisionParticle(Vector2f pos, Vector2f projectileVelocity, Bitmap projectile) {
 			super(pos, new Vector2f(0, 0));
 			setSize((int) (Math.random() * 2 + 1));
-			int[] rgba = Colors.fromInt(projectile.getPixels()[(int) (Math.random() * projectile.getPixels().length)]);
+			int[] rgba = PixColor.fromPixelInt(projectile.getPixels()[(int) (Math.random() * projectile.getPixels().length)]);
 			r = rgba[0];
 			g = rgba[1];
 			b = rgba[2];
@@ -229,8 +228,8 @@ public class Hu$Mage extends Actor {
 		}
 
 		@Override
-		public void update() {
-			super.update();
+		public void update(double delta) {
+			super.update(delta);
 			alpha -= 255f / (float) lifeTime;
 			setColor(r / 255f, g / 255f, b / 255f, alpha / 255f);
 			if(System.currentTimeMillis() - spawnTime > lifeTime || alpha <= 0)
@@ -250,7 +249,7 @@ public class Hu$Mage extends Actor {
 
 		protected BoltTrailParticle(Vector2f pos, Bitmap projectile, float vh) {
 			super(pos, new Vector2f(vh, (float) (Math.random() * 0.3f - 0.15f)));
-			int[] pixel = Colors.fromInt(projectile.getPixels()[(int) (Math.random() * projectile.getPixels().length)]);
+			int[] pixel = PixColor.fromPixelInt(projectile.getPixels()[(int) (Math.random() * projectile.getPixels().length)]);
 			r = pixel[0];
 			g = pixel[1];
 			b = pixel[2];
@@ -262,9 +261,9 @@ public class Hu$Mage extends Actor {
 		}
 
 		@Override
-		public void update() {
-			super.update();
-			alpha -= 6 * Time.delta;
+		public void update(double delta) {
+			super.update(delta);
+			alpha -= 6 * delta;
 			setColor(r, g, b, alpha);
 			if(alpha <= 0)
 				remove();
@@ -290,12 +289,12 @@ public class Hu$Mage extends Actor {
 		}
 
 		@Override
-		public void update() {
-			super.update();
-			if(r < tr) r += 6f * Time.delta;
-			if(g < tg) g += 6f * Time.delta;
-			if(b > tb) b -= 6f * Time.delta;
-			a -= 6 * Time.delta;
+		public void update(double delta) {
+			super.update(delta);
+			if(r < tr) r += 6f * delta;
+			if(g < tg) g += 6f * delta;
+			if(b > tb) b -= 6f * delta;
+			a -= 6 * delta;
 			setColor(r, g, b, a);
 
 			Vector2f destination = Hu$Mage.this.getPosition();

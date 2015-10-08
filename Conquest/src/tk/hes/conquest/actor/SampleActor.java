@@ -1,8 +1,8 @@
 package tk.hes.conquest.actor;
 
-import me.deathjockey.tinypixel.graphics.Bitmap;
-import me.deathjockey.tinypixel.graphics.RenderContext;
-import me.deathjockey.tinypixel.util.Vector2f;
+import me.nibby.pix.Bitmap;
+import me.nibby.pix.RenderContext;
+import me.nibby.pix.util.Vector2f;
 import tk.hes.conquest.game.ActorType;
 import tk.hes.conquest.graphics.Art;
 
@@ -65,12 +65,12 @@ public class SampleActor {
 		if(action != null) {
 			if(drawShadow) {
 				Bitmap shadow = Art.UNIT_SHADOW[attributes.shadowType];
-				c.render(shadow, (int) (x + bb.getRx() + bb.getWidth() / 2 - shadow.getWidth() / 2),
+				c.renderBitmap(shadow, (int) (x + bb.getRx() + bb.getWidth() / 2 - shadow.getWidth() / 2),
 						(int) (y + bb.getRy() + bb.getHeight() - bb.getHeight() / 4 * 3), 0.7f);
 			}
 			Action.Frame frame = action.getCurrentFrame();
 			Bitmap sprite = (flipped) ? frame.getBitmap().getFlipped(false, true) : frame.getBitmap();
-			c.render((drawScale == 1f) ? sprite : sprite.getScaled(drawScale), (int) x, (int) y);
+			c.renderBitmap((drawScale == 1f) ? sprite : sprite.getScaled(drawScale), (int) x, (int) y);
 		}
 
 		actionSet.update();

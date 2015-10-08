@@ -1,9 +1,9 @@
 package tk.hes.conquest.actor.human;
 
-import me.deathjockey.tinypixel.graphics.Animation;
-import me.deathjockey.tinypixel.graphics.Bitmap;
-import me.deathjockey.tinypixel.graphics.RenderContext;
-import me.deathjockey.tinypixel.util.Vector2f;
+import me.nibby.pix.Animation;
+import me.nibby.pix.Bitmap;
+import me.nibby.pix.RenderContext;
+import me.nibby.pix.util.Vector2f;
 import tk.hes.conquest.actor.*;
 import tk.hes.conquest.game.Origin;
 import tk.hes.conquest.game.Player;
@@ -59,8 +59,8 @@ public class Hu$Ranger extends Actor {
 		tuple.hasShadow = true;
 		tuple.shadowType = 0;
 
-		int w = Art.UNIT_HUMAN_WARRIOR.getCellSize().width;
-		int h = Art.UNIT_HUMAN_WARRIOR.getCellSize().height;
+		int w = Art.UNIT_HUMAN_ARCHER.getCellSize().x;
+		int h = Art.UNIT_HUMAN_ARCHER.getCellSize().y;
 
 		actions.set(ActionType.STATIC, new Action()
 				.addFrame(Art.UNIT_HUMAN_ARCHER.getSprite(0, 0), 500, 0, 0));
@@ -90,8 +90,8 @@ public class Hu$Ranger extends Actor {
 	}
 
 	@Override
-	public void update() {
-		super.update();
+	public void update(double delta) {
+		super.update(delta);
 
 		if(System.currentTimeMillis() - lastFireTime > fireCooldown) {
 			shouldAttack = true;

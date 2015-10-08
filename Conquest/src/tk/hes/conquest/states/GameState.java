@@ -1,12 +1,11 @@
 package tk.hes.conquest.states;
 
-
-import me.deathjockey.tinypixel.Input;
-import me.deathjockey.tinypixel.TinyPixelStateBasedGame;
-import me.deathjockey.tinypixel.graphics.RenderContext;
-import me.deathjockey.tinypixel.state.PixelState;
+import me.nibby.pix.Input;
+import me.nibby.pix.PixGameState;
+import me.nibby.pix.RenderContext;
 import tk.hes.conquest.game.*;
 import tk.hes.conquest.game.scene.DungeonScene;
+import tk.hes.conquest.graphics.Art;
 import tk.hes.conquest.gui.game.GGameOverlay;
 import tk.hes.conquest.particle.ParticleManager;
 
@@ -17,17 +16,13 @@ import java.awt.event.KeyEvent;
  *
  * @author Kevin Yang
  */
-public class GameState extends PixelState {
+public class GameState extends PixGameState {
 
 	private GameBoard board;
     private GGameOverlay overlay;
 
-    public GameState(TinyPixelStateBasedGame game) {
-        super(game);
-    }
-
     @Override
-    public void init(RenderContext c) {
+    public void gameInitialize() {
         Player player1 = new Player("Kevin", Race.HUMAN, Origin.WEST, 100);
 		player1.updateActorBuffer(ActorType.MELEE);
 		player1.updateActorBuffer(ActorType.RANGER);
@@ -51,30 +46,27 @@ public class GameState extends PixelState {
 		board = new GameBoard(new DungeonScene(), player1, player2, 8, 50, 600000);
 
 		overlay = new GGameOverlay(board, player1);
-		overlay.init(c);
-
-
     }
 
     @Override
-    public void update() {
-        if (Input.getKeyDown(KeyEvent.VK_ESCAPE)) System.exit(0);
-        board.update();
-        ParticleManager.get().update();
-        overlay.update();
+    public void gameUpdate(Input input, double delta) {
+        if (input.isKeyDown(KeyEvent.VK_ESCAPE)) System.exit(0);
+        board.update(input, delta);
+        ParticleManager.get().update(delta);
+        overlay.update(input);
 
     }
 
 
     @Override
-    public void render(RenderContext c) {
+    public void gameRender(RenderContext c) {
         board.render(c);
         ParticleManager.get().render(c);
         overlay.render(c);
     }
 
     @Override
-    public int getID() {
+    public int getStateID() {
         return StateID.GAME_STATE.getID();
     }
 }

@@ -1,10 +1,12 @@
 package tk.hes.conquest.gui.game;
 
-import me.deathjockey.tinypixel.graphics.BitFont;
-import me.deathjockey.tinypixel.graphics.Colors;
-import me.deathjockey.tinypixel.graphics.RenderContext;
-import me.deathjockey.tinypixel.util.Vector2f;
-import tk.hes.conquest.Font;
+import me.nibby.pix.BitmapFont;
+import me.nibby.pix.Input;
+import me.nibby.pix.PixColor;
+import me.nibby.pix.RenderContext;
+import me.nibby.pix.util.Vector2f;
+import tk.hes.conquest.ConquestGame;
+import tk.hes.conquest.ConquestGameDesktopLauncher;
 import tk.hes.conquest.graphics.Art;
 import tk.hes.conquest.gui.bar.GStatBar;
 import tk.hes.conquest.gui.base.GImage;
@@ -30,37 +32,31 @@ public class GDominanceBar extends GStatBar {
 
     public GDominanceBar(Vector2f position, String playerName, String opponentName) {
         super(position, GStatBarType.CUSTOM);
-		this.topColor = Colors.toInt(172, 50, 50, 255);
-		this.opponentColor = Colors.toInt(0, 123, 255, 255);
-        this.playerName = new GLabel(playerName, new Vector2f(0, 0), Colors.PURE_YELLOW, this);
-        this.opponentName = new GLabel(opponentName, new Vector2f(0, 0), Colors.PURE_YELLOW, this);
-    }
+		this.topColor = PixColor.toPixelInt(172, 50, 50, 255);
+		this.opponentColor = PixColor.toPixelInt(0, 123, 255, 255);
+        this.playerName = new GLabel(playerName, new Vector2f(0, 0), PixColor.YELLOW, this);
+        this.opponentName = new GLabel(opponentName, new Vector2f(0, 0), PixColor.YELLOW, this);
 
-    @Override
-    public void init(RenderContext c) {
         barBackground = new GImage(Art.DOMINANCE_BAR, new Vector2f(0, 0), this);
         this.setSize(barBackground.getSize());
         this.playerName.setPosition(new Vector2f(10, 4));
-        this.playerName.init(c);
 
-        int nameW = BitFont.widthOf(opponentName.getText(), c.getFont(Font.NORMAL));
-        this.opponentName.setPosition(new Vector2f(c.getWidth() - nameW - 10, 4));
-        this.opponentName.init(c);
-        super.init(c);
+        int nameW = BitmapFont.getDefaultFont().widthOf(opponentName);
+        this.opponentName.setPosition(new Vector2f(ConquestGame.WIDTH / ConquestGameDesktopLauncher.SCALE - nameW - 10, 4));
     }
 
     @Override
     public void render(RenderContext c) {
         barBackground.render(c);
-        c.fillRegion(0, 0, c.getWidth(), 15, opponentColor);
+        c.renderFilledRectangle(0, 0, c.getWidth(), 15, opponentColor);
         if (amountFilled > 0)
-            c.fillRegion(0, 0, (int) amountFilled, 15, topColor);
+            c.renderFilledRectangle(0, 0, (int) amountFilled, 15, topColor);
         playerName.render(c);
         opponentName.render(c);
     }
 
     @Override
-    public void update() {
+    public void update(Input input) {
     }
 
     public void setOpponentColor(int opponentColor) {

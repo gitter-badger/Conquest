@@ -1,7 +1,8 @@
 package tk.hes.conquest.gui.dialog;
 
-import me.deathjockey.tinypixel.graphics.RenderContext;
-import me.deathjockey.tinypixel.util.Vector2f;
+import me.nibby.pix.Input;
+import me.nibby.pix.RenderContext;
+import me.nibby.pix.util.Vector2f;
 import tk.hes.conquest.gui.base.GDialog;
 import tk.hes.conquest.gui.base.GLabel;
 import tk.hes.conquest.gui.base.enums.GDialogButtonType;
@@ -41,16 +42,11 @@ public class GTitleDialog extends GDialog implements GButtonActionListener {
         this.title = title;
         this.shouldRemove = false;
         bitmapParts = new GDialogPart(type, true);
-    }
 
-    @Override
-    public void init(RenderContext c) {
-        closeButton = new GDialogButton(new Vector2f((int) size.getWidth() - 9, 3), GDialogButtonType.CROSS, this);
-        closeButton.init(c);
+        closeButton = new GDialogButton(new Vector2f((float) size.getWidth() - 9, 3), GDialogButtonType.CROSS, this);
         closeButton.addActionListener(this);
 
         titleLabel = new GLabel(title, new Vector2f(14, 1), this);
-        titleLabel.init(c);
     }
 
     @Override
@@ -61,10 +57,10 @@ public class GTitleDialog extends GDialog implements GButtonActionListener {
     }
 
     @Override
-    public void update() {
-        super.update();
-        closeButton.update();
-        titleLabel.update();
+    public void update(Input input) {
+        super.update(input);
+        closeButton.update(input);
+        titleLabel.update(input);
     }
 
     public void setCloseButtonType(GDialogButtonType type) {

@@ -1,9 +1,7 @@
 package tk.hes.conquest;
 
-import me.deathjockey.tinypixel.TinyPixelGame;
-import me.deathjockey.tinypixel.TinyPixelStateBasedGame;
-import me.deathjockey.tinypixel.graphics.Colors;
-import me.deathjockey.tinypixel.graphics.RenderContext;
+import me.nibby.pix.PixMultiStateGame;
+import me.nibby.pix.RenderContext;
 import tk.hes.conquest.states.GameState;
 import tk.hes.conquest.states.StateID;
 
@@ -12,30 +10,22 @@ import tk.hes.conquest.states.StateID;
  *
  * @author James Roberts, Kevin Yang
  */
-public class ConquestGame extends TinyPixelStateBasedGame {
+public class ConquestGame extends PixMultiStateGame {
 
     protected static ConquestGame instance;
 
-    public ConquestGame(String title, int width, int height) {
-        super(title, width, height);
+    public ConquestGame(String title, int width, int height, int gfxScale) {
+        super(title, width, height, gfxScale);
 
+    }
+
+    @Override
+    public void initializeGameStates() {
+        registerState(new GameState());
+        enterState(StateID.GAME_STATE.getID());
     }
 
     public static ConquestGame instance() {
         return instance;
-    }
-
-    public void indexStates() {
-        addState(new GameState(this));
-        enterState(StateID.GAME_STATE.getID());
-    }
-
-    @Override
-    protected void init(TinyPixelGame game, RenderContext renderContext) {
-        renderContext.setClearColor(Colors.toInt(1280, 128, 128, 255));
-        Font font = new Font();
-        font.initFonts();
-        font.addFonts(renderContext);
-        super.init(game, renderContext);
     }
 }

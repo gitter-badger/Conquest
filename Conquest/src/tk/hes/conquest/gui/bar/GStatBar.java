@@ -1,7 +1,8 @@
 package tk.hes.conquest.gui.bar;
 
-import me.deathjockey.tinypixel.graphics.RenderContext;
-import me.deathjockey.tinypixel.util.Vector2f;
+import me.nibby.pix.Input;
+import me.nibby.pix.RenderContext;
+import me.nibby.pix.util.Vector2f;
 import tk.hes.conquest.graphics.Art;
 import tk.hes.conquest.gui.base.GComponent;
 import tk.hes.conquest.gui.base.GImage;
@@ -28,6 +29,7 @@ public class GStatBar extends GBar {
         this.type = type;
         this.drawOrigin = GBarOrigin.LEFT;
         updateBarBitmaps();
+        this.setSize(barBackground.getSize());
     }
 
     public void updateBarBitmaps() {
@@ -44,19 +46,16 @@ public class GStatBar extends GBar {
                 barBackground = new GImage(Art.BARS.getSprite(0, 2), new Vector2f(0, 0), this);
                 barOverlay = new GImage(Art.BARS.getSprite(1, 2), new Vector2f(0, 0), this);
                 break;
+            default:
+                barBackground = new GImage(Art.BARS.getSprite(0, 0), new Vector2f(0, 0), this);
+                barOverlay = new GImage(Art.BARS.getSprite(1, 0), new Vector2f(0, 0), this);
+                break;
         }
-    }
-
-
-    @Override
-    public void init(RenderContext c) {
-        super.init(c);
-        this.setSize(barBackground.getSize());
     }
 
     @Override
     public void render(RenderContext c) {
-        c.render(barBackground.getImage().getFlipped(false, isFlipped), (int) position.getX(), (int) position.getY());
+        c.renderBitmap(barBackground.getImage().getFlipped(false, isFlipped), (int) position.getX(), (int) position.getY());
         if (amountFilled > 0) {
 
             //BITMAP REGION
@@ -71,12 +70,13 @@ public class GStatBar extends GBar {
             int xx = (int) position.getX() + ((drawOrigin == GBarOrigin.LEFT) ? 0 : a);
             int yy = (int) position.getY();
 
-            c.render(barOverlay.getImage().getFlipped(false, isFlipped).getBitmapRegion((drawOrigin == GBarOrigin.LEFT) ? 0 : a, y0, x1, y1), xx, yy);
+            c.renderBitmap(barOverlay.getImage().getFlipped(false, isFlipped)
+                    .getRegionAsBitmap((drawOrigin == GBarOrigin.LEFT) ? 0 : a, y0, x1, y1), xx, yy);
         }
     }
 
     @Override
-    public void update() {
+    public void update(Input input) {
 
     }
 }

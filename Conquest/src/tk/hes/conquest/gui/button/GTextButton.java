@@ -1,7 +1,8 @@
 package tk.hes.conquest.gui.button;
 
-import me.deathjockey.tinypixel.graphics.RenderContext;
-import me.deathjockey.tinypixel.util.Vector2f;
+import me.nibby.pix.Input;
+import me.nibby.pix.RenderContext;
+import me.nibby.pix.util.Vector2f;
 import tk.hes.conquest.graphics.Art;
 import tk.hes.conquest.gui.base.GComponent;
 import tk.hes.conquest.gui.base.GLabel;
@@ -46,6 +47,8 @@ public class GTextButton extends GButton {
         this.buttonColor = color;
         this.size.setSize(96, 22);
         updateButtonBitmaps();
+
+        label.setPosition((float) (size.getWidth() / 2 - label.getSize().getWidth() / 2), 5);
     }
 
     private void updateButtonBitmaps() {
@@ -71,20 +74,13 @@ public class GTextButton extends GButton {
     }
 
     @Override
-    public void init(RenderContext c) {
-        super.init(c);
-        label.init(c);
-        label.setPosition((float) (size.getWidth() / 2 - label.getSize().getWidth() / 2), 5);
-    }
-
-    @Override
     public void render(RenderContext c) {
         super.render(c);
         label.render(c);
     }
 
     @Override
-    public void update() {
-        super.update();
+    public void update(Input input) {
+        super.update(input);
     }
 }

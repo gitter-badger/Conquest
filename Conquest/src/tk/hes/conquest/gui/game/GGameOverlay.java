@@ -1,7 +1,8 @@
 package tk.hes.conquest.gui.game;
 
-import me.deathjockey.tinypixel.graphics.RenderContext;
-import me.deathjockey.tinypixel.util.Vector2f;
+import me.nibby.pix.Input;
+import me.nibby.pix.RenderContext;
+import me.nibby.pix.util.Vector2f;
 import tk.hes.conquest.game.GameBoard;
 import tk.hes.conquest.game.Player;
 import tk.hes.conquest.gui.base.GComponent;
@@ -35,46 +36,40 @@ public class GGameOverlay extends GComponent {
         super(new Vector2f(0, 0));
         this.board = board;
         this.player = player;
-    }
 
-    @Override
-    public void init(RenderContext c) {
         dialogBoxes = new ArrayList<>();
 
         dominanceBar = new GDominanceBar(new Vector2f(0, 0), player.getName(), board.getPlayer2().getName());
-        dominanceBar.init(c);
         dominanceBar.setFilledPercent(board.getDominanceValue());
 
         dialogBoxes = new ArrayList<>();
 
         playerInfo = new GPlayerInfo(this, new Vector2f(0, (int) dominanceBar.getSize().getHeight() - 4));
-        playerInfo.init(c);
 
         heroInfo = new GHeroInfo(new Vector2f(310, 16), this);
-        heroInfo.init(c);
-        heroInfo.init(c);
 
         actorBar = new GActorSlotBar(new Vector2f(85, 20), player);
-        actorBar.init(c);
     }
 
-
     @Override
-    public void update() {
+    public void update(Input input) {
         dominanceBar.setFilledPercent(board.getDominanceValue());
         playerInfo.setChargePercentage((float) player.getCharge() / (float) player.getChargeThreshold() * 100);
         playerInfo.setMoneyAmount(player.getGold());
 
-        dominanceBar.update();
-        playerInfo.update();
+        dominanceBar.update(input);
+        playerInfo.update(input);
         //heroInfo.update();
 
-        actorBar.update();
+        actorBar.update(input);
 
         for (int i = 0; i < dialogBoxes.size(); i++) {
             GTitleDialog d = dialogBoxes.get(i);
-            if (d.shouldRemove()) dialogBoxes.remove(i);
-            d.update();
+            if (d.shouldRemove()) {
+                dialogBoxes.remove(i);
+                --i;
+            }
+            d.update(input);
         }
 
     }

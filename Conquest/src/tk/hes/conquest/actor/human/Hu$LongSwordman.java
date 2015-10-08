@@ -48,8 +48,8 @@ public class Hu$LongSwordman extends Actor {
 		tuple.hasShadow = true;
 		tuple.shadowType = 0;
 
-		int w = Art.UNIT_HUMAN_LONG_SWORDSMAN.getCellSize().width;
-		int h = Art.UNIT_HUMAN_LONG_SWORDSMAN.getCellSize().height;
+		int w = Art.UNIT_HUMAN_LONG_SWORDSMAN.getCellSize().x;
+		int h = Art.UNIT_HUMAN_LONG_SWORDSMAN.getCellSize().y;
 
 		actions.set(ActionType.STATIC, new Action()
 				.addFrame(Art.UNIT_HUMAN_LONG_SWORDSMAN.getSprite(0, 0), 500, 0, 0));
@@ -60,9 +60,9 @@ public class Hu$LongSwordman extends Actor {
 
 		actions.set(ActionType.ATTACK1, new Action(this)
 				.addFrame(Art.UNIT_HUMAN_LONG_SWORDSMAN.getSprite(0, 1), 150, 0, 0)
-				.addFrame(Art.UNIT_HUMAN_LONG_SWORDSMAN.getBitmapRegion(w, h, 3 * w, 2 * h), 100, -9 * Actor.SPRITE_SCALE, 0)
-				.addFrame(Art.UNIT_HUMAN_LONG_SWORDSMAN.getBitmapRegion(3 * w, h, 5 * w, 2 * h), 100, -9 * Actor.SPRITE_SCALE, 0)
-				.addFrame(Art.UNIT_HUMAN_LONG_SWORDSMAN.getBitmapRegion(3 * w, h, 5 * w, 2 * h), 100, -9 * Actor.SPRITE_SCALE, 0, "swing-hit")
+				.addFrame(Art.UNIT_HUMAN_LONG_SWORDSMAN.getRegionAsBitmap(w, h, 3 * w, 2 * h), 100, -9 * Actor.SPRITE_SCALE, 0)
+				.addFrame(Art.UNIT_HUMAN_LONG_SWORDSMAN.getRegionAsBitmap(3 * w, h, 5 * w, 2 * h), 100, -9 * Actor.SPRITE_SCALE, 0)
+				.addFrame(Art.UNIT_HUMAN_LONG_SWORDSMAN.getRegionAsBitmap(3 * w, h, 5 * w, 2 * h), 100, -9 * Actor.SPRITE_SCALE, 0, "swing-hit")
 				.addFrame(Art.UNIT_HUMAN_LONG_SWORDSMAN.getSprite(5, 1), 200, 0, 0)
 				.addFrame(Art.UNIT_HUMAN_LONG_SWORDSMAN.getSprite(0, 1), 950, 0, 0, "$RANDOM_DELAY 0 100"));
 

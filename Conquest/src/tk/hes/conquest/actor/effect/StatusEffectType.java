@@ -1,6 +1,6 @@
 package tk.hes.conquest.actor.effect;
 
-import me.deathjockey.tinypixel.graphics.Colors;
+import me.nibby.pix.PixColor;
 
 public enum StatusEffectType {
 
@@ -10,10 +10,10 @@ public enum StatusEffectType {
 
 	private String name;
 	private String description;
-	private int nameColor = Colors.PURE_WHITE;
+	private int nameColor = PixColor.WHITE;
 
 	StatusEffectType(String name, String description) {
-		this(name, description, Colors.PURE_WHITE);
+		this(name, description, PixColor.WHITE);
 	}
 
 	StatusEffectType(String name, String description, int color) {

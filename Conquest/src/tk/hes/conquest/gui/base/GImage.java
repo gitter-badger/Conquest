@@ -1,8 +1,9 @@
 package tk.hes.conquest.gui.base;
 
-import me.deathjockey.tinypixel.graphics.Bitmap;
-import me.deathjockey.tinypixel.graphics.RenderContext;
-import me.deathjockey.tinypixel.util.Vector2f;
+import me.nibby.pix.Bitmap;
+import me.nibby.pix.Input;
+import me.nibby.pix.RenderContext;
+import me.nibby.pix.util.Vector2f;
 
 /**
  * A GImage class for easily drawing images.
@@ -31,18 +32,14 @@ public class GImage extends GComponent {
     }
 
     @Override
-    public void init(RenderContext c) {
-    }
-
-    @Override
     public void render(RenderContext c) {
 		if(!visible) return;
 
-        c.render(image, (int) position.getX(), (int) position.getY());
+        c.renderBitmap(image, (int) position.getX(), (int) position.getY());
     }
 
     @Override
-    public void update() {
+    public void update(Input input) {
     }
 
     public Bitmap getImage() {
