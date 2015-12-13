@@ -13,6 +13,7 @@ import tk.hes.conquest.graphics.Art;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Stack;
 
 public abstract class Actor implements ActionKeyFrameListener {
 
@@ -36,6 +37,7 @@ public abstract class Actor implements ActionKeyFrameListener {
 	protected boolean shouldAttack = true;
 	protected float moveSpeed;
 
+	protected Stack<Action> actions = new Stack<>();
 	protected ArrayList<StatusEffect> statusEffectList = new ArrayList<>();
 
     //This constructor is invoked automatically via reflection in ActorFactory to create new actors

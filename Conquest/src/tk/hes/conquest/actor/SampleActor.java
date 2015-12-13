@@ -3,7 +3,6 @@ package tk.hes.conquest.actor;
 import me.nibby.pix.Bitmap;
 import me.nibby.pix.RenderContext;
 import me.nibby.pix.util.Vector2f;
-import tk.hes.conquest.game.ActorType;
 import tk.hes.conquest.graphics.Art;
 
 /**

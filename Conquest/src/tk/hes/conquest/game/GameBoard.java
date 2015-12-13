@@ -4,6 +4,9 @@ import me.nibby.pix.Input;
 import me.nibby.pix.RenderContext;
 import me.nibby.pix.util.Vector2f;
 import tk.hes.conquest.actor.Actor;
+import tk.hes.conquest.actor.ActorFactory;
+import tk.hes.conquest.actor.ActorRace;
+import tk.hes.conquest.actor.ActorType;
 import tk.hes.conquest.game.scene.Scene;
 
 import java.awt.*;
@@ -121,7 +124,7 @@ public class GameBoard {
 		}
 	}
 
-	public void sendChargeWave(Player player, Race race, ActorType type) {
+	public void sendChargeWave(Player player, ActorRace race, ActorType type) {
 		for(int i = 0; i < laneCount; i++) {
 			addActor(ActorFactory.make(player, race, type), i);
 		}

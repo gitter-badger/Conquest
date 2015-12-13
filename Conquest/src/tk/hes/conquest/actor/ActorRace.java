@@ -1,14 +1,15 @@
-package tk.hes.conquest.game;
+package tk.hes.conquest.actor;
 
 import tk.hes.conquest.actor.Actor;
+import tk.hes.conquest.actor.ActorType;
 import tk.hes.conquest.actor.human.*;
 
 import java.util.HashMap;
 
 /**
- * Created by MrDeathJockey on 22/08/15.
+ * @author Kevin Yang
  */
-public enum Race {
+public enum ActorRace {
 
 	HUMAN {
 		@Override
@@ -33,7 +34,7 @@ public enum Race {
 
 	private HashMap<ActorType, Class<? extends Actor>> actorMap = new HashMap<>();
 
-	Race(){
+	ActorRace(){
 		indexActorMap(actorMap);
 	}
 

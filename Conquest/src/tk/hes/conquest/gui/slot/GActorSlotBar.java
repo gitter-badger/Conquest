@@ -5,7 +5,7 @@ import me.nibby.pix.RenderContext;
 import me.nibby.pix.util.Vector2f;
 import tk.hes.conquest.actor.ActionType;
 import tk.hes.conquest.actor.SampleActor;
-import tk.hes.conquest.game.ActorType;
+import tk.hes.conquest.actor.ActorType;
 import tk.hes.conquest.game.Player;
 import tk.hes.conquest.graphics.Art;
 import tk.hes.conquest.gui.base.GComponent;

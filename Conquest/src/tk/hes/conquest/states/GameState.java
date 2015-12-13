@@ -3,9 +3,10 @@ package tk.hes.conquest.states;
 import me.nibby.pix.Input;
 import me.nibby.pix.PixGameState;
 import me.nibby.pix.RenderContext;
+import tk.hes.conquest.actor.ActorRace;
+import tk.hes.conquest.actor.ActorType;
 import tk.hes.conquest.game.*;
 import tk.hes.conquest.game.scene.DungeonScene;
-import tk.hes.conquest.graphics.Art;
 import tk.hes.conquest.gui.game.GGameOverlay;
 import tk.hes.conquest.particle.ParticleManager;
 
@@ -23,7 +24,7 @@ public class GameState extends PixGameState {
 
     @Override
     public void gameInitialize() {
-        Player player1 = new Player("Kevin", Race.HUMAN, Origin.WEST, 100);
+        Player player1 = new Player("Kevin", ActorRace.HUMAN, Origin.WEST, 100);
 		player1.updateActorBuffer(ActorType.MELEE);
 		player1.updateActorBuffer(ActorType.RANGER);
 		player1.updateActorBuffer(ActorType.CASTER);
@@ -33,7 +34,7 @@ public class GameState extends PixGameState {
 		player1.updateActorBuffer(ActorType.SPECIAL2);
 		player1.updateActorBuffer(ActorType.SPECIAL3);
 
-        Player player2 = new Player("Dumhead", Race.HUMAN, Origin.EAST, 100);
+        Player player2 = new Player("Dumhead", ActorRace.HUMAN, Origin.EAST, 100);
 		player2.updateActorBuffer(ActorType.MELEE);
 		player2.updateActorBuffer(ActorType.RANGER);
 		player2.updateActorBuffer(ActorType.CASTER);

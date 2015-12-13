@@ -4,6 +4,9 @@ import me.nibby.pix.Bitmap;
 import me.nibby.pix.Input;
 import me.nibby.pix.RenderContext;
 import tk.hes.conquest.actor.Actor;
+import tk.hes.conquest.actor.ActorFactory;
+import tk.hes.conquest.actor.ActorRace;
+import tk.hes.conquest.actor.ActorType;
 import tk.hes.conquest.graphics.Art;
 
 import java.awt.event.KeyEvent;
@@ -16,7 +19,7 @@ public class Player {
     private int gold;
     private int charge = 100;
     private int chargeThreshold = 100;
-    private Race race;
+    private ActorRace race;
     private Origin origin;
 
     private long lastDeployTime = System.currentTimeMillis();
@@ -27,7 +30,7 @@ public class Player {
     private int deployLane = 0;
     private GameBoard board;
 
-    public Player(String name, Race race, Origin origin, int gold) {
+    public Player(String name, ActorRace race, Origin origin, int gold) {
         this.name = name;
         this.race = race;
         this.origin = origin;
@@ -144,7 +147,7 @@ public class Player {
         return actorsOwned;
     }
 
-    private void updateActorBuffer(ActorType actorType, Race race) {
+    private void updateActorBuffer(ActorType actorType, ActorRace race) {
         actorBuffer.put(actorType, ActorFactory.make(this, race, actorType));
         if (!actorsOwned.contains(actorType)) {
             actorsOwned.add(actorType);
@@ -203,7 +206,7 @@ public class Player {
         return name;
     }
 
-    public Race getRace() {
+    public ActorRace getRace() {
         return race;
     }
 

@@ -1,14 +1,14 @@
-package tk.hes.conquest.game;
+package tk.hes.conquest.actor;
 
 import com.sun.istack.internal.Nullable;
-import tk.hes.conquest.actor.Actor;
+import tk.hes.conquest.game.Player;
 
 import java.util.HashMap;
 
 public class ActorFactory {
 
 	@Nullable
-	public static Actor make(Player owner, Race race, ActorType actorType) {
+	public static Actor make(Player owner, ActorRace race, ActorType actorType) {
 		HashMap<ActorType, Class<? extends Actor>> raceActorMap = race.getActorMap();
 		Class<? extends Actor> actorClass = raceActorMap.get(actorType);
 		if (actorClass != null) {
