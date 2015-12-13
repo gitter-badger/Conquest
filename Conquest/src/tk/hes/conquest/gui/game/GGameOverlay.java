@@ -29,7 +29,6 @@ public class GGameOverlay extends GComponent {
     private GHeroInfo heroInfo;
     private GPlayerInfo playerInfo;
     private GDominanceBar dominanceBar;
-
     private GActorSlotBar actorBar;
 
     public GGameOverlay(GameBoard board, Player player) {
@@ -37,18 +36,14 @@ public class GGameOverlay extends GComponent {
         this.board = board;
         this.player = player;
 
-        dialogBoxes = new ArrayList<>();
-
         dominanceBar = new GDominanceBar(new Vector2f(0, 0), player.getName(), board.getPlayer2().getName());
         dominanceBar.setFilledPercent(board.getDominanceValue());
-
         dialogBoxes = new ArrayList<>();
-
         playerInfo = new GPlayerInfo(this, new Vector2f(0, (int) dominanceBar.getSize().getHeight() - 4));
-
         heroInfo = new GHeroInfo(new Vector2f(310, 16), this);
+        actorBar = new GActorSlotBar(new Vector2f(80, 23), player);
 
-        actorBar = new GActorSlotBar(new Vector2f(85, 20), player);
+
     }
 
     @Override
@@ -56,11 +51,8 @@ public class GGameOverlay extends GComponent {
         dominanceBar.setFilledPercent(board.getDominanceValue());
         playerInfo.setChargePercentage((float) player.getCharge() / (float) player.getChargeThreshold() * 100);
         playerInfo.setMoneyAmount(player.getGold());
-
         dominanceBar.update(input);
         playerInfo.update(input);
-        //heroInfo.update();
-
         actorBar.update(input);
 
         for (int i = 0; i < dialogBoxes.size(); i++) {
@@ -74,13 +66,11 @@ public class GGameOverlay extends GComponent {
 
     }
 
-
     @Override
     public void render(RenderContext c) {
         dominanceBar.render(c);
         playerInfo.render(c);
         heroInfo.render(c);
-
         actorBar.render(c);
 
         for (GDialog d : dialogBoxes)

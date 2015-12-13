@@ -3,7 +3,6 @@ package tk.hes.conquest.gui.slot;
 import me.nibby.pix.Input;
 import me.nibby.pix.RenderContext;
 import me.nibby.pix.util.Vector2f;
-import tk.hes.conquest.actor.Action;
 import tk.hes.conquest.actor.ActionType;
 import tk.hes.conquest.actor.SampleActor;
 import tk.hes.conquest.game.ActorType;
@@ -33,17 +32,13 @@ public class GActorSlotBar extends GComponent {
         this.offset = 0;
         this.player = player;
 
-        float cx = Art.UI_SLOTS.getCellSize().x / 2;
-        float cy = Art.UI_SLOTS.getCellSize().y / 2;
         for (ActorType actor : player.getActorsOwned()) {
             SampleActor sample = player.getActorBuffer().get(actor).getSampleActor();
-            Vector2f slotPosition = new Vector2f(cx, cy);
-            addSlot(new GActorSlot(sample, slotPosition, this));
+            addSlot(new GActorSlot(sample, new Vector2f(0, 0), this));
         }
 
-        this.buttonLeft = new GImage(Art.UI_ARROW_LEFT, new Vector2f(-14, 12), this);
+        this.buttonLeft = new GImage(Art.UI_ARROW_LEFT, new Vector2f(-10, 12), this);
         this.buttonRight = new GImage(Art.UI_ARROW_RIGHT, new Vector2f(208, 12), this);
-
         unitName = new GLabel("", new Vector2f(0, 38), this);
     }
 
@@ -53,36 +48,31 @@ public class GActorSlotBar extends GComponent {
             if (i < 0 || i > actorSlots.size() - 1) continue;
             actorSlots.get(i).render(c);
         }
+
         if (actorSlots.size() - offset > 6) buttonRight.render(c);
         if (offset > 0) buttonLeft.render(c);
+
         unitName.render(c);
     }
 
     @Override
     public void update(Input input) {
         selectIndex = player.getSelectedActorIndex();
+
         if (selectIndex < 0) {
             selectIndex = actorSlots.size() - 1;
             offset = selectIndex - 6 < 0 ? 0 : selectIndex - 6;
         }
 
-		if (selectIndex > actorSlots.size() - 1) {
+        if (selectIndex > actorSlots.size() - 1) {
             selectIndex = 0;
             offset = 0;
         }
-        if (selectIndex < offset + 1 && selectIndex != 0)
-			offset--;
 
-		if (selectIndex > offset + 4 && selectIndex != actorSlots.size() - 1)
-			offset++;
-
-		if (selectIndex == 0) {
-			offset = 0;
-		}
-
-		if (selectIndex == actorSlots.size() - 1 && actorSlots.size() > 6) {
-			offset = actorSlots.size() - 6;
-		}
+        if (selectIndex < offset + 1 && selectIndex != 0) offset--;
+        if (selectIndex > offset + 4 && selectIndex != actorSlots.size() - 1) offset++;
+        if (selectIndex == 0) offset = 0;
+        if (selectIndex == actorSlots.size() - 1 && actorSlots.size() > 6) offset = actorSlots.size() - 6;
 
         for (int i = 0; i < actorSlots.size(); i++) {
             boolean selected = i == selectIndex;
@@ -93,6 +83,7 @@ public class GActorSlotBar extends GComponent {
             actorSlots.get(i).setDisabledAmount(disabledAmount);
             actorSlots.get(i).setDeployBarEnabled(disabledAmount == 0f);
         }
+
         unitName.setText(actorSlots.get(selectIndex).getActorData().getAttributes().name);
         updateButtonPosition();
     }
@@ -101,9 +92,9 @@ public class GActorSlotBar extends GComponent {
         for (int i = offset; i < offset + 6; i++) {
             if (i < 0 || i > actorSlots.size() - 1) continue;
             int x = (i - offset);
-            actorSlots.get(i).setPosition(((x * 30) + (4 * x)), 0);
+            actorSlots.get(i).setActorPosition(new Vector2f((x * 30) + (4 * x), 0));
+            actorSlots.get(i).setBGPosition(new Vector2f((x * 30) + (4 * x), 0));
         }
-
     }
 
     public void addSlot(GActorSlot slot) {
