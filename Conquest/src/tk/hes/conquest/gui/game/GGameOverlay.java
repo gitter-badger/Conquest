@@ -5,11 +5,15 @@ import me.nibby.pix.RenderContext;
 import me.nibby.pix.util.Vector2f;
 import tk.hes.conquest.game.GameBoard;
 import tk.hes.conquest.game.Player;
+import tk.hes.conquest.graphics.Art;
 import tk.hes.conquest.gui.base.GComponent;
 import tk.hes.conquest.gui.base.GDialog;
+import tk.hes.conquest.gui.button.GButton;
+import tk.hes.conquest.gui.dialog.GTextDialog;
 import tk.hes.conquest.gui.dialog.GTitleDialog;
 import tk.hes.conquest.gui.slot.GActorSlotBar;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -43,7 +47,6 @@ public class GGameOverlay extends GComponent {
         heroInfo = new GHeroInfo(new Vector2f(310, 16), this);
         actorBar = new GActorSlotBar(new Vector2f(80, 23), player);
 
-
     }
 
     @Override
@@ -72,7 +75,6 @@ public class GGameOverlay extends GComponent {
         playerInfo.render(c);
         heroInfo.render(c);
         actorBar.render(c);
-
         for (GDialog d : dialogBoxes)
             d.render(c);
     }

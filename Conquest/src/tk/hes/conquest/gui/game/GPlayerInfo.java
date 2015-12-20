@@ -22,8 +22,8 @@ import java.awt.*;
  */
 public class GPlayerInfo extends GComponent implements GButtonActionListener {
 
-	private static final int COLOR_CHARGE_BAR = PixColor.toPixelInt(204, 212, 0, 255),
-							COLOR_CHARGE_BAR_READY = PixColor.YELLOW;
+    private static final int COLOR_CHARGE_BAR = PixColor.toPixelInt(204, 212, 0, 255),
+            COLOR_CHARGE_BAR_READY = PixColor.YELLOW;
 
     private GImage backgroundImage, chargeBar, moneyBar;
     private GButton storeButton, toolButton;
@@ -37,6 +37,7 @@ public class GPlayerInfo extends GComponent implements GButtonActionListener {
         super(position);
         this.overlay = overlay;
         this.backgroundImage = new GImage(Art.STATS_BACKGROUND, new Vector2f(0, 0), this);
+
 
         storeButton = new GButton(new Vector2f(2, 34), this);
         storeButton.setButtonNormal(Art.STATS_BUTTONS.getSprite(0, 0));

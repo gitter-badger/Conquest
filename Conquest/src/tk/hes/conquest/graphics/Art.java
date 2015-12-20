@@ -30,6 +30,9 @@ public class Art {
     public static Bitmap UI_HERO_BACKGROUND = get("/ui/hero/ui_hero_background.png");
     public static Bitmap UI_HERO_SLOT = get("/ui/hero/ui_hero_slot.png");
 
+    //STORE
+    public static Bitmap UI_STORE = get("/ui/store/ui_store.png");
+
 	//SLOT
 	public static Spritesheet UI_SLOTS = getSpritesheet("/ui/slot/ui_slots.png", 30, 36);
 	public static Bitmap UI_DEPLOY_BAR = get("/ui/slot/ui_deploy_bar.png");
@@ -52,7 +55,6 @@ public class Art {
 	public static Spritesheet UNIT_HUMAN_MYSTIC = getSpritesheet("/actors/human/hum_special.png", 8, 8, Actor.SPRITE_SCALE);
 	public static Spritesheet UNIT_HUMAN_LONG_SWORDSMAN = getSpritesheet("/actors/human/hum_special2.png", 8, 10, Actor.SPRITE_SCALE);
 	public static Spritesheet UNIT_HUMAN_KNIGHT = getSpritesheet("/actors/human/hum_special3.png", 8, 10, Actor.SPRITE_SCALE);
-    public static Bitmap UI_STORE;
 
 	public static Spritesheet PARTICLE_PROJECTILE_ARROW = getSpritesheet("/particles/arrows.png", 8, 8, Actor.SPRITE_SCALE);
 	public static Spritesheet PARTICLE_PROJECTILE_BOLT = getSpritesheet("/particles/bolts.png", 8, 8, Actor.SPRITE_SCALE);
