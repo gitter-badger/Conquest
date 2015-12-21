@@ -21,6 +21,7 @@ public class GButton extends GAbstractButton {
 
     public void setButtonNormal(Bitmap buttonNormal) {
         this.buttonNormal = buttonNormal;
+        this.setSize(buttonNormal.getWidth(), buttonNormal.getHeight());
     }
 
     public void setButtonPressed(Bitmap buttonPressed) {

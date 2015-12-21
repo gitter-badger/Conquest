@@ -5,7 +5,11 @@ import me.nibby.pix.RenderContext;
 import me.nibby.pix.util.Vector2f;
 import tk.hes.conquest.graphics.Art;
 import tk.hes.conquest.gui.base.GImage;
+import tk.hes.conquest.gui.base.enums.GDialogButtonType;
+import tk.hes.conquest.gui.button.GDialogButton;
 import tk.hes.conquest.gui.dialog.GTitleDialog;
+
+import java.awt.*;
 
 /**
  * The UI element responsible for the Store page.
@@ -20,7 +24,6 @@ public class GStore extends GTitleDialog {
         super("Fighter Store", position);
         this.backgroundImage = new GImage(Art.UI_STORE, this);
         this.size = backgroundImage.getSize();
-
         this.closeButton.setPosition((int) getSize().getWidth() - 66, 3);
         this.titleLabel.setPosition(27, 2);
     }

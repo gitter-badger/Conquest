@@ -31,6 +31,11 @@ public class GTitleDialog extends GDialog implements GButtonActionListener {
         this.title = title;
         this.size = null;
         this.shouldRemove = false;
+
+        closeButton = new GDialogButton(new Vector2f(0,0), GDialogButtonType.CROSS, this);
+        closeButton.addActionListener(this);
+
+        titleLabel = new GLabel(title, new Vector2f(14, 1), this);
     }
 
     public GTitleDialog(String title, Vector2f pos, Dimension size) {
